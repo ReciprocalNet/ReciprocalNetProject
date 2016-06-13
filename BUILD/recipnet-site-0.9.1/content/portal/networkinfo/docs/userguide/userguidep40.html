@@ -1,0 +1,319 @@
+<HTML>
+<HEAD>
+<TITLE>How your site interacts with the Site Network</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep39.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep41.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a
+name="_Toc187857422">How your site interacts with the Site Network</a></span></span></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>When you install the site
+software RPM’s on your web server, you join the Reciprocal Net Site Network, an
+Internet community of crystallography labs that donate their time and their
+servers to the project.  The primary
+function of the Reciprocal Net site software you installed on your server is to
+act as a web application, allowing authenticated users to submit and alter
+sample data and metadata, and unauthenticated users to access data and metadata
+for a select set of public samples.  This
+all takes place in the standard web application paradigm, where human users
+direct their web browsers to your web site.</p>
+
+<p class=MsoNormal>The Reciprocal Net Site
+Network performs a considerable amount of behind-the-scenes management in order
+to keep its distributed database consistent. 
+The several sites in the network exchange messages and files with one
+another and with the Reciprocal Net Coordinator on a fairly frequent basis.  It is <B><I>recipnetd</B></I>, the Reciprocal Net
+daemon, which performs this function at your site.  The remainder of this section will provide an
+overview of this interaction.</p>
+
+<p class=MsoNormal>Your site will disclose
+sample data and metadata in the following circumstances:</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l31 level1 lfo15;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>when requested by
+unauthenticated users </I>via the
+web application,  provided the sample has
+been <B><I>Released to Public</B></I>.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l31 level1 lfo15;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>when requested by
+authenticated human users </I>via
+the web application.  The authenticated
+user is authorized to access a sample if any of the following conditions are met:
+1) the authenticated user’s account belongs to the same lab from which the
+sample originated, 2) the authenticated user’s account belongs to the same
+provider from which the sample originated, 3) the authenticated user’s account
+has been authorized explicitly by an entry in the sample’s access control list,
+or 4) the sample has been <B><I>Released
+to Public</B></I>.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l31 level1 lfo15;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>when requested by
+a harvesting agent </I>elsewhere
+on the Internet via OAI (Open Archives Interface), provided the sample has been
+<B><I>Released to Public</B></I>.  OAI is a protocol layered on top of HTTP that
+is commonly used in the digital library community for automated, distributed
+metadata harvesting.  It generally does
+not require client authentication.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l31 level1 lfo15;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>when requested by
+another site </I>in the Site
+Network via bulk HTTP file transfer, provided the sample has been <B><I>Released to Public</B></I>.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l31 level1 lfo15;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Sample metadata
+is broadcast automatically to other sites (as described later) whenever a
+sample’s metadata record is modified, provided the sample has been <B><I>Released to Public</B></I>.</p>
+
+<p class=MsoNormal>It is anticipated that
+outside organizations like the National Science Digital Library (NSDL) and the
+Cambridge Structural Database (CSD) will catalog public samples in the Site
+Network in an accurate and reliable fashion using the interfaces described
+above.  It is also conceivable that
+additional interfaces may be created for such purposes in the future.</p>
+
+<p class=MsoNormal>Your site will receive,
+accept, and process signed messages from the Reciprocal Net Coordinator for the
+following purposes:</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l9 level1 lfo16;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>new site
+initialization</I> during the
+installation process, by way of the <B><I>recipnet.sitegrant</B></I> file installed
+on your computer.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l9 level1 lfo16;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintaining a
+globally consistent list of sites</I>.  A message is received whenever another site
+in the Site Network is added to the network, removed from the network, or
+information in its site record is modified.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l9 level1 lfo16;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintaining a
+globally consistent list of labs</I>.  A message is received whenever a lab in the
+Site Network is added, or when information in the lab record is modified by the
+Coordinator (lab modifications may be made also by the site on which the lab is
+currently hosted).</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l9 level1 lfo16;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintaining a
+globally consistent list of sample id’s</I>.  A message is
+received whenever the Coordinator transfers sample id’s to other sites, or claims
+sample id’s for itself (perhaps with the intent of transferring them to a new site).</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l9 level1 lfo16;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>collecting global
+statistics</I>.  A message is received from the Coordinator
+whenever statistics are being requested from your site.  This may occur periodically.  In response, your site will send a message to
+the designated statistics collection point in which certain operating statistics
+will be disclosed.  This is discussed in
+more detail later.</p>
+
+<p class=MsoNormal>Your site will broadcast
+information to all other sites in the Site Network for the following purposes:</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l21 level1 lfo13;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintaining a
+globally consistent list of labs</I>.  An updated lab record is broadcast to the
+other sites whenever any information about a lab hosted at your site is
+changed, such as when an administrator uses the web app’s <B><I>Edit Lab </B></I>feature.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l21 level1 lfo13;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintaining a
+globally consistent list of providers</I>.  A provider record is broadcast
+to the other sites whenever any provider associated with a lab hosted at your
+site is changed (such as when an administrator uses the web app’s <B><I>Edit Provider</B></I>
+feature), or whenever a new provider is created (such as when an administrator
+uses the web app’s <B><I>Add New
+Provider</B></I> feature).</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l21 level1 lfo13;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintain a
+globally consistent set of sample metadata for public samples</I>.  A sample
+metadata record is broadcast to the other sites whenever a sample belonging to
+a lab hosted at your site becomes publicly visible (via the web app’s <B><I>Release to Public</B></I>
+feature), loses its publicly-visible status, or a publicly-visible sample has
+its metadata updated.  In the future, an
+updated sample metadata record may be broadcast to the other sites whenever
+data files in the repository for a publicly-visible sample are added, deleted,
+or modified.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l21 level1 lfo13;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintaining
+a globally consistent catalog of sample data for public samples</I>.  A sample data holding announcement is
+broadcast to the other sites whenever data for a public sample begins to be
+hosted at your site (such as when a new sample originated by a lab at your site
+is <B><I>Released to Public</B></I>
+via the web app, or public sample data arrives at your server by some other
+means).  Another message is broadcast if
+the sample data later becomes unavailable. 
+</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l21 level1 lfo13;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>maintaining a
+globally consistent directory of sample id’s</I>.  Sample id
+negotiation messages are broadcast to the other sites from time to time as your
+site generates new sample id’s and coordinates with other sites as they
+generate their own new sample id’s.  A
+distributed algorithm is required for this process in order to ensure that the
+sample id’s used by your site are globally unique across all of the Site
+Network.  It is theoretically possible
+that a malicious person elsewhere on the Site Network could track these
+broadcasts to infer the number of samples (both public and private) that have
+been created at your site, to the nearest thousand.  It would not be possible for the malicious person
+to determine the way in which sample id’s were distributed among the individual
+labs at your site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l21 level1 lfo13;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+in the future, <I>real-time
+network-wide load balancing</I>. 
+General statistics regarding server/network load will be broadcast to
+the other sites periodically in order to facilitate load balancing across the
+distributed database.  These statistics
+would be limited to data items like CPU load factor, number of simultaneous
+human web users (with no distinction made between those authenticated and those
+not), number of samples and bytes served recently (with no distinction made
+between samples that are public and those that are not), observed throughput to
+other sites, and so forth.  (As of
+release 0.9.0, the site software does not yet have this capability.)</p>
+
+<p class=MsoNormal>Your site will send private
+messages to other sites in the Site Network for the following purposes:</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l23 level1 lfo14;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>negotiating
+sample id’s</I> as was described
+previously. </p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l23 level1 lfo14;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<I>reporting
+aggregate statistics</I>.  Your site will disclose operating statistics
+(as described later) to the designated collection point in response to a signed
+request from the Coordinator.  </p>
+
+<p class=MsoNormal>Your site will disclose
+general statistics regarding its routine operation to the designated collection
+point in response to signed requests from the Reciprocal Net Coordinator.  Such requests may be received on a regular
+basis.  The statistics then are used by
+the Coordinator to publish whole-network utilization figures, track network
+growth, troubleshoot abnormal activity, and so forth.  The statistics disclosed are:</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total uptime and
+software version of <B><I>recipnetd</B></I>.  These figures will not be published by the
+Coordinator in conjunction with any information that might identify your site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total number of
+web app sessions, broken down by those in which users authenticated and those
+in which users did not.  These figures
+will not be published by the Coordinator in conjunction with any information
+that might identify your site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total number of “page
+views” on samples served via the web app, broken down by lab, and then broken
+down by visits to the <B><I>Show
+Sample</B></I> page versus visits to the <B><I>Edit Sample</B></I>
+page.  These figures will not be
+published by the Coordinator in conjunction with any information that might identify
+your site or any lab at your site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total combined
+size (in bytes) of all data files in the repository, along with the mean size
+of each data directory with figures broken down by lab.  These figures will not be published by the
+Coordinator in conjunction with any information that might identify your site
+or any labs at your site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total number of
+samples that have been released to the public, broken down by lab.  This same information is already readily
+apparent to any unauthenticated user who browses Reciprocalnet.org; therefore,
+the Coordinator reserves the privilege of publishing this figure in conjunction
+with the name of your lab or site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total number of
+messages exchanged with every other site in the Site Network, along with a list
+of each unique sequence number used.  The
+actual contents of these messages are not disclosed.  This information may facilitate debugging and
+troubleshooting.  (The circumstances
+under which messages can be exchanged were described previously.)  These figures will not be published by the
+Coordinator in conjunction with any information that might identify your site. </p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total number of
+OAI queries that were answered.  Also a
+count of the total number of samples returned by those queries.  These figures will not be published by the
+Coordinator in conjunction with any information that might identify your site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Total number of
+HTTP bulk file transfer requests that were accepted.  Also a count of the total number of files and
+the total number of bytes that were transferred during those operations.  These figures will not be published by the
+Coordinator in conjunction with any information that might identify your site.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l22 level1 lfo17;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+In the future,
+the National Science Foundation (NSF) and/or the National Science Digital
+Library (NSDL) may request information about the Site Network’s utilization
+that requires <B><I>recipnetd</B></I>
+to collect additional and possibly more specific statistics, and the
+Coordinator in turn to collect them.  Such
+additional data collection activity would be well-defined and will not track
+web app visitors from visit to visit, track authenticated human users except in
+the aggregate, track the sort of detailed HTTP information normally written to
+a “web server log” except in the aggregate, or track information about non-public
+samples except in the aggregate and only when contrasted with public samples at
+the same site.  </p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep39.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep41.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

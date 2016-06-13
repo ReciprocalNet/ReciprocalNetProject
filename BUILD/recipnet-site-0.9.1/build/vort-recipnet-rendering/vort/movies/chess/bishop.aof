@@ -1,0 +1,17 @@
+
+
+name		bishop8
+description	chess piece - bishop
+author		Randy Brown, brown@cs.unc.edu
+copyright	(c) Randy Brown, OK to distribute if copyright/author appears 
+type		polygon
+
+# Property list for this object
+
+# Prop.          data type    format      filename or default data
+#-------         ---------    ------      ------------------------
+
+geometry	indexed_poly	fff		bishop.geom
+vertex_order	default		s		clockwise 
+polygon_colors	default		fff		0.8 0.8 0.8 
+back_faces	default		s		cull 

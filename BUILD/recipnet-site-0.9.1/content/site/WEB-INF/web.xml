@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  -  Reciprocal Net project
+  -
+  -  web.xml
+  -
+  -  10-Mar-2003: midurbin added changelog to existing file
+  -  03-Jul-2003: ajooloor added configuration parameter 
+  -               restrictLargeFilesAvailability
+  -  12-Aug-2003: midurbin added configuration parameter externalProcessTimeout
+  -  01-Sep-2003: ekoperda changed default value for maxOaiPmhSamples
+  -  07-Jan-2004: ekoperda changed package references to match source tree
+  -               reorganization
+  -  09-Feb-2004: ekoperda added CoreConnector as a listener
+  -  29-Mar-2004: ajooloor added configuration parameter 
+  -               shouldRedirectAuthUserToSampleJsp
+  -  07-May-2004: cwestnea added rmiPort parameter
+  -  07-Jun-2004: midurbin added LanguageHelper as a listener and various
+  -               configuration directives
+  -  13-Jan-2005: jobollin added entries for AuthenticationLogger and
+  -               ClientAccessFilter
+  -  26-Apr-2005: midurbin added listener entry for SessionTracker and the new
+  -               context parameters 'unauthenticatedPreferences' and
+  -               'newUserInitialPreferences'
+  -  04-May-2005: midurbin updated the preference strings to include showsample
+  -               page mode preferences
+  -  15-Jun-2005: ekoperda added UploaderSupport as a servlet
+  -  04-Aug-2005: midurbin added MultipartUploadAccepter as a servlet
+  -  16-Aug-2005: midurbin removed obsolete parameters
+  -  19-Aug-2005: midurbin updated default preferences to include a new
+  -               preference
+  -  28-Oct-2005: midurbin updated default preferences to reflect new ordering
+  -               and new preferences
+  -  10-Nov-2005: midurbin updated default preferences to suppress skipped
+  -               actions
+  -  10-Nov-2005: midurbin updated reference from files.jsp to managefiles.jsp
+  -  11-Nov-2005: midurbin added the 'invalidFilePageUrl' context parameter
+  -  01-Dec-2005: ekoperda replaced servlets IsmPullListener and
+  -               IsmPushListener with new servlet IsmExchangeListener
+  -  12-Jan-2006: jobollin converted to Servlet 2.4 and fixed (longstanding)
+  -               schema-compliance issues related to placement of parameter
+  -               description elements
+  -  17-Jan-2006: added 'stylesheetName' context parameter
+  -->
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+  version="2.4">
+  <!--
+    -  Multiple webapp instances on the same or different servers can be
+    -  distinguished, if necessary, by assigning them different
+    -  display-name elements.  At present, this is only expected to be
+    -  useful if more than one webapp instance is connected to the same
+    -  Core instance
+  -->
+  <display-name>Reciprocal Net site software</display-name>
+
+  <context-param>
+    <description>
+      The name of the host on which recipnetd is running
+    </description>
+    <param-name>hostName</param-name>
+    <param-value>localhost</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The port on which recipnetd's RMI server is running
+    </description>
+    <param-name>rmiPort</param-name>
+    <param-value>1099</param-value>
+  </context-param>
+
+  <context-param>
+    <description>The RMI name of Site Manager</description>
+    <param-name>siteManagerName</param-name>
+    <param-value>RecipnetSiteManager</param-value>
+  </context-param>
+
+  <context-param>
+    <description>The RMI name of Sample Manager</description>
+    <param-name>sampleManagerName</param-name>
+    <param-value>RecipnetSampleManager</param-value>
+  </context-param>
+
+  <context-param>
+    <description>The RMI name of Repository Manager</description>
+    <param-name>repositoryManagerName</param-name>
+    <param-value>RecipnetRepositoryManager</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The name of the the system to rely on for rendering services
+    </description>
+    <param-name>darterServer</param-name>
+    <param-value>iumsc-beowulf.reciprocalnet.org</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      a path to a directory that may be used to store temporary files; if empty
+      (or not specified) then the temp directory provided for this context by
+      the container will be used
+    </description>
+    <param-name>tempDir</param-name>
+    <param-value></param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      the maximum combined size of the FileTracker's tracked files, in
+      megabytes; defaults to 512 if empty, invalid, or not specified
+    </description>
+    <param-name>maxFileCacheSize</param-name>
+    <param-value>512</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      the time, in seconds, before an unaccessed file in the FileTracker's file
+      cache becomes stale and eligible for removal; defaults to 1800 if empty,
+      invalid, or not specified
+    </description>
+    <param-name>fileCacheTimeout</param-name>
+    <param-value>1800</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The e-mail address of a sysadmin who should be listed as responsible for
+      this site's OAI repository. If the value is blank or unspecified, the
+      e-mail address defaults to root@thisserver, where 'thisserver' is the DNS
+      name of this server.
+    </description>
+    <param-name>adminEmail</param-name>
+    <param-value></param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The maximum number of samples that may be returned in response to an
+      incoming OAI-PMH request. Harvesting agents attempting to fetch more
+      samples than this would make multiple HTTP round-trips to this server. If
+      the value is 0 then no limit is enforced. This value can have important
+      performance implications and may help protected against certain DoS
+      attacks.
+    </description>
+    <param-name>maxOaiPmhSamples</param-name>
+    <param-value>512</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The possible vaules are 'true' and 'false'. If true, then only users
+      associated with a sample's originating lab or originating provider may
+      request that prior versions of "large" sample data files be made available
+      for download. If false, then anyone may. Note that setting this value to
+      false may enable others to launch denial of service attacks against your
+      server.
+    </description>
+    <param-name>restrictLargeFilesAvailability</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The value represents the number of milliseconds JammSupport will wait for
+      an external process to complete before interrupting it.
+    </description>
+    <param-name>externalProcessTimeout</param-name>
+    <param-value>30000</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      These are performance tuning parameters used for a cache of localization
+      resources.
+    </description>
+    <param-name>languageCacheParameterString</param-name>
+    <param-value>64,0,4,0,0,0,true</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The complete path of a jar file containing localization information for
+      status codes, field codes or action codes.
+    </description>
+    <param-name>languagePackJar</param-name>
+    <param-value></param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      These are performance tuning parameters used for a cache of persisted
+      operations.
+    </description>
+    <param-name>persistedOperationsCache</param-name>
+    <param-value>256,128,16,0,30000,.1,false</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This is the default preference setting for an unauthenticated user.
+    </description>
+    <param-name>unauthenticatedPreferences</param-name>
+    <param-value>
+      miniJaMM,sample,detailed,3,10,true,false,true,false,true,false,
+      false,true,false,false,form-based,false,false,false,false,true,true
+    </param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This is the default preference setting for a new user.
+    </description>
+    <param-name>newUserInitialPreferences</param-name>
+    <param-value>
+      JaMM2,sample,detailed,3,10,true,false,true,false,true,true,
+      false,true,false,false,form-based,false,false,false,false,true,true
+    </param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      The name of the CSS stylesheet that Reciprocal Net pages should reference,
+      as a path name relative to the webapp context root.  The value should
+      start with a slash ('/') character.
+    </description>
+    <param-name>stylesheetName</param-name>
+    <param-value>/recipnet.css</param-value>
+  </context-param>
+
+  <filter>
+    <filter-name>ClientAccessFilter</filter-name>
+    <filter-class>
+      org.recipnet.site.content.filter.ClientAccessFilter
+    </filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>ClientAccessFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+
+  <listener>
+    <listener-class>org.recipnet.site.wrapper.CoreConnector</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>
+      org.recipnet.site.wrapper.AuthenticationLogger
+    </listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.recipnet.site.wrapper.FileTracker</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.recipnet.site.wrapper.LanguageHelper</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>
+      org.recipnet.site.wrapper.OperationPersister
+    </listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>
+      org.recipnet.site.wrapper.SessionPreferenceTracker
+    </listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>JammSupport</servlet-name>
+    <servlet-class>org.recipnet.site.content.servlet.JammSupport</servlet-class>
+    <init-param>
+      <description>
+        The path provided in the environment of all child processes
+      </description>
+      <param-name>childPath</param-name>
+      <param-value>PATH=/bin:/usr/bin:/usr/local/bin</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>FileRetriever</servlet-name>
+    <servlet-class>
+      org.recipnet.site.content.servlet.FileRetriever
+    </servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>OaiPmhResponder</servlet-name>
+    <servlet-class>
+      org.recipnet.site.content.servlet.OaiPmhResponder
+    </servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UploaderSupport</servlet-name>
+    <servlet-class>
+      org.recipnet.site.content.servlet.UploaderSupport
+    </servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>MultipartUploadAccepter</servlet-name>
+    <servlet-class>
+      org.recipnet.site.content.servlet.MultipartUploadAccepter
+    </servlet-class>
+    <init-param>
+      <description>
+        The path, relative to the servlet context root, for the JSP that
+        displays handling options when a file is uploaded with the same name as
+        an existing file.
+      </description>
+      <param-name>filenameConflictsPageUrl</param-name>
+      <param-value>/lab/uploadedfileconflicts.jsp</param-value>
+    </init-param>
+    <init-param>
+      <description>
+        The path, relative to the servlet context root, for the unversioned JSP
+        that displays files and file management links.
+      </description>
+      <param-name>fileManagementPageUrl</param-name>
+      <param-value>/lab/managefiles.jsp</param-value>
+    </init-param>
+    <init-param>
+      <description>
+        The path, relative to the servlet context root, for the JSP that
+        displays confirmation of file uploads using an UploaderOperation.
+      </description>
+      <param-name>uploadConfirmationPageUrl</param-name>
+      <param-value>/lab/uploadcompleted.jsp</param-value>
+    </init-param>
+    <init-param>
+      <description>
+        The path, relative to the servlet context root, for the JSP that
+        displays an error message indicating that a file upload was cancelled
+        due to an invalid filename or description.
+      </description>
+      <param-name>invalidFilePageUrl</param-name>
+      <param-value>/lab/invalidfile.jsp</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>OrtepInstructionGenerator</servlet-name>
+    <servlet-class>
+      org.recipnet.site.content.servlet.OrtepInstructionGenerator
+    </servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>IsmExchangeListener</servlet-name>
+    <servlet-class>
+        org.recipnet.site.content.servlet.IsmExchangeListener
+    </servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>JammSupport</servlet-name>
+    <url-pattern>/servlet/jammsupport</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>FileRetriever</servlet-name>
+    <url-pattern>/servlet/fileretrieve/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>OaiPmhResponder</servlet-name>
+    <url-pattern>/servlet/oaipmh</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UploaderSupport</servlet-name>
+    <url-pattern>/servlet/uploadersupport</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>MultipartUploadAccepter</servlet-name>
+    <url-pattern>/servlet/multipartuploadaccepter</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>OrtepInstructionGenerator</servlet-name>
+    <url-pattern>/servlet/generateort</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>IsmExchangeListener</servlet-name>
+    <url-pattern>/servlet/ismexchange</url-pattern>
+  </servlet-mapping>
+
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/error.jsp</location>
+  </error-page>
+
+</web-app>

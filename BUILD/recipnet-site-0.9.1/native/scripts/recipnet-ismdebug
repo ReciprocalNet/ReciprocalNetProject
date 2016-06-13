@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Reciprocal Net project
+# @(#)recipnet-ismdebug
+#
+# Shell script that displays current ISM subsystem status for the local site.
+# Useful in debugging ISM-passing problems; should be used only at the 
+# direction of Reciprocal Net technical support.  Best used when recipnetd is
+# *NOT* running.
+#
+# 12-Dec-2002: ekoperda wrote first draft
+
+echo "Please provide MySQL's root password."
+/usr/bin/mysql -u root -p -e "SELECT id, shortName, publicSeqNum, privateSeqNum FROM recipnet.sites ORDER BY id"
+
+echo ""
+echo ""
+echo "Held messages:"
+ls -g -G /var/recipnet/msgs-held
+
+echo ""
+echo ""
+echo "Received messages:"
+ls -g -G /var/recipnet/msgs-recv
+
+echo ""
+echo ""
+echo "Sent messages:"
+ls -g -G /var/recipnet/msgs-sent

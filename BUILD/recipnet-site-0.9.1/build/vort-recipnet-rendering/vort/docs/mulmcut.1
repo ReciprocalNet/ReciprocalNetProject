@@ -1,0 +1,47 @@
+.TH MULMCUT 1 "Feb 19, 1990" "VORT 2.2"
+.SH NAME
+mulmcut \- perform median cut on data in one or more VORT files
+.SH SYNOPSIS
+.PU
+.ll +8
+.B mulmcut
+[
+.B \-c
+.I size
+] [
+.B \-f
+]
+.I "file1 file2..."
+.SH DESCRIPTION
+.I Mulmcut
+applys median cut to the RGB images stored in
+.I file1, file2...
+to generate the colormapped pixel files with a .mix
+suffix. The resulting files will all have the same colormap,
+and be suitable for display with the
+.I movie (1)
+program.
+The colormaps that are generated have, by default, 256 entries;
+this may be modified with the
+.B \-c
+option.
+By default the image data is quantized by mapping each
+pixel to the closest color values in the colormap.
+If the
+.B \-f
+option is specified, Floyd-Steinberg dithering is done
+before selecting a colormap entry.
+.SH "SEE ALSO"
+.IR art (1),
+.IR vortinfo (1),
+.IR targ2vort (1),
+.IR vort2ps (1),
+.IR median (1),
+.IR movie (1),
+.IR gamma (1),
+.IR greyscale (1),
+.IR vortfile (3),
+.IR vort (3).
+.br
+"Color Image Quantization for Frame Buffer Display", Paul
+Heckbert, SIGGRAPH proceedings, 1982, pp. 297-307.

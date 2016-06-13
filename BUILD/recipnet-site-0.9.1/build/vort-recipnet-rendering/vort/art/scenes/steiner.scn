@@ -1,0 +1,25 @@
+title	"Steiner Surface"
+
+lookat(4, 0, 4, 0.0, 0.0, 0.0, 0.0)
+
+light {
+	colour 1.0, 1.0, 1.0
+	location (7.0, 0.0, 7.0)
+}
+
+light {
+	colour 0.2, 0.2, 0.2
+	location (17.0, 0.0, 7.0)
+}
+
+light {
+	colour 0.2, 0.2, 0.2
+	location (-3.0, 0.0, 7.0)
+}
+
+algebraic {
+	colour 1.0, 0.0, 0.0
+	material 0.0, 0.95, 0.00, 0.0
+	equation $$ x^{2}y^{2} + y^{2}z^{2} + z^{2}x^{2} - 2xyz = 0 $$
+}
+

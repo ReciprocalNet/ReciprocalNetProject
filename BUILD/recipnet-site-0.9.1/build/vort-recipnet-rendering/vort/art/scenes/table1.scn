@@ -1,0 +1,541 @@
+title "Plastic teapot on table"
+
+fieldofview 40.0
+
+raysperpixel 4
+
+lookat(1.0, 4.0, 9.4, 0, 2.0, 2.0, 0.0)
+
+background 0.0, 0.4, 0.4
+
+
+light {
+	colour 0.9, 0.9, 0.9
+	location (-7.8, 7.0, 7.0)
+}
+
+light {
+/*
+	radius 0.8
+	numrays	8
+*/
+	colour 0.9, 0.9, 0.9
+	location (6.0, 7.0, 7.0)
+}
+
+light {
+/*
+	radius 0.8
+	numrays	8
+*/
+	colour 0.9, 0.9, 0.9
+	location (0.0, 8.0, -7.0)
+}
+
+/*
+ * Make a table....(with teapot on top)
+ */
+
+composite {
+	rotate (10, y)
+	geometry {
+		phongshading on
+		backfacing off	/* You can see behind the lid otherwise */
+		translate(-1.0, 0.1, 0.2)
+		rotate(10.0, y)
+		scale(0.4, 0.4, 0.4)
+		offfile teapot.geo
+		colour 0.3, 0.8, 0.3
+		material 0.0, 0.5, 0.5, 5.0
+	}
+
+	box {
+		vertex (-2.2, 0.1, -2.2)
+		vertex (2.2, 0.15, 2.2)
+		colour 0.2, 0.2, 0.2
+		material 0.0, 0.75, 0.25, 5.0
+		transparency 0.6
+	}
+
+	polygon {
+		vertex (-1.5, 0.125, -1.5)
+		vertex (-1.5, 0.125, 1.5)
+		vertex (1.5, 0.125, 1.5)
+		vertex (1.5, 0.125, -1.5)
+		colour 0.2, 0.2, 0.2
+		material 0.0, 0.25, 0.75, 5.0
+		reflectance 0.5
+		transparency 0.3
+		tile tile.pix size 0.25, 0.25
+	}
+
+	box {	/* A leg */
+		vertex (2.0, 0.1, -2.0)
+		vertex (1.6, -2.0, -1.6)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			rotate(90.0, x)
+			blendcolour 0.5, 0.35, 0.22
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+
+	box {	/* Another leg */
+		vertex (2.0, 0.1, 2.0)
+		vertex (1.6, -2.0, 1.6)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			rotate(90.0, x)
+			blendcolour 0.5, 0.35, 0.22
+			scalefactors 200.0, 5.0, 3.0
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+
+	box {	/* And another leg */
+		vertex (-2.0, 0.1, 2.0)
+		vertex (-1.6, -2.0, 1.6)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			rotate(90.0, x)
+			blendcolour 0.5, 0.35, 0.22
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+
+	box {	/* The last leg */
+		vertex (-2.0, 0.1, -2.0)
+		vertex (-1.6, -2.0, -1.6)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			rotate(90.0, x)
+			blendcolour 0.5, 0.35, 0.22
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+
+	box {	/* A rail bit at the top */
+		vertex (1.6, 0.0, -1.6)
+		vertex (1.85, -0.35, 1.6)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			blendcolour 0.5, 0.35, 0.22
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+
+	box {	/* Another rail bit at the top */
+		vertex (1.6, 0.0,  1.6)
+		vertex (-1.6, -0.35, 1.85)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			rotate(90.0, y)
+			blendcolour 0.5, 0.35, 0.22
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+
+	box {	/* And another rail bit at the top */
+		vertex (-1.6, 0.0,  1.6)
+		vertex (-1.85, -0.35,-1.6)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			blendcolour 0.5, 0.35, 0.22
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+
+	box {	/* And another rail bit at the top */
+		vertex (-1.6, 0.0,  -1.6)
+		vertex ( 1.6, -0.35,-1.85)
+		colour 0.815, 0.5, 0.278
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale(0.01, 0.01, 0.01)
+			rotate(90.0, y)
+			blendcolour 0.5, 0.35, 0.22
+			turbulence 0.5
+			squeeze 3
+		}
+	}
+}
+
+turb = 2.2
+f_s_x = 0.035
+f_s_y = 0.035
+f_s_z = 0.035
+
+composite {
+	polygon {	/* 1 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-8.00, 0.0, 0.0)
+		colour 0.94, 0.85, 0.45
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (0.82, 0.0, 0.0)
+			blendcolour 0.79, 0.59, 0.36
+			turbulence  turb + .41
+			squeeze 3
+		}
+	}
+	polygon {	/* 2 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-7.00, 0.0, 0.0)
+		colour 0.95, 0.84, 0.45
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (0.82, 0.0, 0.0)
+			blendcolour 0.81, 0.60, 0.35
+			turbulence  turb + .56
+			squeeze 3
+		}
+	}
+	polygon {	/* 3 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-6.00, 0.0, 0.0)
+		colour 0.95, 0.84, 0.46
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (0.25, 0.0, 0.0)
+			blendcolour 0.79, 0.60, 0.36
+			turbulence  turb + .46
+			squeeze 3
+		}
+	}
+	polygon {	/* 4 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-5.00, 0.0, 0.0)
+		colour 0.95, 0.85, 0.45
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (-0.25, 0.0, 0.0)
+			blendcolour 0.80, 0.61, 0.36
+			turbulence 2.41
+			squeeze 3
+		}
+	}
+	polygon {	/* 5 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-4.00, 0.0, 0.0)
+		colour 0.94, 0.86, 0.44
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (0.84, 0.0, 0.0)
+			blendcolour 0.81, 0.60, 0.34
+			turbulence  turb + .53
+			squeeze 3
+		}
+	}
+	polygon {	/* 6 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-3.00, 0.0, 0.0)
+		colour 0.95, 0.86, 0.44
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (-0.67, 0.0, 0.0)
+			blendcolour 0.81, 0.60, 0.35
+			turbulence  turb + .40
+			squeeze 3
+		}
+	}
+	polygon {	/* 7 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-2.00, 0.0, 0.0)
+		colour 0.96, 0.84, 0.46
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (-0.93, 0.0, 0.0)
+			blendcolour 0.81, 0.59, 0.36
+			turbulence  turb + .54
+			squeeze 3
+		}
+	}
+	polygon {	/* 8 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (-1.00, 0.0, 0.0)
+		colour 0.95, 0.84, 0.44
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (-0.69, 0.0, 0.0)
+			blendcolour 0.81, 0.61, 0.36
+			turbulence  turb + .54
+			squeeze 3
+		}
+	}
+	polygon {	/* 9 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (0.00, 0.0, 0.0)
+		colour 0.94, 0.85, 0.45
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (0.87, 0.0, 0.0)
+			blendcolour 0.79, 0.61, 0.35
+			turbulence  turb + .43
+			squeeze 3
+		}
+	}
+	polygon {	/* 10 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (1.00, 0.0, 0.0)
+		colour 0.96, 0.85, 0.46
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (0.78, 0.0, 0.0)
+			blendcolour 0.81, 0.61, 0.35
+			turbulence  turb + .45
+			squeeze 3
+		}
+	}
+	polygon {	/* 11 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (2.00, 0.0, 0.0)
+		colour 0.95, 0.86, 0.45
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (0.89, 0.0, 0.0)
+			blendcolour 0.79, 0.60, 0.36
+			turbulence  turb + .43
+			squeeze 3
+		}
+	}
+	polygon {	/* 12 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (3.00, 0.0, 0.0)
+		colour 0.96, 0.86, 0.45
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (0.01, 0.0, 0.0)
+			blendcolour 0.80, 0.60, 0.34
+			turbulence  turb + .42
+			squeeze 3
+		}
+	}
+	polygon {	/* 13 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (4.00, 0.0, 0.0)
+		colour 0.95, 0.85, 0.46
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (-0.36, 0.0, 0.0)
+			blendcolour 0.80, 0.60, 0.34
+			turbulence  turb + .59
+			squeeze 3
+		}
+	}
+	polygon {	/* 14 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (5.00, 0.0, 0.0)
+		colour 0.94, 0.85, 0.46
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (-0.93, 0.0, 0.0)
+			blendcolour 0.81, 0.59, 0.35
+			turbulence  turb + .49
+			squeeze 3
+		}
+	}
+	polygon {	/* 15 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (6.00, 0.0, 0.0)
+		colour 0.94, 0.85, 0.44
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (0.08, 0.0, 0.0)
+			blendcolour 0.81, 0.60, 0.34
+			turbulence  turb + .47
+			squeeze 3
+		}
+	}
+	polygon {	/* 16 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (7.00, 0.0, 0.0)
+		colour 0.95, 0.84, 0.46
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (-0.76, 0.0, 0.0)
+			blendcolour 0.79, 0.59, 0.34
+			turbulence  turb + .58
+			squeeze 3
+		}
+	}
+	polygon {	/* 17 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (8.00, 0.0, 0.0)
+		colour 0.95, 0.84, 0.44
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (-0.16, 0.0, 0.0)
+			blendcolour 0.79, 0.61, 0.34
+			turbulence  turb + .53
+			squeeze 3
+		}
+	}
+	polygon {	/* 18 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (9.00, 0.0, 0.0)
+		colour 0.95, 0.85, 0.44
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			translate (0.67, 0.0, 0.0)
+			blendcolour 0.79, 0.61, 0.34
+			turbulence  turb + .58
+			squeeze 3
+		}
+	}
+	polygon {	/* 19 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (10.00, 0.0, 0.0)
+		colour 0.94, 0.85, 0.44
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			rotate (90, x)
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (180, y)
+			translate (0.97, 0.0, 0.0)
+			blendcolour 0.81, 0.60, 0.35
+			turbulence  turb + .44
+			squeeze 3
+		}
+	}
+	polygon {	/* 20 */
+		vertex(0.0, -2.0, -10.0)
+		vertex(1.0, -2.0, -10.0)
+		vertex(1.0, -2.0,  10.0)
+		vertex(0.0, -2.0,  10.0)
+		translate (11.00, 0.0, 0.0)
+		colour 0.95, 0.84, 0.45
+		material 0.0, 0.75, 0.25, 5.0
+		texture wood2 {
+			scale (f_s_x, f_s_y, f_s_z)
+			rotate (90, x)
+			translate (-0.88, 0.0, 0.0)
+			blendcolour 0.79, 0.61, 0.36
+			turbulence 2.56
+			squeeze 3
+		}
+	}
+
+}

@@ -1,0 +1,101 @@
+<!-- 
+  - Reciprocal Net project
+  - package-portal.xml
+  -
+  - This Ant build file is designed to be called only by the main build file,
+  - build.xml.  Logic within this file knows how to package the Reciprocal
+  - Net portal software for distribution.
+  -
+  - 29-Apr-2004: ekoperda wrote first draft
+  -->
+
+<project name="recipnet-portal" default="generate-rpms-from-snapshot">
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                   Externally-callable targets are here                  *
+    *                                                                         *
+    *********************************************************************** -->
+   
+    <target name="generate-rpms-from-snapshot" 
+            description="Generate .rpm files provided a source tree snapshot"
+            depends="read-distribution-properties, rpms" />
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Module-level targets are here                     *
+    *                                                                         *
+    *********************************************************************** -->
+
+    <target name="recipnet-portal.spec">
+        <fail unless="dist.source-snapshot-file-truncated" />
+        <fail unless="dist.portal.release" />
+        <fail unless="dist.portal.buildnumber" />
+
+        <mkdir dir="build/embeddedversion/" />
+        <copy file="misc/recipnet-portal.spec" 
+                todir="build/embeddedversion/" 
+                overwrite="true">
+            <filterset>
+                <filter token="dist.source-snapshot-file-truncated" 
+                        value="${dist.source-snapshot-file-truncated}" />
+                <filter token="dist.portal.release" 
+                        value="${dist.portal.release}" />
+                <filter token="dist.portal.buildnumber" 
+                        value="${dist.portal.buildnumber}" />
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="rpms" 
+            depends="read-distribution-properties">
+        <fail unless="dist.portal.release" />
+        <fail unless="dist.portal.buildnumber" />
+        <fail unless="dist.source-snapshot-file"
+                message="Property 'dist.source-snapshot-file' must be set" />
+
+        <basename property="dist.source-snapshot-file-truncated" 
+                file="${dist.source-snapshot-file}" />
+        <antcall target="recipnet-portal.spec" />
+        <mkdir dir="build/rpm/BUILD/" />
+        <mkdir dir="build/rpm/RPMS/i386/" />
+        <mkdir dir="build/rpm/SOURCES/" />
+        <copy file="${dist.source-snapshot-file}" todir="build/rpm/SOURCES" />
+        <property name="rpm-topdir" location="build/rpm/" />
+        <echo file=".rpmmacros" message="%_topdir ${rpm-topdir}" />
+        <exec executable="rpmbuild" failonerror="true">
+            <arg value="-bb" />
+            <arg value="--target" />
+            <arg value="noarch" />
+            <arg file="build/embeddedversion/recipnet-portal.spec" />
+            <env key="HOME" file="." />
+        </exec>
+        <delete file=".rpmmacros" />
+    </target>
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Build infrastructure is here                      *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="read-distribution-properties">
+        <property environment="env" />
+        <propertyfile file="misc/portal.build.number">
+            <entry key="dist.portal.release" default="unknown" />
+            <entry key="dist.portal.buildnumber" 
+                    type="int" 
+                    default="1" 
+                    operation="+" />
+        </propertyfile>
+        <loadproperties srcFile="misc/portal.build.number" />
+    </target>
+</project>

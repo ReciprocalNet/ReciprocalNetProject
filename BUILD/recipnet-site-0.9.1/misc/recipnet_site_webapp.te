@@ -1,0 +1,36 @@
+###############################################################################
+# Reciprocal Net project
+# recipnet.te
+#
+# 02-Jan-2008: ekoperda wrote first draft
+#
+# This is an SELinux policy file designed to be deployed to systems as part of
+# the web application RPM.  It declares the additional privileges that the
+# webapp requires to run properly.
+##############################################################################
+
+module recipnet_site_webapp 1.0.0;
+
+require {
+	type java_exec_t;
+	type httpd_t;
+	type proc_net_t;
+	type port_t;
+	class process execmem;
+	class tcp_socket name_connect;
+	class dir search;
+	class file { getattr read execute execute_no_trans };
+}
+
+#
+# It is necessary to grant additional (expansive) privileges to httpd_t in
+# order for the ModRewriteAuthConnector mechanism to function.  Httpd must be
+# permitted to invoke recipnet-authconnector, which in turn must invoke a whole
+# Java VM, which in turns must establish an RMI connection to core, in order
+# for the feature to work.
+#
+allow httpd_t java_exec_t:file { read execute getattr execute_no_trans };
+allow httpd_t port_t:tcp_socket name_connect;
+allow httpd_t proc_net_t:dir search;
+allow httpd_t proc_net_t:file { read getattr };
+allow httpd_t self:process execmem;

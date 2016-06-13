@@ -1,0 +1,73 @@
+
+copy {
+lookat (0, 10, 35, 0, 0, 0, 0)
+
+raysperpixel 1
+background 0, 0, 0
+
+light {
+	direction (0, 0, -1)
+	color 1, 1, 1
+}
+light {
+	location (0, 0, 30)
+	color .5, .5, .5
+}
+
+light {
+	location (0, -20, 20)
+	color .5, .5, .5
+}
+ambient 0.6, 0.6, 0.6
+material 0.0, 0.2, 0.6, 10 
+reflectance .3
+
+}
+
+scale(1, 1, 3)
+font("times.r")
+textsize(6, 10)
+textradius(0.2)
+/*
+ * It's not a fixed width font - that's why it's not
+ * -30 here.
+  */
+move(-19, 5, 0)
+colour(1, 0, 0)
+drawchar('H')
+colour(0, 1, 0)
+drawchar('e')
+colour(0, 0, 1)
+drawchar('l')
+colour(0, 1, 1)
+drawchar('l')
+colour(1, 1, 1)
+drawchar('o')
+colour(1, 1, 0)
+drawstr(", ")
+font("times.i")
+colour(.3, .4, 1)
+drawchar('w')
+colour(.8, .4, 1)
+drawchar('o')
+colour(.8, 1, .2)
+drawchar('r')
+colour(.2, .6, .2)
+drawchar('l')
+colour(.7, .6, .9)
+drawchar('d')
+colour(.1, .1, .9)
+drawchar('!')
+
+scale(1, 1, 1)
+textsize(5, 10)
+textradius(0.4)
+fixedwidth(true)
+/*
+centertext(true)
+move(0, -8, 0)
+*/
+move(-30, -8, 0)
+output(cyl_sph)
+colour(1, .4, 1)
+drawstr("Hello, world!")

@@ -1,0 +1,20 @@
+This directory contains some simple programs for generating
+some movie sequences. To use them you must enter each directory,
+compile the C program in that directory (cc -o prog prog.c -lm),
+then run the program. Each program will produce 36 ".scn" files
+for art. Each directory also contains a csh script called "run"
+which will run the 36 scn files in batches of 6. (run 300 300).
+We suggest a resolution no bigger than 300x300, as any bigger
+and the suns slow down the screen update to much. (Although
+with the MIT X11R4 server it flys if you can use the X11 movie
+program with the -p option)
+
+After all the ".scn" files have been processed, you then "mulmcut"
+the ".pix" files (mulmcut *.pix) which will produce corresponding
+".mix" files all having the same (optimal) colormap. These files
+are then ready to view using "movie" (movie prog*.mix).
+
+Oh yeah, you'll probably have to make the file "tile.pix" and copy
+it into some directories (art tile.scn 2 2). This ".scn" file should
+be in the vort/art/scenes directory.
+

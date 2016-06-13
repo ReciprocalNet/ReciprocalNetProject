@@ -1,0 +1,150 @@
+<HTML>
+<HEAD>
+<TITLE>Customizing MySQL settings</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep15.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep17.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a
+name="_Toc187857396">Customizing MySQL settings</a></span></span></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>A default
+Reciprocal Net site software installation uses MySQL as its database
+engine.  While it is possible to employ
+most any Java-accessible SQL engine with the site software, most administrators
+find it convenient to use the Red Hat-sanctioned version of MySQL.  The MySQL packages should have been downloaded
+and installed earlier, if they weren’t already present on your system.</p>
+
+<p class=MsoNormal>The first step
+is to start the <B><I>mysqld</B></I>
+dameon.  From the GNOME desktop, navigate
+to the <B><I>System/Administration</B></I>
+menu in the upper-left corner of the screen and launch the <B><I>Services</B></I>
+program.  In the <B><I>Service Configuration</B></I>
+window that appears, look in the left-lower pane and find the <B><I>mysqld</B></I>
+item.  Highlight <B><I>mysqld</B></I> and click
+the <B><I>Start</B></I>
+button on the program’s toolbar.  Click
+the <B><I>OK</B></I> button
+on the success message that appears a few seconds later.  Set the <B><I>Service Configuration</B></I> program
+aside but leave it open.</p>
+
+<p class=MsoNormal>The next step
+is to secure MySQL by setting the <B><I>root</B></I> passwords.  Invent a <I>database <st1:PersonName
+w:st="on">root</st1:PersonName> password</I> for yourself.  This might be the same as GNU/Linux’s <B><I>root</B></I> password,
+or it might be different (recommended).  Go
+to a command prompt and type the following command:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>mysqladmin
+–u <st1:PersonName w:st="on">root</st1:PersonName> password <B><I>‘your password‘
+</TD></TR></TABLE>
+</code></blockquote></B></I></p>
+
+<p class=MsoNormal>, replacing <B><I>your password</B></I>
+with your desired password.</p>
+
+<p class=MsoNormal>Some systems
+may be equipped with a second <B><I>root</B></I> account.  Set the password on the second account by
+typing the following command:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>mysqladmin
+–u <st1:PersonName w:st="on">root</st1:PersonName> –h $HOSTNAME password ‘<B><I>your password</B></I>’
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  This second command may fail with an <B><I>Access denied</B></I> error
+message if there was no second <B><I>root</B></I> account; do not be
+alarmed.  Continue forth.</p>
+
+<p class=MsoNormal>Now, you
+almost certainly want to modify the way in which MySQL authenticates users
+because the default configuration can interfere with password-based
+authentication.  At a command prompt,
+type:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>mysql
+–u <st1:PersonName w:st="on">root</st1:PersonName> –p
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>to open
+MySQL’s interactive console.  When
+prompted, type the database root password that you invented a moment ago.  You should see a welcome message and a <B><I>mysql&gt;</B></I>
+prompt.  Type the following sequence of
+four commands:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>USE
+mysql;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>DELETE
+FROM user WHERE user=’’ OR host=’localhost’ OR host=’127.0.0.1’;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>UPDATE
+user SET host=’%’;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>exit
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  The last command should exit the interactive
+console and return to a shell command prompt.</p>
+
+<p class=MsoNormal>Lastly, it is
+necessary to configure the MySQL daemon to auto-start every time the computer
+boots.  At a command prompt, type:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>chkconfig
+mysqld on
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep15.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep17.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

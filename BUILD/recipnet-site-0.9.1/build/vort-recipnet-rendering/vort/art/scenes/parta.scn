@@ -1,0 +1,76 @@
+lookat (-3.0, -2.1, 1.0, 0.0, 0.0, 0.0, 0.0)
+
+fieldofview 70.0
+
+background 0.0, 0.3, 0.3
+
+light {
+	color 0.5, 0.5, 0.5
+	location (-3.1, -2.1, 1.1)
+}
+
+light {
+	color 0.5, 0.5, 0.5
+	location (0.0, 0.0, -8.0)
+}
+
+light {
+	color 0.3, 0.3, 0.3
+	location (-4.0, 0.0, -0.7)
+}
+
+csg {
+	box b1 {
+		colour 1.0, 0.0, 0.0
+		ambient	0.1, 0.0, 0.0
+		material 0.0, 0.9, 0.9, 8.0
+		vertex (0.5, 1.0, 0.25)
+		vertex (-0.5, -1.0, -0.75)
+	}
+
+	box b2 {
+		colour 0.0, 1.0, 0.0
+		ambient	0.1, 0.0, 0.0
+		material 0.0, 0.9, 0.4, 7.0
+		vertex (0.8, 0.75, 0.8)
+		vertex (-0.8, -0.75, -0.5)
+	}
+
+	cylinder c1 {
+		colour 0.0, 0.0, 1.0
+		ambient	0.1, 0.0, 0.0
+		material 0.0, 0.9, 0.6, 8.0
+		center (0.0, 1.0, 0.25)
+		center (0.0, -1.0, 0.25)
+		radius 0.5
+	}
+
+	cylinder c2 {
+		colour 0.0, 1.0, 1.0
+		ambient	0.1, 0.0, 0.0
+		material 0.0, 0.9, 0.4, 8.0
+		center (0.0, 1.5, 0.25)
+		center (0.0, -1.5, 0.25)
+		radius 0.25
+	}
+
+	cylinder c3 {
+		colour 1.0, 1.0, 0.0
+		ambient	0.1, 0.0, 0.0
+		material 0.0, 0.9, 0.4, 8.0
+		center (0.0, -0.5, 2.0)
+		center (0.0, -0.5, -2.0)
+		radius 0.15
+	}
+
+	cylinder c4 {
+		colour 1.0, 1.0, 0.0
+		ambient	0.1, 0.0, 0.0
+		material 0.0, 0.9, 0.8, 10.0
+		center (0.0, 0.5, 2.0)
+		center (0.0, 0.5, -2.0)
+		radius 0.15
+	}
+
+	b1 + c1 - c2 - c3 - c4 - b2
+}

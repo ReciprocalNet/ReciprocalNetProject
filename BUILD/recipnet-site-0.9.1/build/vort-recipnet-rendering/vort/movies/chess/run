@@ -1,0 +1,11 @@
+(art chess01.scn $1 $2  ; art chess07.scn $1 $2  ; art chess13.scn $1 $2  ; art chess19.scn $1 $2  ; art chess25.scn $1 $2  ; art chess31.scn $1 $2) &
+
+(art chess02.scn $1 $2  ; art chess08.scn $1 $2  ; art chess14.scn $1 $2  ; art chess20.scn $1 $2  ; art chess26.scn $1 $2  ; art chess32.scn $1 $2) &
+
+(art chess03.scn $1 $2  ; art chess09.scn $1 $2  ; art chess15.scn $1 $2  ; art chess21.scn $1 $2  ; art chess27.scn $1 $2  ; art chess33.scn $1 $2) &
+
+(art chess04.scn $1 $2  ; art chess10.scn $1 $2  ; art chess16.scn $1 $2  ; art chess22.scn $1 $2  ; art chess28.scn $1 $2  ; art chess34.scn $1 $2) &
+
+(art chess05.scn $1 $2  ; art chess11.scn $1 $2  ; art chess17.scn $1 $2  ; art chess23.scn $1 $2  ; art chess29.scn $1 $2  ; art chess35.scn $1 $2) &
+
+(art chess06.scn $1 $2  ; art chess12.scn $1 $2  ; art chess18.scn $1 $2  ; art chess24.scn $1 $2  ; art chess30.scn $1 $2  ; art chess36.scn $1 $2) &

@@ -1,0 +1,42 @@
+.TH MEDIAN 1 "May 23, 1989" "VORT 2.2"
+.SH NAME
+median \- perform median cut on data in a VORT file
+.SH SYNOPSIS
+.PU
+.ll +8
+.B median
+[
+.B \-c
+.I size
+] [
+.B \-f
+]
+.I "file1 file2"
+.SH DESCRIPTION
+.I Median
+applys median cut to an RGB image stored in
+.I file1
+to generate the data in
+.IR file2 .
+The colormap generated has, by default, 256 entries;
+this may be modified with the
+.B \-c
+option.
+By default the image data is quantized by mapping each
+pixel to the closest color values in the colormap.
+If the
+.B \-f
+option is specified, Floyd-Steinberg dithering is done
+before selecting a colormap entry.
+.SH "SEE ALSO"
+.IR art (1),
+.IR vortinfo (1),
+.IR targ2vort (1),
+.IR vort2ps (1),
+.IR gamma (1),
+.IR greyscale (1),
+.IR vortfile (5),
+.IR vort (3).
+.br
+"Color Image Quantization for Frame Buffer Display", Paul
+Heckbert, SIGGRAPH proceedings, 1982, pp. 297-307.

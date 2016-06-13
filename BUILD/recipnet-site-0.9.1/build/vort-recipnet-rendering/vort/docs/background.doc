@@ -1,0 +1,66 @@
+
+
+
+BACKGROUND(1)            USER COMMANDS              BACKGROUND(1)
+
+
+
+NAME
+     background - replace the background in a file.
+
+SYNOPSIS
+     background r g b file1 file2
+
+     background tile file1 file2
+
+DESCRIPTION
+     Background can be used to replace the background  colour  in
+     the  file file1 with either another colour or a tile to pro-
+     duce file2. In both cases the file file1 must have an  alpha
+     channel  present  for the background command to produce any-
+     thing.
+
+     In the first usage the background  colour  in  the  file  is
+     replaced  by  the  colour  given by the red, green, and blue
+     values given by r, g, and b. It is assumed these values  are
+     between 0 and 1.
+
+     In the second instance the areas of background  colour  will
+     be replaced by the corresponding pixel in the file tile. The
+     file tile is assumed to be the same size as the  file  file1
+     and  if  no  coverage  information is present in tile then a
+     value of 1.0 is assumed (total coverage) in the final image.
+     If  tile  does  have  coverage  information  in  it then the
+     resulting image  inherits  the  information  from  tile  and
+     further background colour changes can be made to file2.
+
+SEE ALSO
+     art(1), median(1),  vortinfo(1),  targ2vort(1),  vort2ps(1),
+     gamma(1), greyscale(1), vortfile(5), vort(3).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2         Last change: November 22, 1991                 1
+
+
+

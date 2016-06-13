@@ -1,0 +1,234 @@
+diff -uNr recipnet-site-0.9.1/conf/recipnet-webapp.conf recipnet-site-0.9.1-p1/conf/recipnet-webapp.conf
+--- recipnet-site-0.9.1/conf/recipnet-webapp.conf	2008-01-01 19:38:12.000000000 -0500
++++ recipnet-site-0.9.1-p1/conf/recipnet-webapp.conf	2016-02-29 11:03:39.197853912 -0500
+@@ -89,7 +89,8 @@
+ # to move the sample data files repository.
+ #
+ RewriteEngine on
+-RewriteLock /var/lock/recipnet-authconnector
++#RewriteLock /var/lock/recipnet-authconnector
++#Mutex file:/var/lock/recipnet-authconnector rewrite-map
+ RewriteMap recipnet_authconnector "prg:/usr/bin/recipnet-authconnector localhost 1099 RecipnetRepositoryManager 1024 300000"
+ RewriteRule ^(/recipnet/data/.*)$ ${recipnet_authconnector:$1?%{QUERY_STRING}|RECIPNET_FORBIDDEN} [chain]
+ RewriteRule RECIPNET_FORBIDDEN - [forbidden]
+@@ -97,6 +98,7 @@
+ <Directory /var/recipnet/data>
+     Options FollowSymLinks
+     AllowOverride none
+-    Allow from all
++#    Allow from all
++    Require all granted
+     AddType application/octet-stream .crt
+ </Directory>
+diff -uNr recipnet-site-0.9.1/content/site/alreadyloggedin.jsp recipnet-site-0.9.1-p1/content/site/alreadyloggedin.jsp
+--- recipnet-site-0.9.1/content/site/alreadyloggedin.jsp	2005-07-13 10:09:44.000000000 -0500
++++ recipnet-site-0.9.1-p1/content/site/alreadyloggedin.jsp	2015-12-08 15:28:23.247354372 -0500
+@@ -5,6 +5,7 @@
+    - 04-Aug-2004: cwestnea modified redirect to use relative path
+    - 14-Jan-2005: jobollin inserted <ctl:selfForm> elements
+    - 13-Jul-2005: midurbin added authorizationReasonMessage
++   - 08-Dec-2015: yuma added preserveParam1
+   --%>
+ <%@ page
+     import="org.recipnet.site.content.rncontrols.AuthorizationReasonMessage"%>
+@@ -64,7 +65,7 @@
+               <ctl:button suppressInsteadOfSkip="true" label="Logout">
+                 <rn:logout />
+                 <ctl:redirect target="/login.jsp" preserveParam="origUrl"
+-                    preserveParam="authorizationFailedReason" />
++                    preserveParam1="authorizationFailedReason" />
+               </ctl:button>
+               <rn:authorizationChecker canSeeLabSummary="true">
+                 <ctl:button label="Cancel" suppressInsteadOfSkip="true">
+diff -uNr recipnet-site-0.9.1/content/site/lab/releasetopublic.jsp recipnet-site-0.9.1-p1/content/site/lab/releasetopublic.jsp
+--- recipnet-site-0.9.1/content/site/lab/releasetopublic.jsp	2006-04-20 16:08:25.000000000 -0400
++++ recipnet-site-0.9.1-p1/content/site/lab/releasetopublic.jsp	2015-12-08 15:29:16.650396313 -0500
+@@ -30,6 +30,7 @@
+   - 10-Mar-2006: jobollin updated this page to use the new styles from the
+   -              shared stylesheet and to verify correct behavior of the
+   -              various tweaked SampleField varieties
++  - 08-Dec-2015: yuma added preserveParam1
+   --%>
+ <%@ page session="true" isThreadSafe="true"
+         info="Release Sample to Public"
+@@ -49,11 +50,11 @@
+     authorizationFailedReasonParamName="authorizationFailedReason">
+   <rn:sampleChecker includeIfNotHeldLocally="true">
+     <ctl:redirect target="/lab/nolocalholdings.jsp"
+-            preserveParam="sampleId" preserveParam="sampleHistoryId" />
++            preserveParam="sampleId" preserveParam1="sampleHistoryId" />
+   </rn:sampleChecker>
+   <rn:sampleChecker includeIfIneligibleForRelease="true">
+     <ctl:redirect target="/lab/ineligibleforrelease.jsp"
+-            preserveParam="sampleId" preserveParam="sampleHistoryId" />
++            preserveParam="sampleId" preserveParam1="sampleHistoryId" />
+   </rn:sampleChecker>
+   <div class="pageBody">
+     <p class="pageInstructions">
+diff -uNr recipnet-site-0.9.1/content/site/login.jsp recipnet-site-0.9.1-p1/content/site/login.jsp
+--- recipnet-site-0.9.1/content/site/login.jsp	2005-08-16 08:54:52.000000000 -0500
++++ recipnet-site-0.9.1-p1/content/site/login.jsp	2015-12-08 15:25:03.475148533 -0500
+@@ -32,6 +32,7 @@
+    -              instead of forms[0].
+    - 13-Jul-2005: midurbin added authorizationReasonMessage
+    - 26-Jul-2005: midurbin removed the code that was added for task #1380
++   - 08-Dec-2015: yuma added preserveParam1 for ctl:redirect
+   --%>
+ <%@ page
+     import="org.recipnet.site.content.rncontrols.AuthorizationReasonMessage"%>
+@@ -40,7 +41,7 @@
+ <rn:page title="Site Login">
+   <rn:authorizationChecker>
+     <ctl:redirect target="/alreadyloggedin.jsp" preserveParam="origUrl"
+-        preserveParam="authorizationFailedReason"/>
++        preserveParam1="authorizationFailedReason"/>
+   </rn:authorizationChecker>
+   <rn:authorizationChecker invert="true">
+     <ctl:extraHtmlAttribute name="onLoad"
+diff -uNr recipnet-site-0.9.1/content/site/WEB-INF/controls.tld recipnet-site-0.9.1-p1/content/site/WEB-INF/controls.tld
+--- recipnet-site-0.9.1/content/site/WEB-INF/controls.tld	2006-10-27 15:17:41.000000000 -0400
++++ recipnet-site-0.9.1-p1/content/site/WEB-INF/controls.tld	2015-12-08 15:26:36.664245428 -0500
+@@ -65,6 +65,7 @@
+   - 27-Mar-2006: jobollin added SimpleIterator, AddIterationButton,
+   -              DeleteIterationButton
+   - 12-Jun-2006: jobollin added SimpleChecker
++  - 08-Dec-2015: yuma added preserveParam1 attribute to HtmlRedirect
+   -->
+ <taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+@@ -133,6 +134,12 @@
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+       <type>java.lang.String</type>
++    </attribute>
++    <attribute>
++      <name>preserveParam1</name>
++      <required>false</required>
++      <rtexprvalue>true</rtexprvalue>
++      <type>java.lang.String</type>
+     </attribute>
+   </tag>
+   <tag>
+diff -uNr recipnet-site-0.9.1/javasrc/org/recipnet/common/controls/HtmlRedirect.java recipnet-site-0.9.1-p1/javasrc/org/recipnet/common/controls/HtmlRedirect.java
+--- recipnet-site-0.9.1/javasrc/org/recipnet/common/controls/HtmlRedirect.java	2006-10-27 08:43:27.000000000 -0400
++++ recipnet-site-0.9.1-p1/javasrc/org/recipnet/common/controls/HtmlRedirect.java	2015-12-09 10:56:39.973476229 -0500
+@@ -19,6 +19,7 @@
+  * 01-Apr-2005: midurbin fixed bug #1455 in generateCopy()
+  * 19-Jan-2006: jobollin updated copyTransientPropertiesFrom() to use setter
+  *              methods; reformatted the source
++ * 08-Dec-2015: yuma added preserveParam1 attribute and setPreserveParam1() 
+  */
+ 
+ package org.recipnet.common.controls;
+@@ -140,6 +141,11 @@
+         addRequestParam(param, this.pageContext.getRequest().getParameter(
+                 param));
+     }
++    public void setPreserveParam1(String param) {
++        addRequestParam(param, this.pageContext.getRequest().getParameter(
++                param));
++    }
++
+ 
+     /**
+      * Adds a parameter/value pair to the {@code targetRequestParamMap} that
+diff -uNr recipnet-site-0.9.1/javasrc/org/recipnet/coordinator/Coordinator.java recipnet-site-0.9.1-p1/javasrc/org/recipnet/coordinator/Coordinator.java
+--- recipnet-site-0.9.1/javasrc/org/recipnet/coordinator/Coordinator.java	2009-01-25 14:48:46.000000000 -0500
++++ recipnet-site-0.9.1-p1/javasrc/org/recipnet/coordinator/Coordinator.java	2016-02-01 14:37:19.274171935 -0500
+@@ -555,7 +555,8 @@
+         Integer blocks[] = reservedSampleIdBlocks.toArray(new Integer[0]);
+         int i = this.random.nextInt(blocks.length);
+         int blockId = blocks[i].intValue();
+-	this.transferSampleIdBlock(blockId);
++	//this.transferSampleIdBlock(blockId); -- yuma 2016-02-01 bug fix
++	this.transferSampleIdBlock(siteId, blockId);
+     }
+ 
+     public void transferSampleIdBlock(int siteId, int blockId)
+diff -uNr recipnet-site-0.9.1/javasrc/org/recipnet/site/core/SiteManager.java recipnet-site-0.9.1-p1/javasrc/org/recipnet/site/core/SiteManager.java
+--- recipnet-site-0.9.1/javasrc/org/recipnet/site/core/SiteManager.java	2009-01-03 02:28:59.000000000 -0500
++++ recipnet-site-0.9.1-p1/javasrc/org/recipnet/site/core/SiteManager.java	2015-12-09 13:21:32.177901902 -0500
+@@ -3053,7 +3053,7 @@
+      * from the Coordinator.
+      *
+      * @throws IsmProcessingException with the {@code msg} embedded and a 
+-     *     {@code reason} of {@coe SENDER_NOT_AUTHORIZED} if the ISM did
++     *     {@code reason} of {@code SENDER_NOT_AUTHORIZED} if the ISM did
+      *     not originate from the Coordinator.
+      */
+     private void eventForceUpgrade(ForceUpgradeISM msg) 
+diff -uNr recipnet-site-0.9.1/javasrc/org/recipnet/site/core/util/SnapshotStatement.java recipnet-site-0.9.1-p1/javasrc/org/recipnet/site/core/util/SnapshotStatement.java
+--- recipnet-site-0.9.1/javasrc/org/recipnet/site/core/util/SnapshotStatement.java	2008-05-07 19:12:25.000000000 -0400
++++ recipnet-site-0.9.1-p1/javasrc/org/recipnet/site/core/util/SnapshotStatement.java	2015-12-09 13:17:57.734958341 -0500
+@@ -7,6 +7,8 @@
+  * 12-May-2006: jobollin reformatted the source and updated the docs
+  * 07-May-2008: ekoperda added isClose(), setPoolable(), isPoolable(), 
+  *              isWrapperFor(), and unwrap() to comply with Java 1.6
++ * 09-Dec-2015: yuma added isCloseOnCompletion(), closeOnCompletion() 
++ *		to comply with Java 1.7
+  */
+ 
+ package org.recipnet.site.core.util;
+@@ -499,4 +501,20 @@
+     public boolean isWrapperFor(Class iface) throws SQLException {
+ 	return false;
+     }
++
++    /**
++     * {@inheritDoc}.  This version delegates to the underlying
++     * {@code Statement}.
++     */
++    public boolean isCloseOnCompletion() throws SQLException {
++	return s.isCloseOnCompletion();
++    }
++
++    /**
++     * {@inheritDoc}.  This version delegates to the underlying
++     * {@code Statement}.
++     */
++    public void closeOnCompletion() throws SQLException {
++        s.closeOnCompletion();
++    }
+ }
+diff -uNr recipnet-site-0.9.1/native/build.xml recipnet-site-0.9.1-p1/native/build.xml
+--- recipnet-site-0.9.1/native/build.xml	2008-01-01 19:38:12.000000000 -0500
++++ recipnet-site-0.9.1-p1/native/build.xml	2015-11-09 14:57:11.511860088 -0500
+@@ -56,6 +56,7 @@
+             <arg value="-O3" />
+             <arg value="-Wall" />
+             <arg value="-lstdc++" />  
++	    <arg value="-fPIC" />  <!-- 16-Oct-2015: added by yuma -->
+             <arg value="-o" />
+             <arg file="${srcbase}/build/recipnet-dirwatcher" />
+             <arg file="recipnet-dirwatcher/recipnet-dirwatcher.cpp" />
+@@ -82,6 +83,7 @@
+             <arg value="-I${srcbase}/build/jni-headers/" />
+             <arg value="-lstdc++" />  
+             <arg value="-shared" />
++            <arg value="-fPIC" />  <!-- 16-Oct-2015: added by yuma -->
+             <arg value="-o" />
+             <arg file="${srcbase}/build/librecipnet_server.so" />
+             <arg file="librecipnet_server/SyslogHandler.cpp" />
+diff -uNr recipnet-site-0.9.1/native/scripts/drecipnet recipnet-site-0.9.1-p1/native/scripts/drecipnet
+--- recipnet-site-0.9.1/native/scripts/drecipnet	2008-01-01 19:38:12.000000000 -0500
++++ recipnet-site-0.9.1-p1/native/scripts/drecipnet	2016-06-01 14:57:11.511860088 -0500
+@@ -60,5 +60,6 @@
+ JAVAOPT="-Djava.rmi.server.codebase=file:${GenRecipnetdClassFile} \
+          -Djava.util.logging.config.file=${CONFFILE} \
++	     -Djava.rmi.server.hostname=localhost \
+          -Djava.library.path=/usr/lib \
+          -ea \
+          -server"
+diff -uNr recipnet-site-0.9.1/native/recipnet-dirwatcher/WatchListener.cpp recipnet-site-0.9.1-p1/native/recipnet-dirwatcher/WatchListener.cpp
+--- recipnet-site-0.9.1/native/recipnet-dirwatcher/WatchListener.cpp	2004-08-13 16:08:50.000000000 -0500
++++ recipnet-site-0.9.1-p1/native/recipnet-dirwatcher/WatchListener.cpp	2015-11-09 14:58:15.854005789 -0500
+@@ -15,6 +15,9 @@
+ #include <unistd.h>
+ #include "WatchListener.h"
+ 
++/* 16-Oct-2015: yuma added include <string.h> */
++#include <string.h>
++
+ /**
+  * Installs the signal handler that will be called by the kernel when a 
+  * directory notification arrives.

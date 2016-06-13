@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. /etc/java/java.conf
+
+DRIVERFILE=`ls /usr/share/java/mysql-connector-java*.jar`
+JAVA=$JVM_ROOT/jre/bin/java
+
+echo $JAVA -classpath .:$DRIVERFILE DbDiagnostic
+$JAVA -classpath .:$DRIVERFILE DbDiagnostic

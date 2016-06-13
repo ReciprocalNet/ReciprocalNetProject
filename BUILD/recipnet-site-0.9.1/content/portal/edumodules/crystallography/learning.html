@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ><!-- InstanceBegin template="/Templates/subpageTemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+ <!-- InstanceBeginEditable name="doctitle" -->
+ <title>Learning Modules</title>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+// moock fpi [f.lash p.layer i.nspector]
+// version: 1.3.7
+// written by colin moock
+// code maintained at: http://www.moock.org/webdesign/flash/detection/moockfpi/
+// terms of use posted at: http://www.moock.org/terms/
+
+
+
+// =============================================================================
+// These are the user defined globals.
+// Modify the following variables to customize the inspection behaviour.
+
+var requiredVersion = 7;   // Version the user needs to view site (max 9, min 2)
+var useRedirect = false;    // Flag indicating whether or not to load a separate
+                           // page based on detection results. Set to true to
+                           // load a separate page. Set to false to embed the
+                           // movie or alternate html directly into this page.
+                           
+
+
+
+// *************
+// Everything below this point is internal until after the BODY tag.
+// Do not modify! Proceed to the BODY tag for further instructions.
+// *************
+
+// System globals
+var flash2Installed = false;    // boolean. true if flash 2 is installed
+var flash3Installed = false;    // boolean. true if flash 3 is installed
+var flash4Installed = false;    // boolean. true if flash 4 is installed
+var flash5Installed = false;    // boolean. true if flash 5 is installed
+var flash6Installed = false;    // boolean. true if flash 6 is installed
+var flash7Installed = false;    // boolean. true if flash 7 is installed
+var flash8Installed = false;    // boolean. true if flash 8 is installed
+var flash9Installed = false;    // boolean. true if flash 9 is installed
+var maxVersion = 9;             // highest version we can actually detect
+var actualVersion = 0;          // version the user really has
+var hasRightVersion = false;    // boolean. true if it's safe to embed the flash movie in the page
+var jsVersion = 1.0;            // the version of javascript supported
+
+// -->
+</script>
+
+<script language="JavaScript1.1" type="text/javascript">
+<!--
+
+// Check the browser...we're looking for ie/win
+var isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;    // true if we're on ie
+var isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false; // true if we're on windows
+
+
+// This is a js1.1 code block, so make note that js1.1 is supported.
+jsVersion = 1.1;
+
+// Write vbscript detection on ie win. IE on Windows doesn't support regular
+// JavaScript plugins array detection.
+if(isIE && isWin){
+  document.write('<SCR' + 'IPT LANGUAGE=VBScript\> \n');
+  document.write('on error resume next \n');
+  document.write('flash2Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.2"))) \n');
+  document.write('flash3Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.3"))) \n');
+  document.write('flash4Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.4"))) \n');
+  document.write('flash5Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.5"))) \n');  
+  document.write('flash6Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.6"))) \n');  
+  document.write('flash7Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.7"))) \n');
+  document.write('flash8Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.8"))) \n');
+  document.write('flash9Installed = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.9"))) \n');
+  document.write('<\/SCR' + 'IPT\> \n'); // break up end tag so it doesn't end our script
+}
+// -->
+</script>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+
+// Next comes the standard javascript detection that uses the 
+// navigator.plugins array. We pack the detector into a function so that 
+// it preloads before being run.
+
+function detectFlash() {  
+  // If navigator.plugins exists...
+  if (navigator.plugins) {
+    // ...then check for flash 2 or flash 3+.
+    if (navigator.plugins["Shockwave Flash 2.0"]
+        || navigator.plugins["Shockwave Flash"]) {
+
+      // Some version of Flash was found. Time to figure out which.
+      
+      // Set convenient references to flash 2 and the plugin description.
+      var isVersion2 = navigator.plugins["Shockwave Flash 2.0"] ? " 2.0" : "";
+      var flashDescription = navigator.plugins["Shockwave Flash" + isVersion2].description;
+
+      // DEBUGGING: uncomment next line to see the actual description.
+      // alert("Flash plugin description: " + flashDescription);
+      
+      // A flash plugin-description looks like this: Shockwave Flash 4.0 r5
+      // We can get the major version by grabbing the character before the period
+      // note that we don't bother with minor version detection. 
+      // Do that in your movie with $version or getVersion().
+      var flashVersion = parseInt(flashDescription.substring(16));
+
+      // We found the version, now set appropriate version flags. Make sure
+      // to use >= on the highest version so we don't prevent future version
+      // users from entering the site.
+      flash2Installed = flashVersion == 2;    
+      flash3Installed = flashVersion == 3;
+      flash4Installed = flashVersion == 4;
+      flash5Installed = flashVersion == 5;
+      flash6Installed = flashVersion == 6;
+      flash7Installed = flashVersion == 7;
+      flash8Installed = flashVersion == 8;
+      flash9Installed = flashVersion >= 9;
+    }
+  }
+  
+  // Loop through all versions we're checking, and
+  // set actualVersion to highest detected version.
+  for (var i = 2; i <= maxVersion; i++) {  
+    if (eval("flash" + i + "Installed") == true) actualVersion = i;
+  }
+  
+  // If we're on msntv (formerly webtv), the version supported is 4 (as of
+  // January 1, 2004). Note that we don't bother sniffing varieties
+  // of msntv. You could if you were sadistic...
+  if(navigator.userAgent.indexOf("WebTV") != -1) actualVersion = 4;  
+  
+  // DEBUGGING: uncomment next line to display flash version
+  // alert("version detected: " + actualVersion);
+
+
+  // We're finished getting the version on all browsers that support detection.
+  // Time to take the appropriate action.
+
+  // If the user has a new enough version...
+  if (actualVersion >= requiredVersion) {
+    // ...then we'll redirect them to the flash page, unless we've
+    // been told not to redirect.
+    if (useRedirect) {
+      // Need javascript1.1 to do location.replace
+      if(jsVersion > 1.0) {
+        // It's safe to use replace(). Good...we won't break the back button.
+        window.location.replace(flashPage);  
+      } else {
+        // JavaScript version is too old, so use .location to load
+        // the flash page.
+        window.location = flashPage;
+      }
+    }
+
+    // If we got here, we didn't redirect. So we make a note that we should
+    // write out the object/embed tags later.
+    hasRightVersion = true;                
+  } else {  
+    // The user doesn't have a new enough version.
+    // If the redirection option is on, load the appropriate alternate page.
+    if (useRedirect) {
+      // Do the same .replace() call only if js1.1+ is available.
+      if(jsVersion > 1.0) {
+        window.location.replace((actualVersion >= 2) ? upgradePage : noFlashPage);
+      } else {
+        window.location = (actualVersion >= 2) ? upgradePage : noFlashPage;
+      }
+    }
+  }
+}
+
+detectFlash();  // call our detector now that it's safely loaded. 
+  
+// -->
+</script>
+
+<!-- InstanceEndEditable -->
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+ <link href="../../styles/r-net.css" rel="stylesheet" type="text/css" />
+ <link href="../../styles/submain.css" rel="stylesheet" type="text/css" />
+ <link href="../../styles/submainmolecule.css" rel="stylesheet" type="text/css" />
+ <script language="JavaScript" type="text/javascript" src="../../styles/r-net.js"></script>
+ <link rel="shortcut icon" href="../../images/favicon.ico" type="image/x-icon" />
+ <!--Reciprocal Net portal site is designed by Ji Young Chong, E-mail: jchong@indiana.edu -->
+ <!-- InstanceBeginEditable name="head" --><!-- InstanceEndEditable -->
+ <!-- InstanceParam name="image preload" type="text" value="" -->
+</head>
+
+<body onload="">
+ <table id ="wholeTable" cellspacing ="0" cellpadding="0">
+
+  <!--start: shortcut links in upper right corner-->
+  <tr>
+   <td id = "portalLogoTD"><a name="top"></a><span id="portalLogoSpan">Welcome to Reciprocal Net! </span></td> 
+   <td id = "shortcutLinkTD"><div class="layerToLocateRight"><a href="../../networkinfo/howtojoin.html"> Become a Partner&nbsp;</a> | <a href="http://www.reciprocalnet.org/recipnet/search.jsp" target="_blank" onclick="openNewWindow(this.href); return false" onkeypress="openNewWindow(this.href); return false;">&nbsp;Search Structure&nbsp; </a> | <a href="../../projectinfo/staff.html">&nbsp;Contact Us</a></div></td>
+  </tr>
+  <!--end: shortcut links in upper right corner-->
+
+  <tr >
+   <td colspan="2" class = "grayBar1"></td>
+  </tr>
+  <tr id="bannerTR" >
+  <td colspan="2" id= "bannerSubTD"> <br/>
+   <!--title of the site--> 
+   <span class="bigWhiteFont"><a href="../../index.html">Reciprocal Net</a></span>&nbsp;&nbsp;<span class="smallWhiteFont"><a href="../../index.html">a distributed crystallography network for researchers, students and the general public</a></span>
+  </td>
+  </tr>
+  <tr >
+   <td colspan="2" class = "grayBar1"></td>
+  </tr> 
+  <tr>
+   <td colspan="2"> 
+    <table id="contentTable">
+     <tr>
+      <td rowspan ="2"  id="submainColumnLeft">
+       <table id="leftTable">
+        <tr>
+         <td valign ="top">
+					
+          <!-- start: navigation links -->
+          <!-- InstanceBeginEditable name="navTable" -->
+          <table id="navTable" cellspacing="0" cellpadding="0">
+           <tr>
+            <td colspan="2" class ="navChain"><img src="../../images/navdotstart.gif" alt="Navigation Pointer" width="20" height="30"/></td>
+            <td class ="navLink"><a href="../../index.html">Home</a></td>
+           </tr>
+           <tr>
+            <td colspan="2" class ="navChain"><img src="../../images/navdot.gif" alt="Navigation Pointer" width="20" height="30"/></td>
+            <td class ="navLink"><a href="../../projectinfo/index.html">About Reciprocal Net </a></td>
+           </tr>
+           <tr>
+            <td colspan="2" class ="navChain"><img src="../../images/navdot.gif" alt="Navigation Pointer" width="20" height="30" /></td>
+            <td class ="navLink"><a href="../../networkinfo/index.html">Site Network </a></td>
+           </tr>
+           <tr>
+            <td colspan="2" class ="navChain"><img src="../../images/navdotsubstart1.gif" alt="Navigation Pointer" width="20" height="30" /></td>
+            <td class ="navLink"><a href="../index.html">Learn About </a></td>
+           </tr>
+           <tr>
+            <td id = "navLineTD">&nbsp;</td>
+            <td >&nbsp;</td>
+            <td >
+             <table id="navSelectedTable" cellspacing="0" cellpadding="0">
+              <tr>
+               <td class ="navChain"><img src="../../images/navdot.gif" alt="Navigation Pointer" width="20" height="30"/></td>
+               <td class ="navLink"><a href="../commonmolecules/index.html">Common Molecules </a></td>
+              </tr>
+              <tr>
+               <td class ="navChain"><img src="../../images/navdotsubstart1.gif"  alt="Navigation Pointer" width="20" height="30"/></td>
+               <td id="navLinkSelectedSub"><a href="index.html">Crystallography </a></td>
+              </tr>
+              <tr>
+               <td class ="navChain"><img src="../../images/navdot.gif" alt="Navigation Pointer" width="20" height="30" /></td>
+               <td class ="navLink"><a href="../crystallization/index.html">Crystallization</a></td>
+              </tr>
+               <tr>
+               <td class ="navChain"><img src="../../images/navdotend.gif" alt="Navigation Pointer" width="20" height="30" /></td>
+               <td class ="navLink"><a href="../chemistry/index.html">Chemistry</a></td>
+              </tr>
+             </table>
+            </td>  
+           </tr>
+           <tr>
+            <td colspan="2" class ="navChain"><img src="../../images/navdotend.gif" alt="Navigation Pointer" width="20" height="30" /></td>
+            <td class ="navLink"><a href="../../help/index.html">Help</a></td>
+           </tr>
+          </table>
+          <!-- InstanceEndEditable -->
+          <!-- end: navigation links -->
+					
+          <table class ="layoutHandlerLeft"><tr><td></td></tr></table><br/><br/>
+          <span id="fundingInfo">Reciprocal Net is funded by the U.S. National Science Foundation as part of the National Science Digital Library project.</span>&nbsp;&nbsp;<a href="http://nsdl.org"><img src="../../images/nsdl_logo_small.gif" alt="NSDL Logo" width="47" height="11" border="0" /></a>
+         </td>
+        </tr>
+       </table>
+      </td>
+      <td  id="submainColumnRight">
+       <table class="layoutHandlerSubmain"><tr><td></td></tr></table>
+       <table id ="submainContentTable" cellspacing="0">
+        <tr id ="submainContentTR0">
+         <td  id="submainContentTD0"> 
+
+          <!--start: crumb path -->
+          <span id ="crumbpath">You are here :
+          <!-- InstanceBeginEditable name="crumbPath" -->
+           <a href="../../index.html">Reciprocal Net</a> &gt;
+           <a href="../index.html">Learn About</a> &gt;       
+           <a href="index.html">Crystallography</a> &gt;       
+           Learning Modules 				 
+          <!-- InstanceEndEditable --></span>&nbsp;&nbsp;<br/> <br/> 
+          <!--end: crumb path -->
+
+         </td>
+        </tr>
+        <tr >
+         <td  id="submainContentTD2">
+
+          <!-- InstanceBeginEditable name="submainTitle" -->
+           <span id="submainTitle">Learning Modules </span><br/><br/>
+          <!-- InstanceEndEditable -->      
+
+          <!-- start: submain content -->
+          <!-- InstanceBeginEditable name="submainContent1" --> 
+           <div class="boxDivThin">           
+           <div class="layerToLocateCenter">
+
+             <script language="JavaScript" type="text/javascript">
+             <!--
+             // In this section we set up the content to be placed dynamically on the page.
+
+             if (!useRedirect) {    // if dynamic embedding is turned on
+               if(hasRightVersion) {  // if we've detected an acceptable version
+                 var oeTags = '<OBJECT CLASSID="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'
+                 + 'WIDTH="500" HEIGHT="300"'
+                 + 'CODEBASE="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">'
+                 + '<PARAM NAME="MOVIE" VALUE="../../images/comingsoon.swf">'
+                 + '<PARAM NAME="PLAY" VALUE="true">'
+                 + '<PARAM NAME="LOOP" VALUE="false">'
+                 + '<PARAM NAME="QUALITY" VALUE="high">'
+                 + '<PARAM NAME="MENU" VALUE="false">'
+                 + '<EMBED SRC="../../images/comingsoon.swf"'
+                 + 'WIDTH="500" HEIGHT="300"'
+                 + 'PLAY="true"'
+                 + 'LOOP="false"'
+                 + 'QUALITY="high"'
+                 + 'MENU="false"'
+                 + 'TYPE="application/x-shockwave-flash"'
+                 + 'PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">'
+                 + '<\/EMBED>'
+                 + '<\/OBJECT>';
+
+                 document.write(oeTags);   // embed the flash movie
+               } else {  // flash is too old or we can't detect the plugin
+                 var alternateContent = '<img src="../../images/comingsoon.jpg" alt="content coming soon" width="500" height="300">' ;
+                 document.write(alternateContent);  // insert non-flash content
+               }
+             }
+
+             // -->
+             </script>
+
+             <noscript>
+               <img src="../../images/comingsoon.jpg" alt="content coming soon" width="500" height="300" />
+             </noscript>
+             <br/>
+													
+            </div>
+           </div>
+          <!-- InstanceEndEditable -->
+
+          <!-- InstanceBeginEditable name="submainContent2" -->
+          <!-- InstanceEndEditable -->
+          <!-- end: submain content -->
+
+         </td>
+        </tr>
+       </table>					
+      </td>
+     </tr>
+     <tr>
+      <td>
+       <table id="centerBottomTable">
+        <tr>
+         <td>
+          <div class="layerToLocateCenter">
+           <span id ="copyrightScript">
+            Copyright © 2004, The Trustees of Indiana University
+           </span>
+          </div>
+         </td>
+        </tr>
+       </table>
+      </td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+ </table>
+</body>
+<!-- InstanceEnd --></html>

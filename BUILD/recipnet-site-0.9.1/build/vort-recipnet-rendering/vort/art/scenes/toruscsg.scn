@@ -1,0 +1,33 @@
+
+lookat(0, 0, 8, 0, 0, 0, 0)
+
+light {
+	colour 1.0, 1.0, 1.0
+	location (0.0, 0.0, 9.0)
+}
+
+csg {
+	torus t1 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.95, 0.00, 0.0
+		tile tile.pix size 1.0, 1.0
+		rotate(90.0, x)
+		center (0.0, 0.0, 0.0)
+		radii 2.5, 1.5
+	}
+	cylinder c1 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.95, 0.00, 0.0
+		center (0.0, 4.0, 0.0)
+		center (0.0, -4.0, 0.0)
+		radius 2.0
+	}
+	c1 - t1
+}
+
+box {
+	colour 1.0, 1.0, 1.0
+	material 0.0, 0.95, 0.00, 0.0
+	vertex (4.0, 4.0, 0.0)
+	vertex (-4.0, -4.0, -2.0)
+}

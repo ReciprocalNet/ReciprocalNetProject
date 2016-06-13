@@ -1,0 +1,37 @@
+.TH VORT2PCX 1 "Feb 7, 1991" "VORT 2.2"
+.SH NAME
+vort2pcx \- converts a VORT colour mapped file to Microsoft/ZSoft
+PCX format.
+.SH SYNOPSIS
+.PU
+.ll +8
+.B vort2pcx
+.I "file1 file2"
+.SH DESCRIPTION
+Vort2pcx reads in a colour mapped VORT image file and creates a
+PCX format image file. The PCX file format created is:
+.nf
+          .8 bits per pixel
+          .1 image plane
+          .colour mapped
+          .run-length encoded
+
+.fi
+Windows 3.0 Paint can handle such a format.
+.SH BUGS
+Doesn't handle the general VORT image case (i.e. only colour mapped
+VORT images).
+
+The file produced may not have the most appropriate PCX format
+for the VORT image (e.g. 16 colour VORT image is written as
+256 colour PCX image).
+
+.SH "SEE ALSO"
+.IR art (1),
+.IR vortinfo (1),
+.IR targ2vort (1),
+.IR median (1),
+.IR gamma (1),
+.IR greyscale (1),
+.IR vort (3),
+.IR vortfile (5).

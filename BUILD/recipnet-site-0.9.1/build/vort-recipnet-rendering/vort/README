@@ -1,0 +1,88 @@
+
+VORT - a very ordinary rendering tool-kit. Version 2.3.3
+
+VORT is a collection of tools and a library for the generation and
+manipulation of images. It includes a ray tracer, pixel library, and
+utilities for doing gamma correction, median cuts, etc...
+
+The current distribution is described as follows:
+
+art	- a ray tracer for doing algebraic surfaces and CSG models.
+
+	Brief outline of the features of art:
+
+		primitives (blobby, box, cone, cylinder, height field, bicubic
+		patch, polygon, sphere, superquadric, torus, algebraic surfaces,
+		triangular strips and OFF files. Polygons can be flat and
+		phong-shaded, colour interpolation can also be done.)
+		 
+		Composite objects.
+		  
+		Constructive solid geometry.
+					   
+		Directional, point, and area sources.
+						    
+		3D procedural texturing, bump mapping, and 2D image mapping.
+									     
+		Adaptive antialiasing through variable-rate "jittered" sampling.
+
+		Arbitrary (within reason!) transformations on objects and
+		textures.
+
+		Kd trees, uniform grids  and one or two other methods to
+		speed up rendering. Extra grids/kd-trees can be specfied by
+		the user.
+
+		Basic animation support, via variables, and include options.
+
+tools	- some utilities for fiddling around with image files.
+
+docs	- various bits of doco on the tools
+
+lib	- a the pixel library files - this has only been developed to the
+	point needed to read and write display files.
+
+old	- this contains a program for converting image files from 1.0
+	format to 1.1.
+
+sun	- a set of display programs for a sun workstation.
+
+X11	- a set of display programs for a 256 colour X machine.
+
+iris	- a display program for an Iris workstation.
+
+pc	- a set of display programs for a PC with VGA Extended Graphics.
+
+movies	- some C programs for generating some sample animations.
+
+text3d	- a simple program for making 3d text by converting Hershey vector 
+	fonts into art composites.
+
+tutes	- some C programs for generating some animations that demonstrate
+	the texturing.
+
+We would like to thank the following people who helped with this release:
+	Alberto Barsella much bug hunting, ideas, some great scene files, 
+	another pcdisp program, and some mods to super.c.
+	Henry Chatroop for also surviving a VMS port.
+	Brad Fowlow for doing the Mac port.
+	Ole Nielsen, Joe Lappa, and Joel Welling for suggestions
+	and helping isolate the resulting bugs that we introduced.
+	Pavel Rozalski for the SGI movie programs and the changes to 
+	make the VORT library read compressed files.
+	Eric Haines for providing the SPD Databases, which proved
+	invaluable for debugging and testing the kd-tree in art.
+
+This software is public domain, and provided without guarantee, although if
+you send beer (use the snail mail address, it's less messy) we will drink it.
+
+While the display programs are provided these days we'd recommend you
+getting the PBMplus package from http://www.acme.com and using the
+ppm converters in the vort/tools directory to convert the files into
+ppm and then into your favored format.
+
+Surfaces, material properties, and general chat can be directed to:
+
+	echidna@wumpus.com.au
+
+Enjoy.

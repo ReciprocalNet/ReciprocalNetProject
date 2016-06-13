@@ -1,0 +1,59 @@
+#!/bin/sh
+#
+# Reciprocal Net project
+# @(#)recipnetd
+#
+# Init script for the Reciprocal Net core modules.  You should
+# put this file in /etc/rc.d/init.d (on RedHat 7.x) and then
+# run chkconfig to install this daemon.  
+#
+# The Reciprocal Net core modules must be running at every
+# site in order for the Reciprocal Net to function.  In
+# particular, the core modules must be running before Tomcat
+# starts up. 
+#
+# chkconfig: - 79 21
+# description: recipnetd contains the "core modules" for the \
+#              Reciprocal Net application, a distributed \
+#              database for crystallographic information
+# processname: recipnetd
+# pidfile: /var/run/recipnetd.pid
+# config: /etc/recipnet/recipnetd.conf
+#
+# 12-Jun-2002: ekoperda wrote first draft
+# 24-Jul-2002: ekoperda changed chkconfig flags to make more sense
+# 09-Oct-2002: ekoperda modified script so that daemon runs as user 'recipnet'
+
+# Source function library
+. /etc/init.d/functions
+
+RETVAL=0
+
+case "$1" in
+    start)
+	echo -n "Starting Reciprocal Net core modules: "
+	daemon --user recipnet /usr/bin/drecipnet start
+	RETVAL=$?
+	echo
+        if [ $RETVAL -eq 0 ]; then
+            touch /var/lock/subsys/recipnetd
+            mv /tmp/var-run-recipnetd.pid /var/run/recipnetd.pid
+        fi
+	;;
+    stop)
+	echo -n "Stopping Reciprocal Net core modules: "
+	killproc recipnetd
+	RETVAL=$?
+	echo
+	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/recipnetd
+	;;
+    restart)
+	$0 stop
+	$0 start
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+exit $RETVAL
+

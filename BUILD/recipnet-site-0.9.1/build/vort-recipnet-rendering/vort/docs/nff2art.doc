@@ -1,0 +1,66 @@
+
+
+
+NFF2ART(1)               USER COMMANDS                 NFF2ART(1)
+
+
+
+NAME
+     nff2art - convert an nff file into an art file.
+
+SYNOPSIS
+     nff2art -sscale
+
+DESCRIPTION
+     Nff2art reads an nff file from standard input and writes  an
+     art  file to standard output. If a scale factor is specified
+     the objects in the input stream  are  scaled  by  it  before
+     writing them to the output stream.
+
+SEE ALSO
+     art(1),  median(1),  targ2vort(1),   vort2ps(1),   gamma(1),
+     greyscale(1), vort(3), vortfile(5).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2          Last change: December 7, 1990                 1
+
+
+

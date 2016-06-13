@@ -1,0 +1,13 @@
+
+By the by, for people who are interested, there are an excellent series
+of papers on ray tracing and computer graphics in general published in
+the NATO ASI Series of books. The volume in question is in Vol. 40,
+series F, and is titled "Theoretical Foundations of Computer Graphics and
+CAD". It was published in 1988 Springer-Verlag. Roman Kuchkuda's paper
+in it "An Introduction To Ray Tracing", would be the best introductory paper
+we have seen to date. Apart from that it was the first paper we found that
+actually said what a superquadric was! (For the curious look at Barr's
+paper in CG & A Jan 1981, and Franklin and Barr in CG & A July 1981).
+
+Try the local Uni/Tech College library, it's well worth looking at.
+

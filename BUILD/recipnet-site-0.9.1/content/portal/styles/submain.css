@@ -1,0 +1,14 @@
+/***********************************************/
+/* subMain.css                                  */
+/* shared style definitions for sub-main pages   */
+/* written by Ji Young Chong                    */
+/***********************************************/
+
+#layoutHandlerSubmainRight {	margin: 0px;	padding: 0px;	border: none;	height: 1px;	width: 600px;}
+#submainCenterTD1 {	margin: 0px;	border: none;	padding-top: 10px;	padding-left: 20px;	vertical-align: top;	padding-bottom: 10px;}
+#submainColumnLeft {	padding: 5px;	width: 20%;	background-color: #Ebebeb;	vertical-align: top;	border-top: 8px solid #F5f5f5;	border-right: 8px solid #F5f5f5;	border-bottom: 8px solid #F5f5f5;	border-left: none;}
+#submainColumnRight {	margin: 0px;	padding: 5px;	width: 80%;	background-color: #E7ecf3;	vertical-align: top;	border-top: 8px solid #F5f5f5;}
+#submainContentTable {	margin: 0px;	padding: 0px;	border: none;	width: 100%;	top: 0%;	vertical-align: top;}
+#submainContentTD0 {	text-align: right;}
+#submainContentTD2 {	border: none;	padding-right: 30px;	padding-bottom: 30px;	padding-left: 30px;	vertical-align: top;	width: 100%;}
+#submainTitle {	font-family: Geneva, Arial, Helvetica, sans-serif;	font-size: 1.3em;	text-decoration: none;	font-weight: bolder;	color: #003366;}

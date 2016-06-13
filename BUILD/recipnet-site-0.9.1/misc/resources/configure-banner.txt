@@ -1,0 +1,35 @@
+This is recipnetd's self-configuration mode.  You must have performed the
+following tasks before running this utility.
+    1. edited /etc/recipnet/recipnetd.conf to suit your local environment.
+    2. obtained a recipnet.sitegrant file, placed it in /etc/recipnet,
+       and set appropriate permissions.
+    3. installed and started the MySQL database daemon.
+    4. be logged in as 'root' right now.
+If you haven't yet performed these tasks, please press Ctrl-C and correct
+these errors first.
+
+This utility will perform a number of one-time initialization tasks necessary
+for recipnetd to interoperate with the MySQL database.
+    1. A database named 'recipnet' will be created.  Its data files will be
+       stored in /var/recipnet/db .  Any existing files there will be erased.
+    2. The MySQL daemon will be restarted in order to activate the new
+       database.
+    3. A MySQL user account named 'recipnet_site' will be created, given a
+       randomly-generated password, and granted full permissions on the
+       'recipnet' database.
+    4. A MySQL user account named 'recipnet_sample' will be created, given a
+       randomly-generated password, and granted full permissions on the
+       'recipnet' database.
+    5. A MySQL user account named 'recipnet_repos' will be created, given a
+       randomly-generated password, and granted full permissions on the
+       'recipnet' database.  (If you later decide to change any of the three
+       previous user account names or passwords, you will need to update the
+       config file /etc/recipnet/recipnetd.conf also.)
+    6. A number of tables will be created within the 'recipnet' database.
+    7. The MySQL daemon will be restarted again so that the new user accounts
+       are activated.
+    8. Recipnetd will "bootstrap" itself by processing the recipnet.sitegrant
+       file you received from the Reciprocal Net coordinator.
+    9. The first Reciprocal Net site administrator account will be created
+       for you, using a password that you specify.  You may use this first 
+       admin account later to create other user accounts within Reciprocal Net.

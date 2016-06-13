@@ -1,0 +1,352 @@
+<HTML>
+<HEAD>
+<TITLE>Installing GNU/Linux from scratch</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep8.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep10.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a
+name="_Toc187857389"></a><a name="_Ref93981062">Installing
+GNU/Linux from scratch</a></A></FONT></FONT></FONT></B></h2>
+
+<UL>
+<LI><FONT SIZE=+0><I><A HREF="#T2">Obtaining installation media</A></I></FONT></LI>
+<LI><FONT SIZE=+0><I><A HREF="#T3">Installing from CD</A></I></FONT></LI>
+<LI><FONT SIZE=+0><I><A HREF="#T4">First-boot configuration</A></I></FONT></LI>
+</UL>
+</UL>
+
+</div>
+
+
+<h3><B><FONT SIZE=+1><FONT COLOR="000080"><FONT FACE="Arial"><A NAME="T2">Obtaining
+installation media</A></FONT></FONT></FONT></B></h3>
+
+<p class=MsoNormal>These
+instructions assume that you will install Red Hat Enterprise Linux 5.1, i386
+Server edition from its five distribution CD-ROM discs.  Red Hat Enterprise Linux is a commercial
+product; there are no free mirrors available on the Internet.  If your server is owned by the Reciprocal Net
+project and bears an <st1:place w:st="on"><st1:PlaceName w:st="on">Indiana</st1:PlaceName>
+ <st1:PlaceType w:st="on">University</st1:PlaceType></st1:place> inventory
+control tag (even though it may be loaned indefinitely to your institution),
+please contact Reciprocal Net technical support to receive a copy of Red Hat
+Enterprise Linux.  Otherwise, please
+consult with your own organization’s network administrators or software
+distribution center to obtain copies of the installation media.</p>
+
+<p class=MsoNormal>If you do not
+have access to Red Hat Enterprise Linux, do not need business-class technical
+support, and are interested in a free alternative, there are a number of “clone”
+distributions available.  Two examples are
+CentOS 5.1 and Scientific Linux 5.1, both of which have been tested and are
+fully compatible with Reciprocal Net site software.  For these distributions, you can create the
+installation discs yourself by locating a mirror on the Internet, downloading <B><I>.iso</B></I> images for
+the five or six discs, and “burning” the images to CD-R’s using a CD-writing
+program on your desktop computer.</p>
+
+<p class=MsoNormal>If you do not
+have convenient access to a CD-R drive, please contact Reciprocal Net technical
+support for assistance.</p>
+
+
+<h3><B><FONT SIZE=+1><FONT COLOR="000080"><FONT FACE="Arial"><A NAME="T3">Installing
+from CD</A></FONT></FONT></FONT></B></h3>
+
+<p class=MsoNormal>Insert disc 1
+into your computer, power it on, and let the computer boot from the CD-ROM
+drive.  When you see the splash screen,
+press the <B><I>Enter</B></I>
+key to begin an installation.  The system
+will trundle for a minute and then ask you to test your media.  Highlight the <B><I>OK</B></I> button and press the <B><I>Enter</B></I> key to
+continue.  In the next window, highlight
+the <B><I>Test</B></I>
+button and press the <B><I>Enter</B></I>
+key.  The media test takes a few minutes
+to run.  Repeat this process for the
+other four installation discs.  Once all five
+discs have been tested, insert disc 1 again, highlight the <B><I>Continue</B></I>
+button, and press the <B><I>Enter</B></I>
+key.</p>
+
+<p class=MsoNormal>Next, the
+installation engine called Anaconda will load. 
+It should detect your video adapter and attached monitor and then
+display a graphical installation wizard. 
+On the welcome screen that appears, read the message displayed in the
+center, read the <B><I>Release
+Notes</B></I>, and then click the <B><I>Next</B></I> button.  </p>
+
+<p class=MsoNormal>On the language screen that
+appears, choose <B><I>English</B></I>
+in the left pane and click the <B><I>Next</B></I> button.  </p>
+
+<p class=MsoNormal>On the keyboard screen that
+appears, choose <B><I>U.S.
+English</B></I> in the left pane and click the <B><I>Next</B></I> button.</p>
+
+<p class=MsoNormal>On Red Hat
+Enterprise Linux, an <B><I>Installation
+number </B></I>dialog box may appear. 
+If so, consult with your organization’s network administrator regarding
+software licensing arrangements.  Either
+type the number he provides or skip ahead without entering a number.</p>
+
+<p class=MsoNormal>An upgrade screen may appear
+if the hard disk drive previously had another GNU/Linux operating system
+installed.  If this screen should appear,
+choose the <B><I>Install
+Red Hat Enterprise Linux Server </B></I>option and then click the <B><I>Next</B></I>
+button.  Reciprocal Net recommends
+against an in-place upgrade of operating systems because fresh installations
+tend to be more stable and reliable, particularly if you backed up your Reciprocal
+Net site’s data as described in the preceding section.</p>
+
+<p class=MsoNormal>On the partitioning
+screen that appears, choose the <B><I>Remove all partitions on selected drives and create
+default layout</B></I> option and click the <B><I>Next</B></I>
+button.  In the <B><I>Warning</B></I> dialog
+box that appears, click the <B><I>Yes</B></I> button.  Experienced system administrators may prefer
+to manually partition and format their drives instead.  If you choose the latter route, Reciprocal
+Net recommends that you place the <B><I>/var</B></I> subtree on its own large
+partition.  Molecular structure entries
+you create within the Reciprocal Net site software will be stored in the
+directory <B><I>/var/recipnet/data</B></I>
+, and this repository can grow to be many gigabytes in size, particularly at
+more active crystallography labs that archive their raw data.  At <st1:PlaceName w:st="on">Indiana</st1:PlaceName>
+<st1:PlaceType w:st="on">University</st1:PlaceType>’s <st1:place w:st="on"><st1:PlaceName
+ w:st="on">Molecular</st1:PlaceName> <st1:PlaceName w:st="on">Structure</st1:PlaceName>
+ <st1:PlaceType w:st="on">Center</st1:PlaceType></st1:place>, <B><I>/var</B></I> partitions
+are never smaller than 50 gigabytes.  You
+might find a swap partition useful also; at IU swap partitions are generally
+about 1 gigabyte in size.</p>
+
+<p class=MsoNormal>In the network window that
+appears, configure the settings to match those of your local network.  Consult with your organization’s network
+administrator as needed.  Note that use
+of DHCP is discouraged because Reciprocal Net site software acts as a web
+server and thus requires an IP address that does not change frequently.  Reciprocal Net recommends that member servers
+have their IP address either configured statically or assigned a “sticky”
+address by a DHCP server.  Note also that
+IPv6 is not utilized by Reciprocal Net servers and may be disabled to simplify
+configuration.  Click the <B><I>Next</B></I> button
+when your network configuration is complete.</p>
+
+<div >
+
+<p class=Existingsitesonly ><v:shape
+ id="_x0000_s1067" type="#_x0000_t202" fillcolor="#f90" stroked="f">
+ <v:textbox inset="0,2.16pt,0,2.16pt"/>
+ <w:wrap anchorx="margin"/>
+</v:shape>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=72 height=52 bgcolor="#FF9900" >
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td>
+    <div v:shape="_x0000_s1067" 
+    class=shape>
+    <p class=MsoNormal align=center ><b >EXISTING SITES ONLY</b></p>
+    </div>
+    </td>
+   </tr>
+  </table>
+   </td>
+ </tr>
+</table>
+
+If you are
+upgrading an existing Reciprocal Net site, this network configuration takes on
+special significance.  It is easiest if
+your new system’s network name and IP address are identical to those of your
+old system.  If the IP address must
+change, it is preferable that the DNS network name remains the same.  (Consult with your organization’s network
+administrators regarding possible ways of configuring a DNS alias for your old
+system’s name.)  If the DNS network name
+must change, please contact Reciprocal Net technical support for
+assistance.  A “site update” message will
+need to be broadcast to the other servers in the Reciprocal Net Site Network.</p>
+
+</div>
+
+<p class=MsoNormal>On the time zone
+screen that appears, select a time zone according to your local preferences,
+then click the <B><I>Next</B></I>
+button.</p>
+
+<p class=MsoNormal>On the root password
+screen that appears, invent a root password for yourself.  The <B><I>root</B></I> user account is used for
+administration of your operating system and has full access to the
+computer.  You should choose a password
+that includes both letters and numbers, is hard to guess, and preferably is
+unique to this particular computer.  Type
+your chosen password twice, once into each box, and click the <B><I>Next</B></I> button.</p>
+
+<p class=MsoNormal>On the package
+selection screen that appears, you have the opportunity to specify which
+programs are to be installed on your server. 
+Experienced system administrators should feel free to select or unselect
+any packages according to their local customs; any Reciprocal Net site software
+dependencies will be satisfied later in this chapter.  On Red Hat Enterprise Linux, the default
+configuration with all options disabled is fine.  On other distributions, clearing the check
+box for the <B><I>Office/Productivity</B></I>
+package group (if checked) may be desirable. 
+Click the <B><I>Next</B></I>
+button when your package configuration is complete. </p>
+
+<p class=MsoNormal>The computer
+will trundle for a moment and then the ready screen appears.  Verify that you’re ready to proceed and then
+click the <B><I>Next</B></I>
+button.  When the <B><I>Required Install Media</B></I>
+window appears, read the message, verify that you have all needed CD-ROM’s
+ready, and click the <B><I>Continue</B></I>
+button.</p>
+
+<p class=MsoNormal>A progress bar
+will appear and the computer will trundle for several minutes as the hard disk
+drive is formatted and packages are installed from the CD-ROM.  Insert each installation CD in turn as
+prompted.</p>
+
+<p class=MsoNormal>The next
+screen that appears will inform you that installation is complete.  Remove your installation CD-ROM from the
+computer’s drive and click the <B><I>Reboot</B></I> button.  Your computer will reboot.</p>
+
+
+<h3><B><FONT SIZE=+1><FONT COLOR="000080"><FONT FACE="Arial"><A NAME="T4">First-boot
+configuration</A></FONT></FONT></FONT></B></h3>
+
+<p class=MsoNormal>As the
+computer boots, the <B><I>Welcome</B></I>
+wizard will appear.  Click the <B><I>Forward</B></I>
+button.  </p>
+
+<p class=MsoNormal>On Red Hat
+Enterprise Linux, a <B><I>License
+Agreement</B></I> screen may appear. 
+Read the text, select the <B><I>Yes, I agree to the License Agreement</B></I>
+option, and click the <B><I>Forward</B></I>
+button.  </p>
+
+<p class=MsoNormal>On the <B><I>Firewall </B></I>screen
+that appears, choose the <B><I>Enabled</B></I>
+option.  Scroll down to select the <B><I>WWW (HTTP)</B></I>
+option in the box beneath to allow your computer to act as a web server.  (You may need to scroll down to see all
+options.)  Many system administrators
+find it convenient to select also the <B><I>SSH</B></I> option because this allows
+the computer to act as a Secure Shell server. 
+SSH allows you to access a command line remotely and facilitates remote
+system administration.  There is no need
+to select the <B><I>Secure
+WWW (HTTPS)</B></I> option.  Click the <B><I>Forward</B></I> button.  In the confirmation window that appears,
+click the <B><I>Yes</B></I>
+button.</p>
+
+<p class=MsoNormal>On the <B><I>SELinux</B></I> screen
+that appears, choose the <B><I>Enforcing</B></I>
+option.  SELinux is a security
+enhancement technology that imposes mandatory access controls on select
+daemons.  Its use in <B><I>Enforcing</B></I> mode
+is recommended.  Experienced system
+administrators who employ other security mechanisms may choose <B><I>Permissive</B></I> or <B><I>Disabled</B></I> as
+necessary.  Click the <B><I>Forward</B></I>
+button.  If a confirmation dialog box
+appears, click the <B><I>Yes</B></I>
+button.</p>
+
+<p class=MsoNormal>On Red Hat
+Enterprise Linux, a <B><I>Kdump</B></I>
+screen may appear.  By default the <B><I>Enable</B></I> checkbox
+is not selected.  This is
+acceptable.  Click the <B><I>Forward</B></I> button.</p>
+
+<p class=MsoNormal>On the <B><I>Date and Time</B></I>
+screen that appears, set the clock appropriately.  Then click the <B><I>Network Time Protocol </B></I>tab
+first.  Select the <B><I>Enable Network Time Protocol</B></I>
+option and enter the name of your organization’s NTP servers below.  If your organization does not operate its own
+network time server, you are welcome to use the one operated by <st1:place
+w:st="on"><st1:State w:st="on">Indiana</st1:State></st1:place></p>
+
+<p class=MsoNormal>University:
+click the <B><I>Add</B></I>
+button and then type:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>
+ntp.indiana.edu 
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Click the <B><I>Forward</B></I> button when your date configuration
+is complete.</p>
+
+<p class=MsoNormal>On Red Hat
+Enterprise Linux, a <B><I>Set Up
+Software Updates</B></I> screen may appear.  If it does, follow the instructions of your
+network’s administrator.  Exact choices
+will depend upon your organization’s network and software license
+arrangements.  Click the <B><I>Forward</B></I> button.  If a <B><I>Finish Updates Setup</B></I> screen
+appears, click the <B><I>Forward</B></I>
+button.</p>
+
+<p class=MsoNormal>On the <B><I>Create User</B></I>
+screen that appears, you should set up a personal user account that you will
+use for routine activities other than system administration.  Some organizations utilize network-based
+authentication rather than local authentication; for these details, consult
+with your network administrator.  Once
+user accounts have been configured, click the <B><I>Forward</B></I> button.  </p>
+
+<p class=MsoNormal>A <B><I>Sound Card</B></I>
+screen may appear.  If it does, the
+default settings frequently are acceptable. 
+Click the <B><I>Forward</B></I>
+button, the <B><I>Finish</B></I>
+button, or the <B><I>Reboot</B></I>
+button, whichever is present.</p>
+
+<p class=MsoNormal>On Red Hat
+Enterprise Linux, an <B><I>Additional
+CDs</B></I> screen may appear. 
+No action on it is necessary.  Click
+the <B><I>Finish</B></I>
+button or the <B><I>Reboot</B></I>
+button, whichever is present.  </p>
+
+<p class=MsoNormal>Some systems
+may require a reboot at this point.  If a
+confirmation window appears, click the <B><I>OK</B></I> button and allow the computer
+to reboot.</p>
+
+<p class=MsoNormal>When a login
+prompt appears, log in as the <B><I>root</B></I> user using the password
+specified earlier.  You should see a GNOME
+desktop.  </p>
+
+<p class=MsoNormal>Depending on
+the details of your organization’s software license for Red Hat Enterprise
+Linux, there may be a “bootstrap” script that needs to be run on the
+computer.  Run the bootstrap script
+now.  Consult with your organization’s
+network administrator for the details.</p>
+
+<p class=MsoNormal>Then continue
+on to the next section.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep8.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep10.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

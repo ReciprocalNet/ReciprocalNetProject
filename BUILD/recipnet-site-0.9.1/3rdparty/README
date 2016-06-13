@@ -1,0 +1,96 @@
+Reciprocal Net project
+README for 3rdparty directory
+
+
+The '3rdparty' directory contains source code written by external parties that
+is used in at least some portion of the Reciprocal Net project.  Only the 
+pristine copies of other groups' source code are included here - if the 
+Reciprocal Net project made any patches or alterations to this software, those 
+patches are NOT reflected in this directory.  Patches to the software in this 
+directory, if they exist, would live elsewhere in the source tree and be 
+applied at build time.  Check the buildfile for an authoritative answer on what
+gets built and how.
+
+
+SUBDIRECTORIES:
+===============
+  ant-contrib-0.6       Ant-Contrib version 0.6, a collection of "tasks" 
+                        designed for use with the Apache Ant development tool.
+                        The package is distributed under the Ant-Contrib
+                        project under the Apache Software License and was
+                        downloaded from http://ant-contrib.sourceforge.net/ on
+                        09-Apr-2004.
+
+  checkpolicy-1.32	SELinux policy compiler 1.32, as shipped with the
+          		Fedora Core 5 distribution of GNU/Linux.  The package
+ 			is licensed under the GNU GPL and was downloaded from
+			ftp://ftp.ussg.iu.edu/ on 02-Jan-2008.
+
+  jaf-1.0.2		Sun's Java Activation Framework version 1.0.2.  This
+                        is a "standard extension" to the Java 2 SDK that is
+                        employed under-the-hood by SAAJ.  The software is
+                        distributed by Sun under a proprietary but royalty-free
+                        license; see the file for details.  The package was
+                        downloaded from 
+                        http://java.sun.com/products/javabeans/glasgow/jaf.html
+                        on 19-Aug-2004.
+
+  java-1.5.0_01		Sun's Java 5 Software Development Kit version 1.5.0_01,
+			included a Java compiler and related development tools.
+			The software is distributed by Sun under a proprietary
+			but no-cost license; see the file for details.  The
+			package was downloaded from http://java.sun.com/ on
+			1-Feb-2005.
+
+  jaxm-1.1.2		JAXM version 1.1.2, the Java API for XML Messaging.
+			The package "enables applications to send and receive
+                        document oriented XML messages using a pure Java API."
+                        The software is distributed by Sun Microsystems under a
+			proprierty but royalty-free license; see the file for
+			more details.  Downloaded from 
+                        http://java.sun.com/xml/jaxm/ on 03-Sep-2004.
+
+  ortep3-1.0.3		ORTEP-III version 1.0.3, the Oak Ridge Thermal
+                    	Ellipsoid Plot Program.  The software is open source
+  			created by the Oak Ridge National Laboratory (USA) and
+			was downloaded from http://www.ornl.gov/ortep/ on
+			01-Nov-2002.
+
+  policycoreutils-1.30.10  SELinux Policy Module Packager 1.30.10, as shipped
+                        with the Fedora Core 5 distribution of GNU/Linux.  The
+   			package is licensed under the GNU GPL and was
+			downloaded from ftp://ftp.ussg.iu.edu/ on 02-Jan-2008.
+
+  saaj-1.2		SAAJ version 1.2, the SOAP with Attachments API for
+			Java.  The package "enables developers to produce and
+ 			consume messages conforming to the SOAP 1.1
+			specification and SOAP with Attachments note.  The
+			software is distributed by Sun Microsystems under a
+			proprierty but royalty-free license; see the file for
+			more details.  Downloaded from 
+                        http://java.sun.com/xml/saaj/ on 19-Aug-2004.
+
+  sclc-1.23             SCLC version 1.24 - the Source Code Line Counter, a
+                        PERL program that counts lines of source code.  The
+                        software was written by Brad Appleton and is in the 
+                        public domain.  It was downloaded from 
+                        http://www.cmcrossroads.com/bradapp/clearperl/ on 
+                        21-Jan-2004.
+
+  shortep               shortep - "SHortened ORTEP" - from the xTel collection
+                        of programs for crystallography maintained by Indiana
+                        University Molecular Structure Center.  The software
+                        is redistributed in Reciprocal Net site software by
+                        IUMSC's express consent.  This version was obtained
+                        from IUMSC on 24-Dec-2002.
+
+  tomcat-5.0.30         Apache Tomcat version 5.0.30 - the Java Servlet
+                        container distributed by the Apache Software 
+                        Foundation.  The software is released under the terms
+                        of the Apache Software License.  It was downloaded from
+                        http://jakarta.apache.org/ on 04-Feb-2005.
+
+  vort-2.3.3		VORT - a very ordinary rendering tool-kit version
+			2.3.3.  The software is in the public domain and was
+ 			downloaded from http://www.wumpus.com.au/eric/ on
+                        06-Nov-2002.

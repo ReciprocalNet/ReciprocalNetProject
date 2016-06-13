@@ -1,0 +1,12 @@
+# Reciprocal Net project
+# rmi.filelist
+#
+# Java classes listed here need to be callable via Remote Method Invocation
+# (RMI) and are compiled by the rmic tool.
+#
+# 12-Jan-2004: ekoperda wrote first draft
+
+org/recipnet/site/core/RepositoryManager.class
+org/recipnet/site/core/SampleManager.class
+org/recipnet/site/core/SiteManager.class
+

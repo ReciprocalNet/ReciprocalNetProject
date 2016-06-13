@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<TITLE>Customizing mail settings</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep14.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep16.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a name="_Toc187857395">Customizing mail
+settings</a></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>Electronic
+mail addressed to the <B><I>root</B></I>
+user on your server should be directed to a “real” e-mail account read on a
+regular basis by the system’s administrator. 
+Even if the server has been configured not to accept mail from external
+hosts (recommended), important notices from locally-running daemons still may
+be generated.  </p>
+
+<p class=MsoNormal>Continue with
+this section if you would find it convenient to have <B><I>root</B></I>’s mail
+forwarded to another e-mail account.</p>
+
+<p class=MsoNormal>Launch the <B><I>Text Editor</B></I>
+program again.  In the window that opens,
+click the <B><I>Open</B></I>
+button and then open the file named <B><I>/etc/aliases</B></I> .  Scroll to the bottom of the file and find the
+line that begins with the word <B><I>#root</B></I> .  (The leading <B><I>#</B></I> symbol indicates that the line
+has been commented out.)  Remove the
+comment symbol and change the line to read something like:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>root:            yourname@your.university.edu
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Click the <B><I>Save</B></I> button on the toolbar and
+then close the program.</p>
+
+<p class=MsoNormal>Now it is
+necessary to activate the change you just specified.  From the GNOME desktop, launch the program <B><I>Applications/Accessories/Terminal</B></I>
+to get to a command prompt.  At the
+command prompt, type:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>newaliases
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  One line of output will appear and mail
+forwarding will take effect immediately.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep14.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep16.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

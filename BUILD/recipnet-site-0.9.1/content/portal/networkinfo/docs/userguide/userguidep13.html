@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<TITLE>Customizing Firefox and the Java plug-in</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep12.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep14.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a
+name="_Ref94000985"></a><a name="_Toc187857393">Customizing
+Firefox and the Java plug-in</a></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>On Red Hat Enterprise Linux, the default graphical web
+browser is Mozilla’s Firefox.  This
+browser will not display web sites that utilize Java plug-ins without further
+customization.  Because the Reciprocal
+Net web application does make use of Java plug-ins, you should consider whether
+you ever will access the web application from the server console, or whether
+all access will occur via other desktop computers.  Continue with this section only if you choose
+the former.</p>
+
+<p class=MsoNormal>First, verify that the Java plug-in is installed.  Launch the <B><I>Add/Remove Software</B></I> program as
+before and look on the <B><I>List</B></I>
+tab for a package named <B><I>java-1.6.0-sun-plugin</B></I>
+.  If it is not already present on your
+system, download and install this package now.</p>
+
+<p class=Tipparagraph>TIPè On some
+GNU/Linux distributions, there may be several different editions present of the
+Java Runtime Engine (JRE).  Not all JRE’s
+have the same capabilities or directory structure.  You can control which JRE is the default one by
+running: <B><I>alternatives
+--config java</B></I>
+.  Reciprocal Net
+site software is designed to work with the JRE published by Sun Microsystems
+and repackaged by the JPackage Project.  </p>
+
+<p class=MsoNormal>Then, go to a command prompt and type the following
+command (all on one line):</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>ln –s /usr/lib/jvm/jre/plugin/i386/ns7/libjavaplugin_oji.so
+/usr/lib/firefox-1.5.0.12/plugins/
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  If your
+system’s version of Firefox is different than 1.5.0.12, modify the final
+argument accordingly.</p>
+
+<p class=MsoNormal>Now Java applets embedded within web pages should
+display correctly.  Continue to the next
+section.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep12.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep14.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

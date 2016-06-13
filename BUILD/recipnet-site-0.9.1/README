@@ -1,0 +1,90 @@
+Reciprocal Net Project
+README
+
+
+The software contained in the directories beneath this file was created by the 
+Reciprocal Net Project, except as noted otherwise.  Reciprocal Net software is
+copyright (C) 2002-2008, The Trustees of Indiana University.
+
+
+LICENSE
+=======
+Reciprocal Net software is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+Reciprocal Net software is distributed in the hope that it will be useful, but
+without any warranty; without even the implied warranty of merchantability or
+fitness for a particular purpose.  See the GNU General Public License for more
+details.
+
+You should have received a copy of the GNU General Public License along with
+Reciprocal Net software.  If not, see <http://www.gnu.org/licenses/>.
+
+An exception to the above is the "3rdparty" directory.  The modules contained
+within the "3rdparty" directory are created by others and are redistributed by
+the Reciprocal Net Project in accordance with their respective licenses.  Refer
+to the 3rdparty/README file for specific attributions.
+
+In addition to the license described above, the Trustees of Indiana University
+may distribute Reciprocal Net software under other terms.
+
+
+ACKNOWLEDGEMENTS
+================
+The Reciprocal Net Project gratefully acknowleges the contributions of the
+following software developers to the source code contained herein.  All of them
+are or were affiliated with Indiana University.
+
+	John Bollinger, Ph.D.
+	Ji-Young Chong
+	Amey Dharurkar
+	Michael Durbin
+	Ding "Dee" Feng
+	John Hanna
+	Eguono "Iggy" Isiorho
+	Anumit Jooloor
+	Eric Koperda
+	Ryan Lauer
+	Yi "Richard" Li
+	Hsiu-chuan "Jane" Lin
+	Lei Qian
+	Nihar Sanghvi
+	Nihar Sheth
+	Poornima Venkatakrishnan
+	Christopher "Kit" Westneat
+
+Partial support for the Reciprocal Net project in the years 2001 through 2005
+was received from the U.S. National Science Foundation via grant DUE-0121699.
+
+Partial support for the Reciprocal Net project in the years 2007 through 2008
+was received from the U.S. National Science Foundation via grant IIS-0513768.
+
+Continued support for the Reciprocal Net project in the years 2001 through 2008
+was received from various units within Indiana University.
+
+
+BUGS AND IMPROVEMENTS
+=====================
+If you should find any bugs in the Reciprocal Net software or should develop
+any improvements thereto, the Reciprocal Net Project would appreciate hearing
+from you.  Contributions to the software are welcome.  Send e-mail to
+<help@reciprocalnet.org>.
+
+
+CONTACT
+=======
+The Reciprocal Net project is based at Indiana University in Bloomington,
+Indiana, USA.  
+
+Direct electronic correspondence to <info@reciprocalnet.org>.  
+
+Direct written correspondence to:
+	Reciprocal Net Project
+	Molecular Structure Center
+	Department of Chemistry
+        Indiana University
+	800 East Kirkwood Avenue
+	Bloomington, Indiana 47408
+	United States of America

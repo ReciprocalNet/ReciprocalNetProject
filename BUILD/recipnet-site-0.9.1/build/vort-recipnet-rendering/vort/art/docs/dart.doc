@@ -1,0 +1,66 @@
+
+
+
+DART(1)                  USER COMMANDS                    DART(1)
+
+
+
+NAME
+     dart - a distributed ray-tracer for rendering algebraic sur-
+     faces and CSG models.
+
+SYNOPSIS
+     dart file width height [-n]
+
+     in.artd
+
+DESCRIPTION
+     Dart renders the scene defined in file across a net work  by
+     starting  up processes using inetd.  file is a file contain-
+     ing the scene description. width and height  are  the  width
+     and  height  of  the image in pixels. The -n option disables
+     file preprocessing.
+
+     To  set  dart  up  the  additions  need  to   be   made   to
+     /etc/inetd.conf and /etc/services. In /etc/services add
+
+     artd            1992/tcp                        # distributed art daemon
+
+     and in /etc/inetd.conf add
+
+     artd  stream tcp      nowait root /usr/local/etc/in.artd   in.artd
+
+     For instructions on the scene file see the manual  page  for
+     art(1).
+
+
+SEE ALSO
+     disp(1), vortinfo(1), targ2vort(1),  vort2ps(1),  median(1),
+     mulmcut(1),   greyscale(1),   gamma(1),   movie(1),  art(1),
+     nart(1), vort(3).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2            Last change: 24 July 1992                   1
+
+
+
