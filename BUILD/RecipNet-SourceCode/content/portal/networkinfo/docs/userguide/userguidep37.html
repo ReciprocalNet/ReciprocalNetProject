@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<TITLE>Backups</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep36.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep38.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a name="_Toc187857419"></a><a
+name="_Toc48712160"><span style='mso-bookmark:_Toc187857419'>Backups</span></a></span></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>The wise system administrator
+keeps backups of all critical data on his server.  When backing up all the data and metadata
+used by the Reciprocal Net site software, it is sufficient to preserve the
+files beneath <B><I>/var/recipnet/
+</B></I>and<B><I>
+/etc/recipnet/ </B></I>.  It
+may be prudent to stop the <B><I>recipnetd</B></I>
+and <B><I>mysqld</B></I>
+daemons for the duration of the backup so that no “dirty” files get backed up.</p>
+
+<p class=MsoNormal>There are four directories
+under <B><I>/var/recipnet/</B></I>:</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l7 level1 lfo12;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<B><I>/var/recipnet/data/</B></I> - contains data files that have been attached to Reciprocal Net
+samples.  This is the <I>repository</I>.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l7 level1 lfo12;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<B><I>/var/recipnet/db/</B></I> - used by MySQL to store its database files on behalf of <B><I>recipnetd</B></I>.  These database files contain metadata about
+Reciprocal Net samples.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l7 level1 lfo12;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<B><I>/var/recipnet/msgs-held/</B></I> - used by <B><I>recipnetd</B></I> to store every
+inter-site message that it has received from other sites but that cannot be
+processed yet <br>
+(for one reason or another).  Files
+stored here are not critical because they usually can be re-downloaded from
+other sites automatically by <B><I>recipnetd</B></I> if deleted.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l7 level1 lfo12;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<B><I>/var/recipnet/msgs-recv/</B></I> – used by <B><I>recipnetd</B></I> to store select
+inter-site messages that it has received. 
+Not all inter-site messages received get written to files, but those
+that do are stored here.</p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l7 level1 lfo12;
+tab-stops:list 1.25in'>·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<B><I>/var/recipnet/msgs-sent/</B></I> - used by <B><I>recipnetd</B></I> to store every
+inter-site message that it has sent (since the site was installed).  Deleting, losing, or tampering with any files
+in this directory might result in serious data consistency problems across all
+sites in the Reciprocal Net Site Network.</p>
+
+<p class=MsoNormal>To restore from a previous
+backup onto a server that already has the Reciprocal Net site software properly
+configured, it is sufficient to stop the <B><I>recipnetd</B></I> and <B><I>mysqld</B></I> daemons,
+replace all the files under <B><I>/var/recipnet/</B></I> and <B><I>/etc/recipnet/</B></I> with
+those from the backup, and then restart <B><I>mysqld</B></I> and <B><I>recipnetd</B></I>.  If the server is not already properly
+configured, it will be necessary for you to install the most recent site
+software (a free download from <a
+href="http://www.reciprocalnet.org/">http://www.reciprocalnet.org</a></span>),
+place the <B><I>recipnet.sitegrant</B></I>
+file obtained from the Reciprocal Net Coordinator in <B><I>/etc/recipnet/</B></I>,
+and modify <B><I>/etc/recipnet/recipnetd.conf</B></I>
+to match your server’s configuration.</p>
+
+<p class=MsoNormal>Note that it is potentially
+disastrous to attempt to restore a <B><I>recipnet.sitegrant</B></I> file without
+the matching files in <B><I>/var/recipnet</B></I>
+, or to attempt to restore the files in <B><I>/var/recipnet</B></I> without the
+matching <B><I>recipnet.sitegrant</B></I>
+file.  There are a number of interrelationships
+between the two entities; the risk is that other servers in the Reciprocal Net
+Site Network may become confused and cause your site to crash and lose data.  If you should find yourself holding an
+incomplete backup of your server, please contact Reciprocal Net technical
+support for personal assistance.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep36.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep38.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

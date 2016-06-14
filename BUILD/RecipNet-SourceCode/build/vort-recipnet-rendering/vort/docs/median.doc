@@ -1,0 +1,66 @@
+
+
+
+MEDIAN(1)                USER COMMANDS                  MEDIAN(1)
+
+
+
+NAME
+     median - perform median cut on data in a VORT file
+
+SYNOPSIS
+     median [ -c size ] [ -f ] file1 file2
+
+DESCRIPTION
+     Median applys median cut to an RGB image stored in file1  to
+     generate  the data in file2.  The colormap generated has, by
+     default, 256 entries; this  may  be  modified  with  the  -c
+     option.   By  default the image data is quantized by mapping
+     each pixel to the closest color values in the colormap.   If
+     the  -f  option  is  specified, Floyd-Steinberg dithering is
+     done before selecting a colormap entry.
+
+SEE ALSO
+     art(1),  vortinfo(1),  targ2vort(1),  vort2ps(1),  gamma(1),
+     greyscale(1), vortfile(5), vort(3).
+     "Color Image Quantization for Frame  Buffer  Display",  Paul
+     Heckbert, SIGGRAPH proceedings, 1982, pp. 297-307.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2            Last change: May 23, 1989                   1
+
+
+

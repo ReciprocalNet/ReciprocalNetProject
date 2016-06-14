@@ -1,0 +1,66 @@
+
+
+
+VORTINFO(1)              USER COMMANDS                VORTINFO(1)
+
+
+
+NAME
+     vortinfo - print information about VORT files
+
+SYNOPSIS
+     vortinfo name
+
+DESCRIPTION
+     Vortinfo displays general information about  the  VORT  file
+     name.
+
+SEE ALSO
+     art(1),  median(1),  targ2vort(1),   vort2ps(1),   gamma(1),
+     greyscale(1), vort(3), vortfile(5).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2          Last change: October 23, 1990                 1
+
+
+

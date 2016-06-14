@@ -1,0 +1,62 @@
+.TH NART 1 "24 July 1992" "VORT 2.2"
+.SH NAME
+nart - a program to distribute ray tracing.
+.SH SYNOPSIS
+.B nart 
+.I file width height
+.B [-n]
+
+.B nart 
+.I file_list
+.B [-Zn]
+
+.B in.netartd
+.SH DESCRIPTION
+In the first usage nart renders the scene defined in
+.I file
+across a net work by starting up art remotely using inetd.
+.I file
+is a file containing the scene description. 
+.I width
+and
+.I height
+are the width and height of the image in pixels.
+
+In the second usage nart reads in a list of scene files and their
+associated width and heights from the input file. The list file
+should have the scene file name
+and the dimensions of the output picture one per line. If the Z option
+is specfied pix files are compressed as they are generated.
+
+In both cases the
+.I -n
+option disables file preprocessing by art.
+
+To set nart up the additions need to be made to /etc/inetd.conf
+and /etc/services. In /etc/services add
+.nf
+
+netartd            1993/tcp                        # net art daemon
+
+.fi
+and in /etc/inetd.conf add
+.nf
+
+netartd	 stream tcp      nowait root /usr/local/etc/in.netartd   in.netartd
+
+.fi
+For instructions on the scene file see the manual page for art(1).
+
+.SH "SEE ALSO"
+.IR disp (1),
+.IR vortinfo (1),
+.IR targ2vort (1),
+.IR vort2ps (1),
+.IR median (1),
+.IR mulmcut (1),
+.IR greyscale (1),
+.IR gamma (1),
+.IR movie (1),
+.IR art (1),
+.IR dart (1),
+.IR vort (3).

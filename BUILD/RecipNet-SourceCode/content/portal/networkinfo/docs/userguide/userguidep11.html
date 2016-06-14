@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<TITLE>Downloading additional software packages</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep10.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep12.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a
+name="_Toc187857391">Downloading additional software packages</a></span></span></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>Reciprocal Net
+site software is distributed as a set of three RPM packages.  Those RPM packages depend upon several dozen
+other RPM packages that are published and distributed by other organizations in
+the open-source world.  The easiest way
+to obtain precisely those packages your server needs is to download them using <B><I>yum</B></I>.</p>
+
+<p class=MsoNormal>The Reciprocal
+Net project maintains a <B><I>yum</B></I>
+repository of RPM packages on its Internet web site.  To tell <B><I>yum</B></I> how to access this
+repository, it is necessary to install a small <B><I>.repo</B></I> file on your system.  From the GNOME desktop, launch the program <B><I>Applications/Accessories/Terminal</B></I>
+to get to a command prompt.  At the
+command prompt, type the following command (all on one line):</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>wget
+-P /etc/yum.repos.d www.reciprocalnet.org/download /recipnet.repo
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal>.  Then, type the following command (all on one
+line):</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>wget
+-P /etc/yum.repos.d www.reciprocalnet.org/download
+/recipnet-jpackage-rhel5.repo
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  <B><I>yum</B></I> now is able to access
+packages in the Reciprocal Net project’s repository and also those in the
+JPackage project’s repository.</p>
+
+<p class=MsoNormal>Next, from the
+GNOME desktop navigate to the <B><I>Applications</B></I> menu and launch the <B><I>Add/Remove Software</B></I>
+program.  In the window that opens, click
+the <B><I>List</B></I>
+tab.  The program will trundle for a
+moment and then display a list of all software packages available for download.</p>
+
+<p class=MsoNormal>Scroll through
+the list and select the following three packages: <B><I>recipnet-site-server</B></I>, <B><I>recipnet-site-utils</B></I>,
+and <B><I>recipnet-site-webapp</B></I>.  Click the <B><I>Apply</B></I> button.  In the confirmation window that appears,
+click the <B><I>Continue</B></I>
+button.  A <B><I>Resolving dependencies</B></I> window
+will appear with a progress bar; this step may take a moment.</p>
+
+<p class=Tipparagraph>TIPè At this point, on some distributions of GNU/Linux, a
+dependency error may appear that mentions the <B><I>xml-commons</B></I> and <B><I>xml-commons-apis</B></I>
+packages, version number <B><I>0:1.3.02-0.b2.7jpp.10</B></I>
+.  You can resolve the error by returning
+to the list of software packages, finding the package named <B><I>xml-commons-apis</B></I>,
+clearing the check box beside it, and clicking the <B><I>Apply</B></I> button
+again.</p>
+
+<p class=MsoNormal>In the <B><I>Dependencies added</B></I>
+window that appears, note that a few dozen other packages have been detected as
+necessary for your system and will be installed at the same time.  Click the <B><I>Continue</B></I> button.  A <B><I>Downloading packages</B></I> window will
+appear with a progress bar; this step may take several minutes depending upon
+the speed of your Internet connection.</p>
+
+<p class=MsoNormal>An <B><I>Import key</B></I>
+window may appear asking permission to trust software published by the JPackage
+project.  Verify that the key ID reads <B><I>0xC431416D </B></I>.  Click the <B><I>Import key</B></I> button.</p>
+
+<p class=MsoNormal>A second <B><I>Import key</B></I>
+window may appear for the Reciprocal Net project.  Verify that the key ID reads <B><I>0x4889CA78</B></I>
+.  Click the <B><I>Import key</B></I>
+button. </p>
+
+<p class=MsoNormal>An <B><I>Updating software</B></I>
+window will appear with another progress bar. 
+This step also may take a few minutes. 
+Finally, a <B><I>Software
+installation completed</B></I> window will appear.  Click the <B><I>OK</B></I> button and quit the <B><I>Package Manager</B></I>
+program.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep10.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep12.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,224 @@
+<HTML>
+<HEAD>
+<TITLE>Creating a new sample</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep27.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep29.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a name="_Toc187857409"></a><a name="_Toc48712145"></a><a
+name="_Toc20190693">Creating a new sample</a></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>You should already have
+logged in to the web application and created a provider record, as was described
+in the preceding section.</p>
+
+<p class=MsoNormal>The first step in creating a
+new Reciprocal Net sample is to create its metadata record using the web
+application.  Click the <B><I>Submit Sample</B></I>
+button on the menu bar to go to the submission form.  Notice that the lab with which your user account
+is associated is being recorded in the sample’s metadata.  In the next field you should choose the provider
+that delivered this crystal sample to you. 
+You may create new provider records, if needed, via the <B><I>Administrative Tools</B></I>
+feature that was described above.  A
+sample’s associated provider cannot be changed once the sample record has been
+created.  You may enter the sample’s
+anticipated empirical formula, if the provider gave you some idea what it might
+be.  You may also enter the name of the
+person within the provider’s lab who actually delivered the sample to you.</p>
+
+<p class=MsoNormal>Every Reciprocal Net sample
+must be assigned a unique <I>sample number</I>
+that identifies the sample within the context of your lab.  It is not necessary for your sample number to
+be globally unique (across all of the Reciprocal Net Site Network), just for it
+to be unique within your lab.  The sample
+number may be up to 32 characters long and may contain letters and symbols if
+you like.  Many crystallography labs
+prefer to use a separate system for tracking samples submitted, using their own
+ID numbers.  If your lab fits into this
+category you’ll want to specify that tracking number here.  Or, you could configure your server to
+auto-generate sequential sample numbers according to rules you specify.  (See page 46.)  It is very not possible to change a sample
+number once the sample record has been created, so choose wisely.  Enter any comments you like and then click
+the <B><I>Submit</B></I>
+button.  </p>
+
+<p class=MsoNormal>Your browser should be
+delivered to the <B><I>Edit
+sample</B></I> page, where you can see details about this sample
+record and make changes to it.  The next
+step in creating a new sample is to create its data directory in the
+repository; it’s easiest if you do this via the web application.  Scroll to near the bottom of the <B><I>Edit sample</B></I>
+page, in the section that begins with a message something like <B><I>No files for xxx in repository</B></I>.  Every sample should have a corresponding
+directory in the repository where the sample’s data files can be stored.  In a default site software installation, the
+files are stored somewhere beneath <B><I>/var/recipnet/data/</B></I>, usually
+under a directory named for the sample’s originating lab and then under a
+directory named for the sample number. 
+Every sample has its own data directory, and this directory name must
+match the sample number.  Some labs find
+it more convenient to organize their sample data directories into deeper
+hierarchies (perhaps with sample directories grouped into parent directories
+according to the year they were created, for example).  This is an optional feature, but if you
+choose to use it you’ll need to specify the “grouping directory” name in this
+box.  If you do not wish to use this
+feature, and you’re satisfied with all your sample data directories living in
+the same parent directory without any additional hierarchy, you may safely
+leave this box blank.  Click the <B><I>Create</B></I> button
+to continue.  The section of the <B><I>Edit sample</B></I>
+page that displayed a warning message before now contains a list of all the
+data files associated with this sample. 
+No files will appear in this section, however, until you upload them to
+the server.</p>
+
+<p class=MsoNormal>After you have submitted a
+new sample record and created its directory in the repository, the next thing
+you do to a real-world crystal sample is put it on your diffractometer and collect
+some data.  Once data collection has
+completed, you’ll want to return to the <B><I>Edit sample</B></I> page in the web app
+and click the <B><I>Collect
+preliminary data</B></I> link in the menu at the bottom of the page.  The <B><I>Collect preliminary data</B></I> page
+gives you an opportunity to record information garnered from the collection
+operation – all fields are optional.  You
+may specify the name of the crystallographer who collected the data (if more
+than one crystallographer was involved you may enter several names), the unit
+cell parameters (these can be changed later), the temperature at which data was
+gathered, a short (one-word) description of the crystal’s color, and general
+comments about the collection operation. 
+Click the <B><I>Save</B></I>
+button when you’ve finished filling out the form.</p>
+
+<p class=MsoNormal>Once data has been collected
+from the real-world crystal sample and the operation recorded within the
+recipnet web app, the next step is usually to solve the structure and refine it.  Unfortunately Reciprocal Net cannot help you
+with this part.  But once the structure
+has been refined, be sure to visit the <B><I>Edit sample</B></I> page and click the <B><I>Refine structure</B></I>
+link.  The <B><I>Refine structure</B></I> page allows you
+to record more information about the sample – again all fields are
+optional.  The unit cell parameters
+specified on the <B><I>Collect
+preliminary data </B></I>page previously may be changed here; you may
+enter a summary of the structure if you wish; you may enter z and the space
+group, several  statistical indicators of
+your data’s accuracy (goodness of fit, RF, R(F<sup>2</sup>), RWF, RW(F<sup>2</sup>)), and
+an empirical formula, structural formula, moiety formula, SMILES code, trade
+name, common name, and IUPAC (formal) name. 
+Enter information in as many of these fields as you’re able and then hit
+the <B><I>Save</B></I>
+button.</p>
+
+<p class=MsoNormal>Your sample record is now in
+the <I>Complete</I> state and might stay this way for many
+months or years.  The sample’s provider,
+if he has a user account on your site, will be able to look his sample up and
+access the data you collected, as will fellow staffers who at your
+crystallography lab.  Now is a good time
+to attach data files to your sample – like an industry-standard <B><I>cif</B></I> file or a <B><I>crt</B></I> file so
+that JaMM will work.  All data files
+associated with samples that you create are stored on your server in the <I>repository</I>,
+somewhere beneath the directory <B><I>/var/recipnet/data/</B></I>.  For instance, if you gave your sample the
+number ‘123’ and the name of your lab was ‘abc’, and you chose not to use a
+“grouping directory”, all the sample’s data files should be placed in the
+directory <B><I>/var/recipnet/data/xyz/123/</B></I>.  This directory should have already been
+created when you clicked the <B><I>Create</B></I> button earlier in this
+section.  (Due to potential permissions
+and security issues, the site software web application is the preferred method
+for creating repository directories.)</p>
+
+<p class=MsoNormal>You may upload data files to
+the server from your desktop computer via any of several mechanisms.  Click the <B><I>Upload files</B></I> button near the
+lower-left corner of the page.  You’ll
+see the <B><I>Upload
+Files</B></I> page, where you can upload up to five files from your
+desktop computer to the server.  Click a <B><I>Browse</B></I> button,
+choose a file from your local system, and click the <B><I>Upload now</B></I>
+button.  The file is uploaded and a
+confirmation page appears.  Subsequently
+you see the Manage Files page, which lists all sample data files attached to
+the sample and can manipulate them as need.</p>
+
+<p class=MsoNormal>Another method for uploading
+files is via dragging-and-dropping to the web application.  This is particularly effective if you have
+many files to transfer at once.  On the <B><I>Manage Files</B></I>
+page, look in the lower-right corner and click on the link for <B><I>Upload files (Drag-and-Drop)</B></I>.  The next page that appears contains a Java
+applet that helps you upload files.  (If
+you see a security warning, please authorize the applet to run.)  Arrange the windows on your screen so that
+you see both the web page and your local computer’s file manager at the same
+time.  Find a sample data file that you
+wish to upload within your desktop computer’s file manager.  Click on a file icon, drag the file into your
+web browser window, and drop the file onto the applet.  A progress bar appears and the file is
+uploaded to the server.  You can repeat
+the procedure for several files.  You
+also can select several files on your desktop and drag all of them to the
+applet at once.  When you’ve finished,
+click the <B><I>Save</B></I>
+button.  A moment later you should see
+the <B><I>Manage Files</B></I>
+page again.  Look in the lower-right
+corner and click the link <B><I>Back
+to “Edit Sample”</B></I>. 
+Notice that links to the sample’s attached data files have appeared on
+the bottom-left side of the page.</p>
+
+<p class=MsoNormal>There are other ways to
+transfer sample data files to your server as well.  Reciprocal Net site software automatically
+detects and recognizes sample data files that are deposited into existing
+repository directories on the server’s filesystem.  Thus, services like <B><I>ftp</B></I>, <B><I>ssh</B></I> (and
+related utilities), <B><I>nfs</B></I>,
+<B><I>samba</B></I>,
+etc. are useful for this purpose.  Pretty
+much any of these mechanisms will require that the user transferring data files
+have a GNU/Linux user account on the server and write permissions on at least
+some portion of the repository.  </p>
+
+<p class=MsoNormal>The last step in dealing with
+a Reciprocal Net sample is releasing it to the public.  This is the chief motivation behind the
+Reciprocal Net site software – making it as easy as possible for you to
+contribute your samples to the distributed public collection.  In deference to intellectual property issues,
+most labs choose to publish samples on Reciprocal Net only after the same
+structure has been published in a trade journal (usually by the sample’s
+provider), possibly several years after the Reciprocal Net sample reached the <I>complete</I>
+state.  This ensures that the
+prior-publication rights of the sample provider are not infringed.  Reciprocal Net also encourages its member labs
+to institute a policy that samples that have gone unpublished for five years or
+more (for example) are automatically released to the public by the crystallography
+lab staff.</p>
+
+<p class=MsoNormal>To release a sample to the
+public, go to the <B><I>Edit
+sample</B></I> page and click the <B><I>Release to public</B></I> link.  The <B><I>Release to public</B></I> page allows you
+to enter a few additional metadata items (all optional): a layman’s explanation
+of the sample’s real-world significance, a preferred name if there are several
+from which to choose, a copyright notice for your data and metadata, and
+comments about why the sample is being released to the public.  The layman’s explanation is particularly
+valuable if you intend to contribute your sample to the “Common molecules
+collection” maintained by Reciprocalnet.org but may be of limited use
+otherwise.  The copyright notice is
+optional, but if you find your lab’s employees typing the same notice for many
+samples, you might want to go to <B><I>Administrative Tools</B></I> and <B><I>Edit lab</B></I> to
+change the default copyright notice that appears on samples released from your
+lab.  Click the <B><I>Submit</B></I> button
+to release the sample to the public.</p>
+
+<p class=MsoNormal>Unauthenticated visitors to
+your web site now will see the sample in the searches they run, and your sample
+will be indexed by the distributed search engine on Reciprocalnet.org very soon.  Congratulations on releasing your first
+sample.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep27.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep29.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,64 @@
+.TH CRT 5 "AUGUST 2000" "Reciprocal Net" "User Manuals"
+.SH NAME
+crt \- crt file format
+.SH DESCRIPTION
+The
+.B CRT
+file format is designed to be a compact representation of a crystallographic
+model, with emphasis on features facilitating fast transmission and
+visualization.  In particular, the name
+.B CRT
+comes from the fact that atomic coordinates on the file are referenced to
+a Cartesian system of axes with units of Angstroms.
+.B CRT
+files consist of free-format lines, with information content varying depending
+on section of the file, as determined by section-delimiting keywords.
+.P
+.B CRT
+files begin with a line containing the keyword "CARTESIAN", integer counts of
+the numbers of atoms and bonds listed on the file, and a file label.
+Next comes one or more atom lines, each containing an atom label, three
+coordinates, and the atomic number.
+.P
+The end of the atom list and beginning of the bond list is designated by the
+"ENDATOMS" keyword.  Lines in the bond list consist of pairs of integers,
+designating pairs of atoms from the atom list between which there is a bond.
+Although it is technically legal to list the numbers in either order, avoiding
+duplication is facilitated by giving the lower number first.  The end of the
+bond list is designated by "ENDBONDS" keyword.
+.P
+The remaining sections are optional.
+.P
+The unit cell section is designated by the "CELL" keyword.  It always contains
+four lines: the Cartesian coordinates of the crystallographic
+.IR a ", " b ", and " c
+vectors and of the crystallographic origin.
+It is a felicitous side effect that the first three of these four lines
+form a transformation matrix and the last line a translation vector so that
+left-multiplying a column vector of crystallographic coordinates by the matrix
+and adding the translation vector to the result transforms the crystallographic
+coordinates into the Cartesian system.
+.P
+The symmetry section is designated by the "SYMMETRY" keyword and on the same
+line an integer count of the number of symmetry operations in the section.  The
+identity operation is always assumed and should not be specified or counted.
+Other symmetry operations are given in the form of a rotation matrix and
+translation;
+left multiplication of a column vector of Cartesian coordinates followed by
+addition of the translation vector produces a crystallographically equivalent
+position in the same system of Cartesian coordinates.  This section terminates
+with an "ENDSYMM" keyword.
+.SH BUGS
+There is currently no way to indicate bond order.
+.P
+There is no facility for indicating bonds to symmetry equivalents of the atoms
+in the list; only to the exact positions listed.
+.SH "SEE ALSO"
+.BR cif (5),
+.BR cssr (5),
+.BR sdt (5),
+.BR shortep (1)
+.SH AUTHOR
+This manpage was written by John Bollinger of the Indiana University Molecular
+Structure Center <jobollin@indiana.edu>.  The information on it is correct to
+the best of my knowledge and ability, but not guaranteed in any way.

@@ -1,0 +1,11 @@
+(art cyl01.scn $1 $2  ; art cyl07.scn $1 $2  ; art cyl13.scn $1 $2  ; art cyl19.scn $1 $2  ; art cyl25.scn $1 $2  ; art cyl31.scn $1 $2) &
+
+(art cyl02.scn $1 $2  ; art cyl08.scn $1 $2  ; art cyl14.scn $1 $2  ; art cyl20.scn $1 $2  ; art cyl26.scn $1 $2  ; art cyl32.scn $1 $2) &
+
+(art cyl03.scn $1 $2  ; art cyl09.scn $1 $2  ; art cyl15.scn $1 $2  ; art cyl21.scn $1 $2  ; art cyl27.scn $1 $2  ; art cyl33.scn $1 $2) &
+
+(art cyl04.scn $1 $2  ; art cyl10.scn $1 $2  ; art cyl16.scn $1 $2  ; art cyl22.scn $1 $2  ; art cyl28.scn $1 $2  ; art cyl34.scn $1 $2) &
+
+(art cyl05.scn $1 $2  ; art cyl11.scn $1 $2  ; art cyl17.scn $1 $2  ; art cyl23.scn $1 $2  ; art cyl29.scn $1 $2  ; art cyl35.scn $1 $2) &
+
+(art cyl06.scn $1 $2  ; art cyl12.scn $1 $2  ; art cyl18.scn $1 $2  ; art cyl24.scn $1 $2  ; art cyl30.scn $1 $2  ; art cyl36.scn $1 $2) &

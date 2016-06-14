@@ -1,0 +1,31 @@
+	Text3d is supposed to generate 3-D text. It does this by using boxes
+	and cylinders (or cylinders and spheres if desired) to subsitute for
+	the vectors in the Hershey fonts. This program can therefore make
+	very large files. This program is a real hack from the original
+	Vogle text.c routine.
+
+	NOTE: You need to also get VOGLE (available from www.wumpus.com.au/eric)
+	and make the binary versions of the Hershey fonts. Text3d uses these
+	binary versions of the fonts.
+
+	There are a number of examples here as well to run them you would
+	do something like the following:
+
+	text3d ABC.in > ABC.scn
+	art ABC.scn 512 512
+
+	text3d 3d.in > 3d.scn
+	art 3d.scn 512 512
+
+	text3d hello.in > hello.scn
+	art hello.scn 512 512
+
+	text3d mary.in > mary.scn
+	art mary.scn 512 512
+
+	text3d pdsfd.in > pdsfd.scn
+	art pdsfd.scn 512 512
+
+	text3d decr.in > decr.scn
+	art decr.scn 512 512
+

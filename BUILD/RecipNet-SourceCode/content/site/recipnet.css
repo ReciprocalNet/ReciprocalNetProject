@@ -1,0 +1,74 @@
+/*
+ * Reciprocal Net common styles
+ */
+ 
+body {
+ background: #FFFFFF;
+ font-size: small;
+ font-family: Georgia, serif;
+ margin: 0.2em;
+}
+
+/* These styles apply to the page header: */
+
+table.header td {
+ margin: 0;
+ border: 0;
+ padding: 0;
+ vertical-align: middle;
+}
+
+table.header img {
+ vertical-align: bottom;
+}
+
+table.header form {
+ margin:0;
+ border:0;
+ padding: 0.2em;
+}
+
+a.navItem {
+ font-weight: bold;
+ font-style: normal;
+ color: #003399;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+a.navItem:visited {
+ text-decoration: none;
+}
+
+a.navItem:link {
+ text-decoration: none;
+}
+
+a.navItem:hover {
+ text-decoration: underline;
+}
+
+/* Common styles for WAP pages: */
+div.pageBody { font-family: Arial, Helvetica, Verdana, sans-serif;
+    text-align: center; }
+table.bodyTable { margin: 0 auto 0 auto; width: 1px; }
+table.bodyTable th { text-align: right; padding-right: 0.5em;
+    white-space: nowrap; }
+table.bodyTable td { text-align: left; }
+table.bodyTable th.sectionHead,
+table.bodyTable th.leadSectionHead { text-align: left; font-style: italic;
+    font-size: 125%;  }
+table.bodyTable th.multiboxLabel { vertical-align: top; padding-top: 0.5em;}
+table.bodyTable th.sectionHead,
+table.bodyTable td.sectionHead,
+table.bodyTable td.actionButton,
+table.bodyTable td.formButtons { padding-top: 1em; }
+table.bodyTable td.actionButton,
+table.bodyTable td.formButtons { text-align: center; }
+tr.oddRow { background: #F0F0F0; color: #000050; }
+tr.evenRow { background: #D0D0D0; color: #000050; }
+.pageInstructions { font-weight: bold; font-style: normal;
+     font-size: medium; color: gray; }
+.notice { color: #909090; font-style: italic; }
+.notice, .errorNotice { font-size: small; }
+.errorMessage, .errorNotice { color: #F00000; font-weight: bold; }
+

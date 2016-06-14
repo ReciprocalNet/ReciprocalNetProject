@@ -1,0 +1,39 @@
+
+copy {
+lookat (0, -7, 23, 0, 0, 0, 0)
+
+raysperpixel 4
+background 0, 0.3, 0.3
+
+light {
+	direction (0, 0, -1)
+	color 0.7, 0.7, 0.7
+}
+light {
+	location (0, 0, 30)
+	color .5, .5, .5
+}
+
+light {
+	location (0, -20, 20)
+	color .5, .5, .5
+}
+ambient 0.4, 0.4, 0.4
+material 0.0, 0.2, 0.6, 10 
+reflectance .3
+}
+
+scale(1, 1, 3)
+font("times.r")
+centertext(true)
+textsize(8.5, 10.0)
+textradius(0.3)
+move(0, 12, 0)
+colour(0, 1, 0)
+drawstr("This is")
+move(0, 0, 0)
+colour(1, 1, 1)
+drawstr("3-D")
+color(1, 0, 0)
+move(0, -12, 0)
+drawstr("Text")

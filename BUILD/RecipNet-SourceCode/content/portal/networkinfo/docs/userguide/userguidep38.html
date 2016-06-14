@@ -1,0 +1,245 @@
+<HTML>
+<HEAD>
+<TITLE>Creating custom (locally-defined) metadata fields</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep37.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep39.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a name="_Toc187857420"></a><a name="_Toc48712161"></a><a
+name="_Toc20190706"></a><a name="_Ref20114233">Creating
+custom (locally-defined) metadata fields</a></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>Site administrators can
+define additional metadata fields that are attached to samples.  Some labs find these fields convenient for
+storing information such as billing account numbers, requested completion
+dates, extra tracking information. 
+Custom metadata fields are defined on a per-lab basis their visibility
+is configurable.  They are not searchable
+and they are not replicated to other sites in the Reciprocal Net Site Network.</p>
+
+<p class=MsoNormal>Each custom metadata field
+can store textual data up to 128 characters in length.  Metadata contained within custom fields is
+visible in the recipnet web application on the <B><I>Sample Details</B></I> and <B><I>Edit sample </B></I>pages,
+and can be edited on most of the workflow action pages.  Each site may define at most 1000 custom
+fields, with each field being used by a single lab.</p>
+
+<p class=MsoNormal>Custom metadata fields are
+defined in <B><I>recipnetd.conf</B></I>
+by using the SitLocalFieldxxx directive, one metadata field per directive and one
+directive per line.  The line in <B><I>recipnetd.conf</B></I>
+should look something like</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>SitLocalField000=12345,”Field
+name”,65535
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>where <B><I>000</B></I> is any
+three-digit number uniquely identifying the field, <B><I>12345</B></I> is the
+numeric id of the lab that will use this custom field, and <B><I>Field name</B></I> is
+the human-readable name for the metadata field. 
+The number <B><I>65535</B></I>
+is a bit mask that controls which web pages display the field (see below).  There should be no spaces between the three directive
+parameters, and the field name should be enclosed in quotation marks. You may
+choose any three-digit decimal number for the directive, as long as each SitLocalFieldxxx directive in <B><I>recipnetd.conf</B></I> has a distinct number.  The numeric lab id required by the directive
+can be found by using the recipnet web app, logging on as a site administrator,
+going to <B><I>Administrative
+Tools</B></I>, and going to the <B><I>Edit Lab</B></I> page for the desired
+lab.</p>
+
+<p class=MsoNormal>In addition to identifying
+specific fields, the three-digit field numbers establish the relative order in
+which they are displayed by the recipnet web application: lower-numbered custom
+metadata fields are displayed before (higher on the page than) higher-numbered
+fields.  Order of the directives in <B><I>recipnetd.conf</B></I>
+is not significant.</p>
+
+<p class=MsoNormal>The visibility number is a
+bit mask that specifies which pages in the site software web application should
+expose the custom field.  The minimum
+value is <B><I>0</B></I>,
+which means that the field is not exposed anywhere, and the maximum value is <B><I>65535</B></I>, which
+means that the field is exposed in all possible places.  Other values require doing some binary math.  The bits of the visibility number are defined
+as follows:</p>
+
+<div align=right>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ >
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=center > <b >Bit
+  number</b></p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata align=center ><b
+  >Custom field exposed where?</b></p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >(least significant)  0 </p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Reserved</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >1</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Submit page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >2</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Collect Preliminary Data page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >3</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Refine Structure page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >4</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Release to Public page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >5</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Modify Custom Fields page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >6</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Suspend page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >7</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Resume page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >8</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Declare Incomplete page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >9</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Failed to Collect page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >10</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Declare Non-SCS page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >11</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Retract page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >12</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Withdraw page</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >13</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Sample Details page, visible to any authenticated lab user</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >14</p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Sample Details page, visible to any authenticated provider
+  user</p>
+  </td>
+ </tr>
+ <tr >
+  <td width=133 valign=top >
+  <p class=Tabledata align=right >(most significant)  15 </p>
+  </td>
+  <td width=363 valign=top >
+  <p class=Tabledata>Sample Details page, visible to any unauthenticated user</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal>After making changes to <B><I>recipnetd.conf</B></I>,
+you should restart <B><I>recipnetd</B></I>
+so that the changes will take effect.  <B><I>httpd</B></I> and <B><I>tomcat5</B></I> should
+be restarted at the same time, as usual.</p>
+
+<p class=MsoNormal>If you decide ever to stop
+using a custom metadata field, you may delete the appropriate SitLocalFieldxxx directive from <B><I>recipnetd.conf</B></I>.  Keep in mind that this will not delete the
+actual metadata from the database, however, and therefore you should avoid
+using the same three-digit number on other custom fields in the future.  A superior alternative might be to change the
+visibility number to <B><I>0</B></I>,
+which will cause the web application to not display the field on any page.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep37.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep39.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

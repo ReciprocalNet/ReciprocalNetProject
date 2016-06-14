@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>Administering the Site Software</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep33.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep35.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+
+<H1 ALIGN=CENTER><B><FONT SIZE=+3><FONT COLOR="008000"><FONT FACE="Arial"><A NAME="T1"><a name="_Toc187857415"></a><a name="_Toc48712156"></a><a
+name="_Ref20274838"></a><a name="_Ref20274822"></a><a name="_Toc20190701">Administering
+the Site Software</a></A></FONT></FONT></FONT></B></h1>
+
+<div >
+
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T2"><a name="_Toc20190704"></a><a name="_Toc187857416"></a><a
+name="_Toc48712157"></a><a name="_Ref24791404"></a><a name="_Toc20190677">Web
+site customization</a></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>The Reciprocal Net site software’s web application
+includes an image at the top of each web page that identifies the site’s
+sponsor.  Normally this is the logo of
+the crystallography lab that has joined the Reciprocal Net Site Network.  You should replace this image file with one
+that includes the logo of your institution. 
+</p>
+
+<p class=MsoNormal>The image file is located on your server at <B><I>/var/www/html/recipnet/images/sitesponsor.gif</B></I>.  Use the picture editing program of your
+choice to modify the file, but please maintain the existing image’s size of 256
+by 72 pixels.  You can see examples of
+other site’s logos by visiting <a
+href="http://www.reciprocalnet.org/"><span style='mso-bookmark:_Toc20190704'><span
+>http://www.reciprocalnet.org/</a> and clicking on <B><I>Partner sites</B></I>.</p>
+
+<p class=MsoNormal>There is no need to restart any daemons once you have
+replaced the <B><I>sitesponsor.gif</B></I>
+file.  Apache Httpd makes the new file
+available to web browsers immediately.</p>
+
+<p class=MsoNormal>The Reciprocal Net site software will not interfere
+with normal operation of the web site hosted on your server (by Apache
+Httpd).  The site software web
+application will be accessible under the <B><I>/recipnet/</B></I> URL, but content
+placed anywhere else in your web tree should not be affected.  Similarly, it is possible to modify Apache
+Httpd’s configuration file to support other applications on your web site
+without interfering with the site software’s operation.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep33.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep35.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

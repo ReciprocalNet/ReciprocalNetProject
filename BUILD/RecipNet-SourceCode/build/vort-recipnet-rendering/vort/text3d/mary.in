@@ -1,0 +1,39 @@
+
+
+copy {
+lookat (-1.0, -0.5, 35.0, -0.5, 0.0, 0.0, 0.0)
+
+raysperpixel 8
+background 0, 0.3, 0.3
+
+light {
+	direction (0, 0, -1)
+	color 0.7, 0.7, 0.7
+}
+light {
+	location (1.4, 4.5, 9.0)
+	color 0.7, 0.7, 0.7
+}
+
+light {
+	location (-0.5, -0.5, 10.0)
+	color 0.7, 0.7, 0.7
+}
+ambient 0.5, 0.5, 0.5 
+material 0.0, 0.2, 0.4, 20 
+}
+
+scale(1, 1, 2)
+font("times.r")
+centertext(true)
+textsize(3.5, 5.0)
+color(0, 1.0, 0)
+textradius(0.22)
+move(0, 9 , 0) 
+drawstr("Mary had a little lamb")
+move(0, 3 , 0) 
+drawstr("It always was a gruntin'")
+move(0, -3 , 0) 
+drawstr("She tied it to a five bar gate")
+move(0, -9 , 0) 
+drawstr("And told it to behave")

@@ -1,0 +1,222 @@
+<!-- 
+  - Reciprocal Net project
+  - compile-time-tools.xml
+  -
+  - This Ant build file is designed to be called only by the main build file,
+  - build.xml.  Logic within this file knows how to prepare all the tools that
+  - are required to compile the Reciprocal Net project's code.
+  -
+  - 23-Jan-2004: ekoperda wrote first draft
+  - 09-Apr-2004: midurbin and ekoperda modified 'httpd' target and added
+  -              'httpd-eachversion', 'httpd-eachrpm', 'http-patch-apxs',
+  -              'httpd-patch-config-vars', 'http-patch-apr-config',
+  -              'httpd-patch-libtool', and 'ant-contrib' targets to support
+  -              multiple simultaneous versions of httpd
+  - 21-Apr-2004: midurbin changed paths to use updated versions of tomcat4 and
+  -              java
+  - 19-Aug-2004: ekoperda added 'jaf' and 'saaf' targets to support use of new
+  -              packages in the 3rdparty directory of the source tree
+  - 03-Sep-2004: ekoperda added 'jaxm' target to support use of new package
+  -              in the 3rdparty directory of the source tree
+  - 04-Feb-2005: ekoperda renamed 'j2sdk' target to 'jdk', introduced support
+  -              for Sun's Java SDK 1.5.0, and introduced support for 
+  -              Tomcat 5.0.30
+  - 03-Mar-2005: ekoperda modified 'jdk' and 'httpd-eachversion' targets to
+  -              resolve the executables that they invoke relative to basedir
+  - 20-Nov-2006: jobollin updated the 'jdk' target to not copy out the JDK's
+  -              'man' or 'demo' directory - this is a hack around an Ant
+  -              race condition that started appearing on FC5
+  - 01-Jan-2008: ekoperda removed dependencies needed only by mod_recipnet_auth
+  - 02-Jan-2008: ekoperda added 'checkpolicy' and 'policycoreutils' targets
+  -->
+
+<project name="compile-time-tools" default="compile-time-tools" basedir="..">
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                   Externally-callable targets are here                  *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="compile-time-tools"
+            description="Unpack tools needed to compile the source tree"
+            depends="init" 
+            unless="compile-time-tools-uptodate">
+        <delete dir="build/compile-time-tools/" />
+        <antcall target="jdk" />
+        <antcall target="ant-contrib" />
+        <antcall target="sclc" />
+        <antcall target="tomcat" />
+        <antcall target="jaf" />
+        <antcall target="saaj" />
+        <antcall target="jaxm" />
+        <antcall target="checkpolicy" />
+        <antcall target="policycoreutils" />
+    </target>
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Module-level targets are here                     *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <!--
+      - SCLC - Source Code Line Counter
+      -->
+    <target name="sclc">
+        <mkdir dir="build/compile-time-tools/sclc/" />
+        <untar src="3rdparty/sclc-1.23/sclc-cdiff.tar.gz"
+                dest="build/compile-time-tools/sclc/"
+                compression="gzip" />
+        <replace file="build/compile-time-tools/sclc/sclc"
+                token="/usr/misc/bin/perl5" value="/usr/bin/perl" />
+        <chmod file="build/compile-time-tools/sclc/sclc" perm="a+x" />
+    </target>
+
+    <!--
+      - Ant-Contrib - a collection of Ant tasks written by third parties
+      -->
+    <target name="ant-contrib">
+        <mkdir dir="build/compile-time-tools/ant-contrib/" />
+        <untar src="3rdparty/ant-contrib-0.6/ant-contrib-0.6-bin.tar.gz"
+                dest="build/compile-time-tools/ant-contrib/"
+                compression="gzip" />
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+            <classpath>
+                <pathelement location="build/compile-time-tools/ant-contrib/lib/ant-contrib-0.6.jar" />
+            </classpath>
+        </taskdef>
+    </target>
+
+    <!--
+      - Apache Tomcat
+      -->
+    <target name="tomcat">
+        <mkdir dir="build/compile-time-tools/tomcat/" />
+        <untar src="3rdparty/tomcat-5.0.30/jakarta-tomcat-5.0.30.tar.gz"
+                dest="build/compile-time-tools/tomcat/"
+                compression="gzip">
+            <patternset includes="**/*.jar" />
+        </untar>
+        <copy todir="build/compile-time-tools/tomcat/">
+            <fileset dir="build/compile-time-tools/tomcat/" 
+                    includes="**/*" />
+            <mapper type="flatten" />
+        </copy>
+    </target>
+
+    <!--
+      - Sun's Java 5 SDK
+      -   We automate our saying 'yes' to the license agreement.
+      -->
+    <target name="jdk">
+        <mkdir dir="build/compile-time-tools/java/" />
+        <property name="javadist" value="jdk-1_5_0_01-linux-i586.bin" />
+        <copy file="3rdparty/java-1.5.0_01/${javadist}"
+                todir="build/compile-time-tools/java/" />
+        <echo message="Extracting archive..." />
+        <chmod perm="+x" file="tools/unpackjava.sh" />
+        <exec executable="tools/unpackjava.sh"
+                failonerror="true"
+                resolveExecutable="true">
+            <arg file="build/compile-time-tools/java/${javadist}" />
+            <arg file="build/compile-time-tools/java/" />
+        </exec>
+        <move todir="build/compile-time-tools/java/">
+            <fileset dir="build/compile-time-tools/java/jdk1.5.0_01" 
+                    includes="bin/**/* include/**/* jre/**/* lib/**/*" />
+        </move>
+        <delete file="build/compile-time-tools/java/${javadist}" />
+        <delete dir="build/compile-time-tools/java/jdk1.5.0_01" />
+    </target>
+
+    <!--
+      - JAF - Java Activation Framework
+      -->
+    <target name="jaf">
+        <mkdir dir="build/compile-time-tools/jaf/" />
+        <unzip src="3rdparty/jaf-1.0.2/jaf-1_0_2-upd.zip"
+                dest="build/compile-time-tools/jaf/" />
+        <move todir="build/compile-time-tools/jaf/">
+            <fileset dir="build/compile-time-tools/jaf/" includes="**/*" />
+            <mapper type="flatten" />
+        </move>
+    </target>
+
+    <!--
+      - SAAJ - SOAP with Attachments API for Java
+      -->
+    <target name="saaj">
+        <mkdir dir="build/compile-time-tools/saaj/" />
+        <unzip src="3rdparty/saaj-1.2/saaj-1_2-fr-spec-api.zip"
+                dest="build/compile-time-tools/saaj/" />
+    </target>
+
+    <!--
+      - JAXM - Java API for XML Messaging
+      -->
+    <target name="jaxm">
+        <mkdir dir="build/compile-time-tools/jaxm/" />
+        <unzip src="3rdparty/jaxm-1.1.2/jaxm-1_1_2.zip"
+                dest="build/compile-time-tools/jaxm/" />
+        <move todir="build/compile-time-tools/jaxm/">
+            <fileset dir="build/compile-time-tools/jaxm/" includes="**/*" />
+            <mapper type="flatten" />
+        </move>
+    </target>
+
+    <!--
+      - Checkpolicy - SELinux policy compiler
+      -->
+    <target name="checkpolicy">
+        <mkdir dir="build/compile-time-tools/checkpolicy/" />
+        <chmod perm="+x" file="tools/unrpm.sh" />
+        <exec executable="tools/unrpm.sh" 
+                failonerror="true" 
+                resolveExecutable="true">
+            <arg file="3rdparty/checkpolicy-1.32/checkpolicy-1.32-1.fc5.i386.rpm" />
+            <arg file="build/compile-time-tools/checkpolicy/" />
+        </exec>
+    </target>
+
+    <!--
+      - Policycoreutils - SELinux policy module packager
+      -->
+    <target name="policycoreutils">
+        <mkdir dir="build/compile-time-tools/policycoreutils/" />
+        <chmod perm="+x" file="tools/unrpm.sh" />
+        <exec executable="tools/unrpm.sh" 
+                failonerror="true" 
+                resolveExecutable="true">
+            <arg file="3rdparty/policycoreutils-1.30.10/policycoreutils-1.30.10-2.fc5.i386.rpm" />
+            <arg file="build/compile-time-tools/policycoreutils/" />
+        </exec>
+    </target>
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Build infrastructure is here                      *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="init">
+        <uptodate property="compile-time-tools-uptodate" 
+                targetfile="build/compile-time-tools/">
+            <srcfiles dir="3rdparty/" includes="**/*" />
+            <srcfiles dir="misc/" includes="compile-time-tools.xml" />
+            <srcfiles dir="misc/" includes="*.patch" />
+        </uptodate>
+    </target>
+</project>

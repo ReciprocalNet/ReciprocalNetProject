@@ -1,0 +1,9 @@
+# site-en_US-html.strings
+#
+# This file is empty because its parent (site-en-html.strings) provides correct
+# values for each key.
+#
+# 14-Jun-2004: midurbin wrote first draft by consolidating
+#              actionCodes-en_US-html.properties,
+#              fieldCodes-en_US-html.properties and
+#              statusCodes-en_US-html.properties

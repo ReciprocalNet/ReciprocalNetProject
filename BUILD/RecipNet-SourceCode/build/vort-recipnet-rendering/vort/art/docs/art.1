@@ -1,0 +1,1468 @@
+.TH ART 1 "22 July 1993" "VORT 2.30"
+.SH NAME
+art - a ray-tracer for rendering algebraic surfaces and CSG models.
+.SH SYNOPSIS
+.B art
+.B [-v]
+.I file width height
+.B [-x x1 x2]
+.B [-y y1 y2]
+.B [-f frameid]
+.B [-o filename]
+.B [-D var=expr]
+.B [-n]
+
+.SH DESCRIPTION
+Art renders the scene defined in
+.I file
+which is a file (standardin if file is "-") containing the scene description. 
+.I width
+and
+.I height
+are the width and height of the image in pixels.
+The scene file's name must end in a ".scn". If the -v option is specified
+the ray tracer echos the number of each scanline before it is commenced.
+The -x option results in the raytracer only rendering the pixels in the
+columns x1 to x2 in the image (note: the first column is column is zero).
+The -y option results in the raytracer only rendering the pixels in the
+scanlines y1 to y2 (once again the first scanline is zero). The pixel (0,0)
+is the top lefthand corner of the image. The -f option is used to provide
+a frameid for the include statement and set the global variable frameno
+- see below. The -o option is used
+to specify a filename for the pix file instead of the default (pic.pix
+if the input is standard in. The -D option allows a variable to be assigned 
+either an integer or floating point constant on the command line. The -n
+option disables
+preprocessing of the
+input file, this is quicker and uses less space if there are no includes
+in the file. C style comments are supported and the remainder of a line 
+can be made into a comment by a # symbol. This version attempts to speed
+up ray tracing by using shadow caches, and a kd-tree to do non-uniform
+spatial subdivision, or optionally a uniform grid.
+.SH COMMANDS
+.SS Including files and variables.
+.HP
+.BI include
+.RI filename
+.br
+Includes the file filename in the current file. If the extension on
+filename is 
+.BI .frameid
+the frameid extension is replaced with whatever the frameid is for
+the image (the default is 000, so bloot.frameid will make art look
+for a file called bloot.000 is nothing has been specified on the
+command line).
+.HP
+.BI varname = expr
+assigns the expression expr to varname. An expression can be any mixture
+of floats, integers, or character constants of the form 'x' where x is
+the character. The variables x, y, and, z are predefined as the
+character values 'x', 'y', and 'z', for backward compatability. The frame
+number for the frame can be accessed via the variable 
+.BI frameno.
+Note: the
+value in 
+.BI frameno
+will only be meaningful if the -f option is passed an
+integer.
+.SS Setting options.
+.HP
+.BI output
+.RI type
+.br
+sets the output format for an image.
+.nf
+
+		e.g. output rle
+
+.fi
+makes the output image run-length encoded (the default) without saving
+alpha information. Other output formats are rgb, rgba, and rlea.
+Formats ending in an 'a' include alpha information in the output file.
+.HP
+.BI subdivision
+.RI method
+.br
+determines what type of subdivision to use for the objects up to the
+terminating brace. Method can be either kdtree or grid, the grid keyword
+can also be followed by the dimensions of the grid if the default, as
+shown in the example, is not required. More than one subdivision type may
+appear in a file as, on occasion, it is useful to be able to group objects
+together.
+.nf
+
+		e.g. subdivision grid 20, 20, 20 {
+			objects....
+		     }
+
+.fi
+The default subdivision method for the entire file is the kdtree.
+.HP
+.BI twentyfivebit
+.RI on|off
+.br
+Starts the ray tracer generating 25 bit rgb values. The default is
+off, as it's only for when you need that bit extra.
+.HP
+.BI maxtreedepth
+.RI depth
+.br
+sets the maximum depth for the kd-tree to split to.
+.nf
+
+		e.g. maxtreedepth 35
+
+.fi
+sets the maxtreedepth to 35 (the default).
+.HP
+.BI maxhitlevel
+.RI depth
+.br
+sets the maximum number of rays traced for reflection.
+.nf
+
+		e.g. maxhitlevel 6
+
+.fi
+sets the maxhitlevel to 6 (the default).
+.HP
+.BI pixelgrid
+.RI on
+.br
+sample the image one pixel wider and hider and generate the picture
+from averaging the resulting grid of pixels. This happens by default
+if the number of raysperpixel is greater than one. Without this option
+what you see is what you hit.
+.HP
+.BI raysperpixel
+.br
+set the number of rays per pixel. 
+.nf
+
+		e.g. raysperpixel 4
+
+.fi
+this value should be an integer number, default is one. If the number
+of raysperpixel is greater than one the pixelgrid is turned on automatically,
+and the final pixel value is the average of the grid plus any extra rays.
+Generally 4 rays per pixel will remove most signs of aliasing, with 16
+giving a good approximation to "perfection" (if you have the time!).
+.HP
+.BI antialiasing
+.br
+this keyword can be followed by the flag 
+.BI adaptive
+or
+.BI brute.
+If the
+.BI brute
+keyword is used the raytracer will always trace as many
+rays per pixel as given, if the
+.BI adaptive
+keyword is used the raytracer
+will trace up to the number of rays given, but attempts to minimise
+the number of rays by checking the local variation where a ray is
+being traced.
+.HP
+.BI background
+.br
+sets the background colour.
+.nf
+
+		e.g. background 0.0, 1.0, 0.0
+
+.fi
+sets the background colour to green.
+.HP
+.BI falloff
+.br
+specifies the fall off in the medium. The resulting intensity
+for an initial intensity i distance d away is calculated
+according to i / (1.0 + falloff * d).
+.nf
+
+		e.g. falloff 0.0
+
+.fi
+sets the falloff to zero (the default).
+.HP
+.BI ri
+.br
+sets the world refractive index.
+.nf
+
+		e.g. ri 1.0
+
+.fi
+sets the refractive index to 1.0 (the default).
+.HP
+.BI fogfactor
+.br
+specifies a fogfactor. Unless this value is non-zero the hazecolour and
+rfactor are ignored. Objects that are more distant will have the
+hazecolor blended with them according to the following 
+equation (derived from Beer's Law):
+.nf
+
+	I(d) = I(base) * (1 - (1 - rfactor) * exp(fogfactor * d))
+
+.fi
+.br
+A value of 0.00001 would give a slight amount of haze, while a value
+of 0.004 gives a very misty picture.
+.nf
+
+		e.g fogfactor 0.0005
+
+.fi
+sets the fogfactor to 0.0005 (the default is 0).
+.HP
+.BI hazecolour
+.br
+specifies a hazecolour to be blended with more distant objects.
+.nf
+
+		eg. hazecolour 0.5, 0.5, 1.0
+
+.fi
+sets the haze color to a bluish grey. The default is white.
+.HP
+.BI rfactor 
+.br
+specifies an rfactor for use below in computing haze. The rfactor is a 
+measure of the fraction of incident radiation that objects reflect
+in the atmosphere. 
+.nf
+
+		e.g. rfactor 0.3
+
+.fi
+sets the rfactor to 0.3 (the default).
+.HP
+.BI projection
+.br
+sets the projection type, either 
+.I orthographic
+or 
+.I perspective.
+The default is
+.I perspective. 
+If an orthographic projection is chosen the
+.I screensize 
+keyword should be used to set the height and width of clipping window.
+.HP
+.BI lookat
+.br
+sets the viewpoint and direction by giving a reference point for
+the center of the image. A twist around the line of sight may
+also be specified. Note: if the up vector is to be changed 
+.I up
+should be used before
+.I lookat.
+.nf
+
+		e.g. lookat(10.0, 10.0, 10.0, 0.0, 0.0, 0.0, 45.0)
+
+.fi
+puts the eyepoint at (10, 10, 10) looking at the origin
+with a 45 degree twist around the line of sight.
+.HP
+.BI up
+.br
+sets the world up to be something other than the default (positive
+y).
+.nf
+
+		e.g. up(0.0, 0.0, 1.0)
+
+.fi
+specifies that the world up is positive z. Note: this must be used 
+before
+.I lookat.
+.HP
+.BI screensize
+.br
+specifies the size of the screen the rays originate from
+.nf
+ 
+		 e.g. screensize 2.0, 2.0
+		  
+.fi
+sets it to a sqare 2.0 by 2.0 screen units, centered around the
+origin (the default).
+.HP
+.BI fieldofview
+.br
+specifies the field of view.
+.nf
+
+		e.g. fieldofview 90.0
+
+.fi
+sets it to 90 degrees (the default). Reducing the field
+of view zooms on the center of the image.
+.HP
+.BI title
+.br
+is used to specify a title to be saved in the image
+file. Quotes are required.
+.nf
+
+		e.g. title "Man's inhumanity to man"
+
+.fi
+provides a good name for any previously untitled work.
+.HP
+.BI sourceradius 
+.br
+(followed by a number) specifies an average source radius distribution
+for use with the ripples texture decribed below.
+.nf
+
+	e.g.	sourceradius 100
+	
+.fi
+specifies that the average radius of the centers of
+the randomly placed wave sources is 100 unit.
+.SS Specifying light sources.
+Lights are treated essentially like objects and may be included in composite
+objects (such as lamps) so that they move with the object.
+.HP
+.BI light
+.br
+is used to define a light source. A point light source is defined by two
+attributes: colour and location.
+.nf
+
+	e.g.	light {
+			colour 1.0, 1.0, 1.0
+			location (-10.0, 40.0, 20.0)
+		}
+
+.fi
+defines a white light source of unit intensity at the point
+(-10, 40, 20). Lights are treated as point sources unless a
+radius is specified using the
+.BI radius
+keyword. The keyword 
+.BI numrays
+(followed by an integer) determines the number of rays used to sample
+the area light. Non-point lightsources generally lead to softer shadows.
+Lights may also be given a direction and an angle.
+.nf
+
+	e.g.	light {
+			colour 1.0, 1.0, 1.0
+			direction (10.0, -40.0, -20.0)
+			angle 20.0
+			location (-10.0, 40.0, 20.0)
+		}
+
+.fi
+defines a light source with light going in the direction of the origin and
+a spread of 20 degrees from its location around its direction vector. If
+the keyword
+.BI insideangle
+is used then the intensity of the light will fall of linearly to zero
+from the inside angle to the angle of the directional light. A slight
+falloff can be introduced inside the inside angle by using the
+.BI beamdistribution
+keyword. This uses the usual beamdistribution function, that is raising
+the cos of the angle between the center of the directional light and the
+point of interest raised to the beam distribution. For example:
+.nf
+
+	e.g.	light {
+			colour 1.0, 1.0, 1.0
+			direction (10.0, -40.0, -20.0)
+			angle 20.0
+			insideangle 20.0
+			beamdistribution 15.0
+			location (-10.0, 40.0, 20.0)
+		}
+
+.fi
+If no angle is specified the light is assumed to be distant (like
+sunlight) and to have the same direction everywhere in the scene. If
+the light source contains
+.nf
+	shadows off
+.fi
+then shadow testing is turned off for that light.
+.SS Setting Object Attributes.
+.LP
+Attributes are maintained on an attribute stack. If attributes are
+not set in the object it will use whatever has been defined outside the object's
+scope.
+.HP
+.BI ambient
+.br
+specifies the amount of ambient light affecting an object
+.nf
+
+		e.g. ambient 0.1, 0.1, 0.1
+
+.fi
+Specifies ambient light with colour values
+r = 0.1,
+.br
+g = 0.1, and b = 0.1. This is the default value.
+.HP
+.BI material
+.br
+sets the material properties for the object
+.nf
+
+		e.g. material 0.0, 1.0, 0.0, 0
+
+.fi
+The numbers in the material are as follows: the refractive index,
+the diffuse component, the specular component, and the specular
+exponent. The diffuse component represents the percentage of
+light that will be reflected diffusely by the object, the specular
+component the amount of light that will be reflected in a specular
+fashion. The specular exponent (which is always truncated down to
+the nearest integer) determines how rough the surface is
+(on a microscopic level), so the larger this value becomes the
+smaller the specular highlights on the object. As a rule the
+specular component and diffuse components should add up to one,
+and if reflections are being allowed most realistic results for
+a non-transparent objects material occur when the level of reflectance
+is the same as the specular component.
+Some typical material properties are chalk (0.0, 1.0, 0.0, 0.0),
+plastic (0.0, 0.75, 0.25, 20.0), aluminium (0.0, 0.25, 0.75, 6.0).
+Note: note for the refractive index to have any effect the object
+must have some transparency specified. An refractive index of 1.5
+is a good place to start.
+.HP
+.BI shadows
+.RI on|off
+.br
+Specifies whether or not the object is to cast a shadow. The 
+default is on.
+.HP
+.BI tile
+.br
+specifies a tiling pattern for an object.
+.nf
+
+		e.g. tile filename size 0.25, 0.25
+
+.fi
+Reads the tiling pattern from filename (another image
+file produced by a program using the vort library) and tiles
+the object as though the pattern
+represents an image 1/4 of the surface area of the object. If 
+tiles are used through the texture keyword they may also be
+rotated, etc, as is sensible. Tiles can be applied to anything
+but boxes, geometries, csgs and algebraics.
+.HP 
+.I texture {
+.nf
+		texture body
+	}
+.fi
+.br
+specifies a texture for an object.
+The current texture types are:
+.TP
+.I marble
+- a marble type texture, basically this texture is formed by modeling 
+heterogenous layers of differing materials. Each layer is then perturbed
+(in the X direction) by a "turbulent" function to give a streaky look.
+.TP
+.I granite
+- a granite looking texture, this texture randomly mixes a "blendcolor" 
+with the base color of the object.
+.TP
+.I wood
+- a wood grain looking texture,
+this texture simulates wood grain by modeling a tree trunk with randomly
+perturbed concentric cylinders. 
+.TP
+.I wood2
+- another wood grain texture,
+This is similar to "wood" but the cylinder perturbation is carried out
+over a number of octaves to give 1/f perturbation to the rings.
+.TP
+.I spotted
+- makes funny 'spots' 
+on the object by randomly blending the colour white with the basecolour
+.TP
+.I fuzzy
+- makes things look fuzzy
+by randomly perturbing the objects normal vector.
+.TP
+.I stucco
+- produces a plasted effect by perturbing the objects
+normal vector
+.TP
+.I ripples
+- makes what looks likes water ripples.
+This is done by summing the contibutions of a set of randomly positioned
+wave sources and perturbing the objects normal verctor.
+.TP
+.I waves
+- makes non-random wave patterns.
+The user may specify the position and amplitude etc of a set of wave sources
+whose contributions are summed to perturb the objects normal vector
+.TP
+.I bumpy
+- makes what looks like bumps by randomly perturbing the objects normal vector.
+.TP
+.I colourblend
+- does a linear colour blend along the y axis.
+.TP
+.I tile
+- tiles a preexisting picture onto an object.
+.TP
+The following options can be specified with most of the textures
+.TP
+.B blend expr
+	Specify how much of the current texture to blend with the object
+	colour. For example, we might wish to blend two tile patterns
+	together so we could use:
+.nf
+
+	texture tile {
+		vortfile tile1.pix
+		blend 0.5		/* Blend %50 of tile1 to object */
+	}
+	texture tile {
+		vortfile tile2.pix
+		blend 0.75		/* Blend %75 of tile2 to object */
+	}				/* plus tile1 */
+.fi
+.TP
+.B blendcolor red, green, blue
+	Specify a colour to blend with the base colour of the object.
+	For example, the vein colour in a marble texture or the ring
+	colour in a wood grain.
+
+.TP
+.B colormap filename 
+	Rather than use the blendcolor (see above) colours may be
+	specified in a colour map file. Instead of mixing with the
+	base colour, an index into this colour map is derived from
+	the texture and the resulting colour from the map is used.
+
+	The format of the file is:
+	
+.nf
+		number_of_entries		- integer
+		r1, g1, b1			- floats (between 0 and 1)
+		.   .   . 
+		.   .   . 
+		rn, gn, bn
+.fi
+
+.TP
+.B colourmap {
+.nf	
+		r1, g1, b1,
+		r2, g2, c2,
+		.   .   . ,
+		.   .   . ,
+
+		rn, gn, bn
+	}
+.fi
+
+	Instead of specifying a colourmap file as above, the colourmap
+	entries may be directly specified. (Remember the commas at the
+	end of all but the last line).
+
+.TP
+.B turbulence expr
+.LP
+	Some textures have a turbulent or a noisy character about
+	them. This parameter attempts to control this aspect in the
+	texture.
+
+.TP
+.B squeeze expr
+	With the marble and wood textures, the veins for rings may
+	be made thinner (spacing stays the same) by increasing this
+	parameter. Usually a maximum squeeze of no more than 3 or 4 
+	is recomended as the resultant change is very small above
+	these values.
+
+.TP
+.B scalefactor expr
+	Some textures require a single scalefactor (eg. fuzzy, spotted, ripples)
+	that controls the overall character of the texture. For example,
+	with the fuzzy texture the scale factor controls 'overall fuzziness'
+	of the texture. For the spotted texture it controls the mixing
+	of the white noise with the objects basecolour.
+
+.TP
+.B scalefactors expr, expr, expr
+	Some textures require more than one scalefactor.
+(eg. bumpy - where each component of the normal perturbation may be controlled,
+and colourblend, where the first value is a start point along y, the second
+the distance you want to blend over, and the third the turbulance)
+	In fact, for the textures that do not explicitly require a 
+	scalefactors field, the first value equates to a "size" scale
+	for the texture, the second to the turbulence, and the third
+	to the squeeze. This gives a shorthand way of specify in some
+	parameters and is backwardly compatible with older versions
+	of art.
+.TP
+.B source {
+.nf
+		wave source specification
+	}
+.fi
+	The waves texture should have one or more wave sources defined.
+	The location of each wave source is given by the 
+.IB "center(x, y, z)" keyword. Other parameters for a wave source are:
+.HP
+.IB wavelength 
+expr
+.HP
+.IB phase 
+expr
+.HP
+.IB damping 
+expr
+.HP
+.IB amplitude 
+expr
+.TP
+	all of which have their traditional meanings.
+.LP
+Textures are applied in the object's canonical space and are
+automatically scaled by the object's size unless
+specified outside the scope of the object. Tiles appearing in textures 
+are applied in the object's canonical space.
+Canonical spaces for objects
+are as follows:
+.TP
+.I boxes, cylinders, cones
+- bottom z equals zero, top z equals one.
+.TP
+.I spheres, ellipsoids, superquadrics
+- unit radius centered at the origin.
+.TP
+.I rings and torii
+- unit radius, lying in the xy-plane, facing z.
+.TP
+.I patches
+- unit square, reflecting u, v space.
+.TP
+.I polygons
+- lying in the positive xy-plane, one corner at (0, 0, 0), scaled
+to a unit square.
+.LP
+Additionally transformations such as rotation, etc... can also be used in
+textures. These transformations are applied after the viewing and, if
+the texture is defined in the object's scope, the object transformation.
+For example:
+.nf
+
+		texture tile {
+			size 0.25, 0.25
+			vortfile tile.pix
+			rotate(45, y)
+		}
+
+.fi
+will tile an object with the tile pattern rotated in object space
+by 45 degrees around y.
+.I Examples
+.nf
+
+		texture marble {
+			blendcolour 0.4, 0.1, 0.1
+			turbulence 30
+			squeeze 2
+			rotate(90.0, x)
+			range 6
+		}
+
+		texture waves {
+			source {
+				center(0, 0, 0)
+				amplitude 1
+				wavelength 2
+			}
+			source {
+				center(1, 0, 0)
+				amplitude 0.5
+				wavelength 2.5
+				damping 0.2
+			}
+		}
+
+		texture fuzz scalefactor 0.2
+
+		texture wood {
+			rotate(90, y)
+			turbulence 2
+			squeeze 2
+			blendcolor 0.2, 0.2, 0.2
+		}
+
+
+		texture marble {
+			rotate(60, z)
+			translate(0.2, 0.2, 0.2)
+			turbulence 3
+			colourmap {
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0
+			}
+
+		texture tile vortfile lenna.pix
+
+		texture tile {
+			rotate (90, z)
+			vortfile lenna.pix
+			blend 0.5
+		}
+
+.fi
+The 
+.I tile
+texture needs to be given a size if the default (1.0, 1.0) is not
+wanted. The pixel file being used is specified using the
+.I vortfile 
+keyword.
+.I Textures 
+may also be used to modulate different surface attributes other than
+colour. For example, a texture may be used to modulate the transparency
+of an object. This is done by specifying the attribute to modulate then
+a texture specification as described above. For example:
+.nf
+
+	transparency texture marble {
+		blendcolor 1, 1, 1
+		turbulence 2
+	}
+
+.fi
+would modulate the transparency of an object. 
+
+.nf
+
+	polygon {
+		material 1, 0.5, 0.5, 10
+		vertex(-1, -1, 0)
+		vertex(-1, 1, 0)
+		vertex(1, 1, 0)
+		vertex(1, -1, 0)
+		transparency texture tile {
+			vortfile lenna.pix
+		}
+	}
+
+.fi
+would produce a polygon with a transparent image on it - similar to a 
+slide. Attributes that may be modified with textures are:
+
+.HP
+.I transparency
+- the colour returned from the texture function is used to set the
+transparency values of the object.
+.HP
+.I ambient
+- the colour returned from the texture function is used to set the
+ambient values of the object.
+.HP
+.I reflectance
+- the colour returned from the texture function is used to set the
+reflectance values of the object.
+.HP
+.br
+.I ri
+- the grayscale equivalent of the colour returned from the texture function is added to the refractive index of the object.
+.br
+
+
+
+.HP
+.BI colour
+.br
+specifies the object's colour.
+.nf
+
+		e.g. colour 1.0, 1.0, 1.0
+
+.fi
+makes an object white. The word color can also be
+used.
+.HP
+.BI reflectance
+.br
+sets the amount of reflectance for an object.
+.nf
+
+		e.g. reflectance 0.75
+
+.fi
+indicates that 75% of the light coming from an object is
+reflected from somewhere else.
+.HP
+.BI transparency
+.br
+set the transparency of an object.
+.nf
+
+		e.g. transparency 0.75
+
+.fi
+indicates that 75% of the light behind an object is
+transmitted through it. Transparent objects will look
+washed out if the diffuse component is too high and
+the specular component too low. For example a glass
+object might have the following properties:
+.nf
+
+		meterial 1.5, 0.1, 0.9, 100
+		transparency 0.9
+		reflectance 0.1
+
+.fi
+.HP
+.BI absorption
+.br
+set the absorption factor for an object.
+.nf
+
+		e.g. absorption 0.35
+
+.fi
+indicates that 35% of the light coming from an object is
+absorbed per unit of length in world units. Transparency
+must be used also for this to be effective.
+.SS Defining Objects.
+.HP
+.BI sphere	
+.br
+defines a sphere. The radius and the centre must be given.
+.nf
+
+		e.g.	sphere {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.25, 0.75, 6.0
+				reflectance 0.75
+				center (-2.0, -0.5, -6.0)
+				radius	1.1
+			}
+
+.fi
+.HP
+.BI ellipsoid
+.br
+defines an axis-aligned ellipsoid. The center of the ellipsoid
+and the radii for each axis need to be specified. The usual set
+of transformations may be applied to an ellipsoid when a non axis-aligned
+object is required.
+.nf
+
+		e.g.	ellipsoid {
+				colour 0.7, 0.5, 0.5
+				material 0.0, 1.0, 0.0, 0.0
+				rotate(45.0, x)
+				center (0.0, 0.0, 0.0)
+				radii 1.5, 0.5, 6.0
+			}
+
+.fi
+.HP
+.BI box	
+.br
+defines an axis-aligned box. It requires the top-front-right
+and the bottom-back-left corners to be specified. The usual set
+of transformations may be applied to a box when a non axis-aligned
+object is required.
+.nf
+
+		e.g.	box {
+				colour 0.7, 0.5, 0.5
+				material 0.0, 1.0, 0.0, 0.0
+				vertex (2.5, 2.5, -5.0)
+				vertex (1.5, 0.5, -6.0)
+			}
+
+.fi
+.HP
+.BI cylinder
+.br
+defines a cylinder. The centers of the two faces
+are needed together with the radius. An elliptic cylinder
+can be defined by using radii (e.g. radii 2.0, 1.0) instead of
+radius.
+.nf
+
+		e.g.	cylinder {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.75, 0.25, 6.0
+				center (0.0, 4.0, -6.0)
+				center (0.0, -3.5, -6.0)
+				radius	2.5
+			}
+
+.fi
+.HP
+.BI cone
+.br
+defines a cone. The tip of the cone plus the
+center of its face and its radius is needed. Elliptic cones
+will be generated if radii is used. If another center and
+rdaius are provided instead of the vertex a truncated cone
+is generated instead.
+.nf
+
+		e.g.	cone {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 1.0, 0.0, 0.0
+				vertex (0.0, 20.0, 0.0)
+				center (0.0, 0.0, 0.0)
+				radius	5.5
+			}
+
+.fi
+.HP
+.BI torus
+.br
+defines a right circular torus. The definition requires the
+center of the torus and values for the radius of the torus
+and the radius of its pipe.  Unless a rotation, via
+.I rotate,
+is specified all torii have their
+major axis in a plane parallel to the (x, y) plane.
+.nf
+
+		e.g.	torus {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.95, 0.00, 0.0
+				center (0.0, 0.0, 0.0)
+				radius 3.0
+				radius 2.0
+			}
+
+.fi
+.HP
+.BI
+polygon
+.br
+describes a polygon by specifying the vertices of the polygon.
+If a tile pattern is defined the first vertex specified is used
+to map the tile pattern onto the polygon.
+.nf
+
+		e.g.	polygon {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 1.0, 0.0, 0.0
+				tile rb.pix size 0.5, 0.5
+				vertex (-2.0, -0.7, -2.0)
+				vertex (2.0, -0.7, -2.0)
+				vertex (2.0, -0.7, 2.0)
+				vertex (-2.0, -0.7, 2.0)
+			}
+		
+.fi
+describes a four sided polygon. In the case of 3 and most 4 sided
+polygons additional surface normals and colours can be specified
+that will be interpolated from the polygons vertices. The following
+example shows where both have been added, the second set of numbers
+in parentheses is the normal at that vertex, the third set of numbers
+is the colour at that vertex. The normals and colours may be specified
+in any order, and don't need to be specified together. Note: if the
+polygon is 4 sided a base colour for it must be defined as the interpolation
+works by dividing the polygon up into triangles, generally this base
+colour should be the average of the normal colours, although interesting
+results can be obtained when it isn't.
+.nf
+ 
+	 e.g.    polygon {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 1.0, 0.0, 0.0
+			tile rb.pix size 0.5, 0.5
+			vertex (-2.0, -0.7, -2.0), (0, 1, 0), 1.0, 0.0, 0.0
+			vertex (2.0, -0.7, -2.0), (0, 1, 1), 0.0, 1.0, 0.0
+			vertex (2.0, -0.7, 2.0), (0, 1, -1), 0.0, 0.0, 1.0
+		}
+
+.fi
+.HP
+.BI
+patch
+.br
+describes a bicubic patch. Three bases are provide, bezier, bspline,
+and cardinal (also know as the Catmull-Rom spline). A patch is defined
+by giving the control points in x, y, and z. The default basis is
+bezier and the default subdivision level is 6.
+.nf
+	e.g.	patch {
+			basis bezier
+			maxsublevel 4
+			colour 0.0, 1.0, 0.0
+			material 0.0, 1.0, 0.0, 0.0
+			geomx {
+				0.0,   0.2588,   0.5,   0.7071,
+				0.0,   0.51764,  1.0,   1.4142,
+				0.0,   0.51764,  1.0,   1.4142,
+				0.0,   0.2588,   0.5,   0.7071
+			}
+
+			geomy {
+				1.0,   0.966,   0.866,  0.7071,
+				2.0,   1.9318,  1.732,  1.4142,
+				2.0,   1.9318,  1.732,  1.4142,
+				1.0,   0.966,   0.866,  0.7071
+			}
+
+			geomz {
+				1.0,   1.0,     1.0,    1.0,
+				1.0,   1.0,     1.0,    1.0,
+				0.0,   0.0,     0.0,    0.0,
+				0.0,   0.0,     0.0,    0.0
+			}
+		}
+.fi
+.HP
+.BI
+blobby
+.br
+is used to define an object made up of meta-balls, these can be used
+to make weird and strange "lifelike" objects. At the moment these are
+still a little limited (one of these days). A blobby is defined by 
+its enclosing metaballs, the metaball takes its centre, radius, and
+strength as arguments. The strength may be negative. The threshold value
+determines how much the metaballs have to  overlap before they start
+to blend. The best way
+to understand these is to play round with them!
+.nf
+		blobby {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 0.75, 0.25, 20.0
+			threshold 0.5
+			metaball (0.0, 0.0, -1.5), 0.9, 0.8
+			metaball (0.0, -0.510142, -1.5), 0.9, 0.8
+			metaball (0.0, 0.575719, -1.5), 0.9, 0.8
+			metaball (-0.571153, 0.0, -1.5), 0.9, 0.8
+			metaball (0.597485, 0.0, -1.5), 0.9, 0.8
+		}
+.fi
+.HP
+.BI
+disk
+.br
+describes a disk.
+.nf
+
+		e.g.	disk {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 1.0, 0.0, 0.0
+				center (0.0, 0.0, 0.0)
+				radius 1.0
+			}
+
+.fi
+describes a disk of unit radius at the origin, in the (x, y)
+plane. If an elliptical disk is required radii can be used
+instead of radius. Disks can be transformed as required.
+.HP
+.BI
+ring
+.br
+describes a ring.
+.nf
+
+		e.g	ring {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 1.0, 0.0, 0.0
+				center (0.0, 0.0, 0.0)
+				radius 1.0
+				radius 0.5
+			}
+
+.fi
+describes a ring of unit radius at the origin, in the (x, y)
+plane, with a hole in it radius of 0.5. If an elliptical ring
+is required radii can be used instead of radius. Rings can be
+transformed as required.
+.HP
+.BI geometry
+.br
+describes a multi-faceted object. If the object is a polyhedron
+it can be used in csg modeling. Geometry objects can be a set of
+polygons defined in a geometry file, a strip of triangles or a 
+heightfield.  They may be phong shaded and backfaced if required.
+It is noted that some things are not designed with backfacing in mind.
+.nf
+
+		e.g.	geometry {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.25, 0.75, 6.0
+				phongshading on
+				backfacing on
+				offfile goblet.geo
+			}
+
+.fi
+If phong shading is not specified the geometry model is flat
+shaded. Currently only offfiles (files in the "object file format")
+and strips are supported by the geometry option. The offiles describing
+the colour of individual polygons, the vertex normals, the vertex 
+colours, and the polygon normals may also be included in the geometry,
+their keywords are colourfile, vnormalfile, vcolourfile, and normalfile
+respectively.        
+
+The triangle strips are introduced using the strip keyword. In its
+most basic form a strip which defines two triangles would look as
+follows:
+.nf
+
+		e.g.	geometry {
+				strip {
+				    (-9.523, 10.625, -7.842)
+				    (-8.662,  9.543, -9.554)
+				    (-9.435, 10.241, -7.556)
+				    (-8.574,  9.159, -9.267)
+				}
+			}
+
+.fi
+Each line defines a vertex. The first triangle is
+composed of the first three vertices, and the second the last three. The
+surface normals for each of the triangles are reversed for every second
+one (i.e they are calculated 1, 2, 3, then 4, 3, 2, then 3, 4, 5....),
+so that strips can be backfaced sensibly.
+
+It is also possible to associate vertex colours with a strip:
+.nf
+
+		e.g.	geometry {
+				strip {
+				    (-9.523, 10.625, -7.842), 1.0, 0.0, 0.0
+				    (-8.662,  9.543, -9.554), 0.0, 1.0, 0.0
+				    (-9.435, 10.241, -7.556), 1.0, 0.0, 0.0
+				    (-8.574,  9.159, -9.267), 0.0, 0.0, 1.0
+				}
+			}
+
+.fi
+In this case each line defines a vertex, vertex-colour pair.
+
+Two formats of heightfields are supported, the first is a binary file with
+an int at the front giving the dimension
+of the grid followed by a list of z values (floats), the second is a binary
+file of z values (floats) that begins with one line of text.
+.nf
+		
+		e.g.	HEIGHTFIELD xdim ydim
+			<floats>.....
+
+.fi
+where xdim, and ydim are the dimensions (eg. 640 480).
+The height field 
+described in the file is assumed to be in the range 0 to 1 in it's longest
+dimension. 
+.nf
+
+		e.g.	geometry {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.25, 0.75, 6.0
+				phongshading on
+				heightfield land.hf
+			}
+
+.fi
+Heightfields may also be tiled with an image or coloured using
+a colorfield. A colorfield is a binary file of rgb values (all floats)
+that begins with one line of text.
+.nf
+		
+		e.g.	COLORFIELD xdim ydim
+			<floats>.....
+
+.fi
+where xdim, and ydim are the dimensions (eg. 640 480). It is assumed that
+the colorfield has the same dimensions as it's corresponding heightfield.
+.HP
+.BI superquadric
+.br
+is used to define a superquadric surface. Superquadrics are 
+basically boxes with curved edges, with a superquadric of
+order 1 looking like a diamond with 8 facets. They are defined
+as a bounding box and an order.
+.nf
+
+		e.g.	superquadric {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.95, 0.0, 0.0
+				vertex (3.0, 9.0, 3.0)
+				vertex (-3.0, 3.0, -3.0)
+				order 1.0
+			}
+
+.fi
+.HP
+.BI algebraic	
+.br
+is used to describe an algebraic surface. Currently the maximum 
+order for a surface is 12 (MAX_ORDER in poly.h). The equation
+for the surface is in TeX format.
+.nf
+
+		e.g.	algebraic {
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.95, 0.00, 0.0
+				equation $$ x^{2} + y^{2} + z^{2} - 1 = 0 $$
+			}
+		
+.fi
+describes a sphere of unit radius.
+
+The area of the surface being looked at can be restricted by using
+a clip volume (as well as csg, defining a clipping volume is faster).
+Clip volumes may be spheres, cylinders, or boxes. The following is
+an example of the use of a clip volume.
+.nf
+
+		algebraic {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 0.95, 0.00, 0.0
+			equation $$
+				x^{4} + y^{4} + z^{4} + 1
+				- x^{2} - y^{2} - z^{2}
+				- y^{2}z^{2} - z^{2}x^{2} - x^{2}y^{2}
+				= 0
+			$$
+			clipvolume box {
+				vertex (3.0, 3.0, 3.0)
+				vertex (-3.0, -3.0, -3.0)
+			}
+		}
+
+.fi
+.HP
+.BI composite
+.br
+is used to specify a composite object. This construct is still a bit
+restricted but is useful if a bunch of related objects need to be transformed
+in the same way. Composites cannot be used in csg modeling.
+.nf
+
+		e.g.	composite {
+				rotate(45.0, y)
+				colour 1.0, 0.0, 0.0
+				material 0.0, 0.95, 0.00, 0.0
+
+				sphere {
+					center(0.0, 0.0, 0.0)
+					radius 1.0
+				}
+				sphere {
+					center(0.0, 0.0, 2.0)
+					radius 0.5
+				}
+			}
+
+.fi
+.HP
+.BI csg
+.br
+is used to specify a CSG model. Constructive solid geometry 
+operations may be applied to any of the above except where
+stated otherwise. The syntax for the CSG operations are: +
+for union, - for subtract, and * for intersect. CSG requires
+the naming of the objects making up the model. Other CSG
+objects can be included in the model definition.
+.nf		
+
+		e.g.	csg {
+				sphere s1 {
+					colour 0.8, 0.1, 0.0
+					material 0.0, 0.95, 0.05, 6.0
+					center (1.7, 3.1, -4.5)
+					radius	2.0
+				}
+				sphere s2 {
+					colour 0.8, 0.1, 0.0
+					material 0.0, 0.95, 0.05, 6.0
+					center (4.7, -1.7, -4.5)
+					radius	2.0
+				}
+				box b1 {
+					colour 1.0, 0.0, 0.0
+					material 0.0, 1.0, 0.0, 0.0
+					vertex (4.5, 2.5, -5.0)
+					vertex (1.5, -1.5, -8.0)
+				}
+
+				(b1 - s1) - s2
+			}
+
+.fi
+Note that it is wise to allow some room for numerical error when
+doing a csg subtract. The following will not always work:
+.nf
+
+	csg {
+		box b1 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 1.0, 0.0, 0.0
+			vertex (4.5, 2.5, -5.0)
+			vertex (1.5, -1.5, -8.0)
+		}
+		box b2 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 1.0, 0.0, 0.0
+			vertex (4.5, 2.0, -4.0)
+			vertex (1.5, -1.0, -7.0)
+		}
+
+		(b1 - b2)
+	}
+
+.fi
+whereas:
+.nf
+
+	csg {
+		box b1 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 1.0, 0.0, 0.0
+			vertex (4.5, 2.5, -5.0)
+			vertex (1.5, -1.5, -8.0)
+		}
+		box b2 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 1.0, 0.0, 0.0
+			vertex (5.5, 2.0, -4.0)
+			vertex (0.5, -1.0, -7.0)
+		}
+
+		(b1 - b2)
+	}
+
+.fi
+will, (hint: look at the definition for b2).
+.SS Repeating Objects in a scene.
+.LP
+If an object is created with a name (as in csg) then the object will
+not appear in the scene unless the name of it is used elsewhere in
+the file as an object type. This can be useful if you have a
+composite object which you wish to define several occurances of, 
+for example:
+.br
+.nf
+	composite com {
+		colour 1.0, 1.0, 1.0
+		.
+		.
+		.
+
+	}
+
+	com {
+		translate(-10, 0, 0)
+	}
+
+	com {
+		translate(10, 0, 0)
+	}
+.fi
+puts two 'com' objects in the scene which are tranlated versions
+of the original ones.
+.LP
+Alternatively the \fB repeat \fR statement can be used to provide
+more than one occurance of an object. 
+.br
+.nf
+	
+	repeat 4 {
+		translate(5, 0, 0)
+		com
+	}
+
+.fi
+creates four occurances of the object com with each one occuring a
+further 5 units along in positive x.
+.SS Transformations.
+.LP
+Three transformations may be applied, rotate, scale, and translate, as well
+as a more general transformation matrix. As with object attributes, matrices
+live in a stack so a transformation applied outside the scope of an object
+will apply to that object, in addition to any transformations that may be
+specified in the object itself.
+.HP
+.BR translate
+.br
+Translation can be applied to any primitive.
+.nf
+
+		e.g. translate(1.0, 0.0, 0.0)
+
+.fi
+shifts the object in x by 1.0.
+.HP
+.BR rotate
+.br
+Rotation can be applied to any primitive.
+.nf
+
+		e.g. rotate(90.0, x)
+
+.fi
+rotates the object 90 degrees around x.
+.HP
+.BR scale
+.br
+Scaling may be done on any primitive.
+.nf
+
+		e.g. scale(2.0, 2.0, 2.0)
+
+.fi
+scales the object by 2.
+.HP
+.BR transform
+.br
+The transform keyword can be used to introduce a 4 x 3 transformation matrix.
+.nf
+
+		e.g. transform {
+			R11, R12, R13,
+			R21, R22, R23,
+			R31, R32, R33,
+			TX, TY, TZ
+		     }
+
+.fi
+The R values represent rotations (possibly with an a scaling vector applied)
+and the T values represent translation. Strictly speaking this is treated
+as a 4 x 4 but the last column is always assumed to be (0, 0, 0, 1).
+.SH "BUGS"
+While the twentyfive bit mode does set the twenty fifth bit it doesn't
+seem to change the picture quality.
+
+On the IBM PC, you can't have more than 5450 vertices and 1300 polygons
+in a geometry file.
+
+.SH "SEE ALSO"
+.IR disp (1),
+.IR vortinfo (1),
+.IR targ2vort (1),
+.IR vort2ps (1),
+.IR median (1),
+.IR mulmcut (1),
+.IR greyscale (1),
+.IR gamma (1),
+.IR movie (1),
+.IR dart (1),
+.IR nart (1),
+.IR vort (3).

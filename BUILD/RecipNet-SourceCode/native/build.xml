@@ -1,0 +1,364 @@
+<!-- 
+  - Reciprocal Net project
+  - build.xml
+  -
+  - This Ant build file compiles the processor- and OS-specific code in the
+  - "native" directory of the source tree.  It is designed to be called by the
+  - master build file in the base of the source tree.
+  -
+  - 21-Jan-2004: ekoperda wrote first draft
+  - 09-Apr-2004: midurbin and ekoperda modified 'mod_recipnet_auth' target and
+  -              added 'mod_recipnet_auth-eachversion' target to support
+  -              multiple platform-specific versions of mod_recipnet_auth
+  - 13-Aug-2004: cwestnea added dirwatcher target
+  - 27-Oct-2004: ekoperda removed a reference to the obsolete DirectoryTable.c
+  -              file from the target 'mod_recipnet_auth-eachversion'
+  - 04-Feb-2005: ekoperda modified mod_recipnet_auth target to use new Java
+  -              location in order to match a change in compile-time-tools.xml
+  - 01-Jan-2008: ekoperda removed mod_recipnet_auth and assoc. dependencies 
+  -->
+
+<project name="native" default="all">
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                   Externally-callable targets are here                  *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="all" 
+            description="compile everything"
+            depends="dirwatcher, librecipnet_server, ortep3, renderclient,
+                    shortep, vort2ppm" 
+      />
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Module-level targets are here                     *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="dirwatcher" 
+            depends="init" 
+            unless="skip-dirwatcher"
+            description="">
+        <echo message="Building recipnet-dirwatcher" />
+        <exec executable="gcc"
+                failonerror="true">
+            <arg value="-O3" />
+            <arg value="-Wall" />
+            <arg value="-lstdc++" />  
+	    <arg value="-fPIC" />  <!-- 16-Oct-2015: added by yuma -->
+            <arg value="-o" />
+            <arg file="${srcbase}/build/recipnet-dirwatcher" />
+            <arg file="recipnet-dirwatcher/recipnet-dirwatcher.cpp" />
+            <arg file="recipnet-dirwatcher/WatchListener.cpp" />
+        </exec>        
+    </target>
+
+    <target name="librecipnet_server" 
+            depends="init" 
+            unless="skip-librecipnet_server"
+            description="">
+        <echo message="Building shared library librecipnet_server.so" />
+        <mkdir dir="${srcbase}/build/jni-headers/" />
+        <javah destdir="${srcbase}/build/jni-headers/" 
+                classpath="${srcbase}/build/classes/"
+                force="true">
+            <class name="org.recipnet.site.core.util.SyslogHandler" />
+        </javah>
+        <exec executable="gcc"
+                failonerror="true">
+            <arg value="-O3" />
+            <arg value="-I${srcbase}/build/compile-time-tools/java/include/" />
+            <arg value="-I${srcbase}/build/compile-time-tools/java/include/linux/" />
+            <arg value="-I${srcbase}/build/jni-headers/" />
+            <arg value="-lstdc++" />  
+            <arg value="-shared" />
+            <arg value="-fPIC" />  <!-- 16-Oct-2015: added by yuma -->
+            <arg value="-o" />
+            <arg file="${srcbase}/build/librecipnet_server.so" />
+            <arg file="librecipnet_server/SyslogHandler.cpp" />
+        </exec>        
+    </target>
+
+    <target name="ortep3" 
+            depends="init"
+            unless="skip-ortep3"
+            description="">
+        <mkdir dir="${srcbase}/build/ortep3" />
+        <copy file="${srcbase}/3rdparty/ortep3-1.0.3/ortep.f"
+                todir="${srcbase}/build/ortep3/"
+                overwrite="true"
+          />
+        <patch patchfile="recipnet-ortep3/ortep.f.patch"
+                originalfile="${srcbase}/build/ortep3/ortep.f"
+          />
+        <echo message="Compiling file ortep.f" />
+        <exec executable="gfortran" failonerror="true">
+            <arg value="-fno-backslash" />
+            <arg value="-fno-automatic" />
+            <arg value="-w" />
+            <arg value="-O3" />
+            <arg value="-o" />
+            <arg file="${srcbase}/build/ortep3/ortep.o" />
+            <arg value="-c" />
+            <arg file="${srcbase}/build/ortep3/ortep.f" />
+        </exec>
+
+        <echo message="Compiling file ortwrap.c" />
+        <exec executable="gcc"
+                failonerror="true">
+            <arg value="-O3" />
+            <arg value="-o" />
+            <arg file="${srcbase}/build/ortep3/ortwrap.o" />
+            <arg value="-c" />
+            <arg file="recipnet-ortep3/ortwrap.c" />
+        </exec>
+
+        <echo message="Linking program recipnet-ortep" />
+        <exec executable="gfortran" failonerror="true">
+            <arg value="-O3" />
+            <arg value="-o" />
+            <arg file="${srcbase}/build/recipnet-ortep3" />
+            <arg file="${srcbase}/build/ortep3/ortep.o" />
+            <arg file="${srcbase}/build/ortep3/ortwrap.o" />
+        </exec>
+    </target>
+
+    <target name="renderclient" 
+            depends="init"
+            unless="skip-renderclient"
+            description="">
+        <echo message="Compiling files renderc.c dartio.c" />
+        <exec executable="gcc"
+                failonerror="true">
+            <arg value="-O3" />
+            <arg value="-fomit-frame-pointer" />
+            <arg value="-DALTSYSTEM" />
+            <arg value="-DBZ2V1" />
+            <arg value="-lbz2" />
+            <arg value="-o" />
+            <arg file="${srcbase}/build/recipnet-renderclient" />
+            <arg file="recipnet-renderclient/renderc.c" />
+            <arg file="recipnet-renderclient/dartio.c" />
+        </exec>
+    </target>
+
+    <target name="shortep" 
+            depends="init"
+            unless="skip-shortep"
+            description="">
+        <delete dir="${srcbase}/build/shortep" />
+        <untar src="${srcbase}/3rdparty/shortep/shortep.tgz" 
+                dest="${srcbase}/build/" 
+                overwrite="true" 
+                compression="gzip" />
+        <exec executable="make" 
+                dir="${srcbase}/build/shortep/"
+                failonerror="true">
+            <arg value="shortep" />
+            <env key="FC" value="gfortran" />
+            <env key="FFLAGS" value="-O3" />
+        </exec>
+        <copy file="${srcbase}/build/shortep/shortep"
+                tofile="${srcbase}/build/recipnet-shortep" />
+        <chmod perm="+x" file="${srcbase}/build/recipnet-shortep" />
+        <gzip src="${srcbase}/build/shortep/man1/shortep.1"
+                zipfile="${srcbase}/build/shortep/man1/recipnet-shortep.1.gz" />
+        <gzip src="${srcbase}/build/shortep/man5/cif.5"
+                zipfile="${srcbase}/build/shortep/man5/cif.5.gz" />
+        <gzip src="${srcbase}/build/shortep/man5/crt.5"
+                zipfile="${srcbase}/build/shortep/man5/crt.5.gz" />
+        <gzip src="${srcbase}/build/shortep/man5/cssr.5"
+                zipfile="${srcbase}/build/shortep/man5/cssr.5.gz" />
+        <gzip src="${srcbase}/build/shortep/man5/sdt.5"
+                zipfile="${srcbase}/build/shortep/man5/sdt.5.gz" />
+        <gzip src="${srcbase}/build/shortep/man5/star.5"
+                zipfile="${srcbase}/build/shortep/man5/star.5.gz" />
+    </target>
+
+    <target name="vort2ppm" depends="init,vort-tools" description="">
+        <copy file="${srcbase}/build/vort-recipnet-rendering/vort/tools/vort2ppm" 
+                tofile="${srcbase}/build/recipnet-vort2ppm" 
+          />
+        <chmod perm="+x" file="${srcbase}/build/recipnet-vort2ppm" />
+    </target>
+
+    <target name="vort-raytracer"
+            depends="init,vort-source,vort-lib"
+            unless="skip-vort-raytracer"
+            description="">
+        <!--
+          - Compile VORT's 'art' module that does ray-tracing.
+          -->
+        <exec executable="make" 
+                dir="${srcbase}/build/vort-recipnet-rendering/vort/art/src/">
+            <arg value="MFLAGS=-O2" />
+            <arg value="CC=gcc" />
+            <arg value="YACC=bison" />
+            <arg value="LEX=flex" />
+            <arg value="LEXLIB=-lfl" />
+        </exec>
+    </target>
+
+    <target name="vort-tools" depends="init,vort-source,vort-lib"
+            unless="skip-vort-tools">
+        <!--
+          - Compile the VORT command-line tools.
+          -->
+        <exec executable="make" 
+                dir="${srcbase}/build/vort-recipnet-rendering/vort/tools/">
+            <arg value="MFLAGS=-O2" />
+            <arg value="CC=gcc" />
+        </exec>
+    </target>
+
+    <target name="vort-lib" depends="init,vort-source" unless="skip-vort-lib">
+        <!--
+          - Compile the VORT library
+          -->
+        <exec executable="make" 
+                dir="${srcbase}/build/vort-recipnet-rendering/vort/lib/">
+            <arg value="MFLAGS=-O2" />
+            <arg value="CC=gcc" />
+        </exec>
+    </target>
+
+    <target name="vort-source" depends="init" unless="skip-vort-source">
+        <delete dir="${srcbase}/build/vort-recipnet-rendering/" />
+        <mkdir dir="${srcbase}/build/vort-recipnet-rendering/" />
+        <untar src="${srcbase}/3rdparty/vort-2.3.3/vort.tar.gz" 
+                dest="${srcbase}/build/vort-recipnet-rendering/" 
+                compression="gzip" />
+        <patch patchfile="vort-recipnet-rendering/vort-recipnet-rendering.patch"
+                dir="${srcbase}/build/vort-recipnet-rendering/vort/"
+                strip="1" />
+    </target>
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Build infrastructure is here                      *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="init">
+        <property name="srcbase" location="../" />
+
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+            <classpath>
+                <pathelement location="${srcbase}/build/compile-time-tools/ant-contrib/lib/ant-contrib-0.6.jar" />
+            </classpath>
+        </taskdef>
+        <uptodate property="skip-dirwatcher"
+                targetfile="${srcbase}/build/recipnet-dirwatcher">
+            <srcfiles dir="recipnet-dirwatcher" includes="**/*" />
+            <srcfiles dir="." includes="build.xml" />
+        </uptodate>
+        <uptodate property="skip-librecipnet_server"
+                targetfile="${srcbase}/build/librecipnet_server.so">
+            <srcfiles dir="librecipnet_server/" includes="**/*" />
+            <srcfiles dir="${srcbase}/build/classes/" 
+                    includes="**/SyslogHandler.class" />
+            <srcfiles dir="." includes="build.xml" />
+        </uptodate>
+        <uptodate property="skip-ortep3"
+                targetfile="${srcbase}/build/recipnet-ortep3">
+            <srcfiles dir="recipnet-ortep3/" includes="**/*" />
+            <srcfiles dir="${srcbase}/3rdparty/" includes="ortep3*/**/*" /> 
+            <srcfiles dir="." includes="build.xml" />
+        </uptodate>
+        <uptodate property="skip-renderclient"
+                targetfile="${srcbase}/build/recipnet-renderclient">
+            <srcfiles dir="recipnet-renderclient/" includes="**/*" />
+            <srcfiles dir="." includes="build.xml" />
+        </uptodate>
+        <uptodate property="skip-shortep" 
+                targetfile="${srcbase}/build/recipnet-shortep">
+            <srcfiles dir="${srcbase}/3rdparty/shortep/" includes="**/*" /> 
+            <srcfiles dir="." includes="build.xml" />
+        </uptodate>
+        <uptodate property="skip-vort-source"
+                targetfile="${srcbase}/build/vort-recipnet-rendering/">
+            <srcfiles dir="vort-recipnet-rendering/" includes="**/*" />
+            <srcfiles dir="${srcbase}/3rdparty/" includes="vort*/**/*" />
+            <srcfiles dir="." includes="build.xml" />
+        </uptodate>
+        <condition property="skip-vort-lib">
+            <and>
+                <isset property="skip-vort-source" />
+                <uptodate targetfile="${srcbase}/build/vort-recipnet-rendering/vort/lib/libvort.a">
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/lib"
+                        includes="*.c" />
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/lib"
+                        includes="*.h" />
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/lib"
+                        includes="Makefile" />
+                </uptodate>
+            </and>
+        </condition>
+        <condition property="skip-vort-tools">
+            <and>
+                <isset property="skip-vort-lib" />
+                <uptodate>
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/tools"
+                        includes="*.c" />
+                    <mapper type="regexp" from="^(.*)\.c$$" to="\1"/>
+                </uptodate>
+            </and>
+        </condition>
+        <condition property="skip-vort2ppm">
+            <and>
+                <isset property="skip-vort-tools" />
+                <uptodate property="skip-vort2ppm"
+                    srcfile="${srcbase}/build/vort-recipnet-rendering/vort/tools/vort2ppm"
+                    targetfile="${srcbase}/build/recipnet-vort2ppm" />
+            </and>
+        </condition>
+        <condition property="skip-vort-raytracer">
+            <and>
+                <isset property="skip-vort-lib" />
+                <uptodate>
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/art/src"
+                        includes="*.c" />
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/art/src"
+                        includes="*.h" />
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/art/src"
+                        includes="*.y" />
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/art/src"
+                        includes="*.l" />
+                    <srcfiles
+                        dir="${srcbase}/build/vort-recipnet-rendering/vort/art/src"
+                        includes="Makefile" />
+                    <compositemapper>
+                        <mergemapper to="${srcbase}/build/vort-recipnet-rendering/vort/art/src/art" />
+                        <mergemapper to="${srcbase}/build/vort-recipnet-rendering/vort/art/src/in.artd" />
+                        <mergemapper to="${srcbase}/build/vort-recipnet-rendering/vort/art/src/dart" />
+                        <mergemapper to="${srcbase}/build/vort-recipnet-rendering/vort/art/src/nart" />
+                        <mergemapper to="${srcbase}/build/vort-recipnet-rendering/vort/art/src/in.netartd" />
+                    </compositemapper>
+                </uptodate>
+            </and>
+        </condition>
+    </target>
+</project>

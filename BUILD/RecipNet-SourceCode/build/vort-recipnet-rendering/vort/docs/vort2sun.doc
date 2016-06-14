@@ -1,0 +1,66 @@
+
+
+
+VORT2SUN(1)              USER COMMANDS                VORT2SUN(1)
+
+
+
+NAME
+     vort2sun - convert a VORT file into a sun raster file.
+
+SYNOPSIS
+     vort2sun [ -mn ] file
+
+DESCRIPTION
+     Vort2sun reads the pixfile (5) format file file1 and outputs
+     a sun raster file to standard out.  If the -mn is specified,
+     where n is some integer the picture is scaled by  n  in  the
+     output.
+
+BUGS
+     It doesn't handle 24bit files.
+
+SEE ALSO
+     art(1),  vortinfo(1),  targ2vort(1),  median(1),   gamma(1),
+     greyscale(1), vort(3), vortfile(5).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2          Last change: December 3, 1990                 1
+
+
+

@@ -1,0 +1,541 @@
+/*
+raysperpixel 4
+*/
+
+up(0.0, 0.0, 1.0)
+lookat(14.0, 3.0, 2.0, 0.0, 0.0, 0.0, 15.0)
+
+fieldofview 90.0
+
+
+light {
+	colour 1.0, 1.0, 1.0
+	location (50.0, 50.0, 20.0)
+}
+
+light {
+	colour 1.0, 1.0, 1.0
+	location (50.0, 50.0, 20.0)
+}
+
+/* some moons */
+sphere {
+	colour 0.9, 0.9, 0.8
+	material 0.0, 0.75, 0.0, 0.0
+	radius 0.1
+	center (0.0, 11.0, 0.5)
+}
+
+sphere {
+	colour 0.9, 0.8, 0.9 
+	material 0.0, 0.75, 0.0, 0.0
+	radius 0.1
+	center (5.0, 10.5, 0.0)
+}
+
+sphere {
+	colour 0.9, 0.9, 0.9
+	material 0.0, 0.75, 0.0, 0.0
+	radius 0.1
+	center (11.0, 0.0, 0.0)
+}
+
+sphere {
+	colour 0.8, 0.9, 0.9
+	material 0.0, 0.75, 0.0, 0.0
+	radius 0.09
+	center (9.5, -1.5, 0.5)
+}
+
+sphere {
+	colour 0.8, 0.9, 0.7
+	material 0.0, 0.75, 0.0, 0.0
+	radius 0.09
+	center (-10.0, -10.5, 7.0)
+}
+
+/* planet (constructed of bands) */
+csg {
+	/* top polar cap */
+	sphere s1 {
+		colour 0.8, 0.5, 0.19
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 4.6)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - blower
+
+}
+
+csg {
+	/* band 1 */
+	sphere s1 {
+		colour 0.93, 0.60, 0.30
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 4.6)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 4.1)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 2 */
+	sphere s1 {
+		colour 0.9, 0.54, 0.24
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 4.1)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 3.52)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 3A - very thin brown */
+	sphere s1 {
+		colour 0.63, 0.37, 0.168
+		colour 0.9, 0.54, 0.24
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 3.52)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 3.5)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 3B - whitish */
+	sphere s1 {
+		colour 0.88, 0.594, 0.264
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 3.5)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 3.0)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 4 */
+	sphere s1 {
+		colour 0.9, 0.54, 0.24
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 3.0)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 1.4)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 5 - thin reddish */
+	sphere s1 {
+		colour 0.9, 0.45, 0.15
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 1.4)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 1.1)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 6 */
+	sphere s1 {
+		colour 0.87, 0.5, 0.2
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 1.1)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 0.7)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 7 - whitish */
+	sphere s1 {
+		colour 0.88, 0.594, 0.264
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 0.7)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, 0.51)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 8 */
+	sphere s1 {
+		colour 0.9, 0.54, 0.24
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, 0.51)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, -2.5)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 9 */
+	sphere s1 {
+		colour 0.9, 0.45, 0.15
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, -2.5)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, -2.9)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 10 */
+	sphere s1 {
+		colour 0.9, 0.54, 0.24
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, -2.9)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, -3.9)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 11 */
+	sphere s1 {
+		colour 0.85, 0.6, 0.3
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, -3.9)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, -4.2)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* band 12 */
+	sphere s1 {
+		colour 0.9, 0.54, 0.24
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, -4.2)
+		}
+
+	box blower {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex ( 10.0,  10.0, -4.7)
+		vertex (-10.0, -10.0, -10.0)
+		}
+	s1 - bupper - blower
+
+}
+
+csg {
+	/* bottom polar cap */
+	sphere s1 {
+		colour 0.8, 0.5, 0.19
+		material 0.0, 0.75, 0.0, 0.0
+		radius 5.0
+		center (0.0, 0.0, 0.0)
+	}
+
+	box bupper {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.0, 0.0
+		vertex (-10.0, -10.0, 10.0)
+		vertex ( 10.0,  10.0, -4.7)
+		}
+
+	s1 - bupper
+
+}
+
+/* some rings */
+csg {
+	cylinder c1a {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.1, 5.0
+		radius 7.5
+		center (0.0, 0.0, 0.002)
+		center (0.0, 0.0, -0.002)
+	}
+
+	cylinder c1b {
+		colour 0.24, 0.159, 0.072
+		ambient 0.1, 0.1, 0.1
+		material 0.0, 0.75, 0.1, 5.0
+		radius 8.175
+		center (0.0, 0.0, 0.001)
+		center (0.0, 0.0, -0.001)
+	}
+
+	c1b - c1a
+}
+
+csg {
+	cylinder c2a {
+		colour 0.425, 0.37, 0.22
+		material 0.0, 0.75, 0.1, 5.0
+		radius 8.175
+		center (0.0, 0.0, 0.002)
+		center (0.0, 0.0, -0.002)
+	}
+
+	cylinder c2b {
+		colour 0.4, 0.27, 0.12
+		material 0.0, 0.75, 0.1, 5.0
+		ambient 0.1, 0.1, 0.1
+		radius 8.425
+		center (0.0, 0.0, 0.001)
+		center (0.0, 0.0, -0.001)
+	}
+
+	c2b - c2a
+}
+
+csg {
+	cylinder c3a {
+		colour 0.6, 0.5, 0.3
+		material 0.0, 0.75, 0.1, 5.0
+		radius 8.425
+		center (0.0, 0.0, 0.002)
+		center (0.0, 0.0, -0.002)
+	}
+
+	cylinder c3b {
+		colour 0.8, 0.54, 0.24
+		material 0.0, 0.75, 0.1, 5.0
+		ambient 0.1, 0.1, 0.1
+		radius 9.05
+		center (0.0, 0.0, 0.001)
+		center (0.0, 0.0, -0.001)
+	}
+
+	c3b - c3a
+}
+
+csg {
+	cylinder c4a {
+		colour 0.0, 0.0, 0.0
+		material 0.0, 0.75, 0.1, 5.0
+		radius 9.3
+		center (0.0, 0.0, 0.002)
+		center (0.0, 0.0, -0.002)
+	}
+
+	cylinder c4b {
+		colour 0.4, 0.27, 0.12
+		material 0.0, 0.75, 0.1, 5.0
+		ambient 0.1, 0.1, 0.1
+		radius 9.55
+		center (0.0, 0.0, 0.001)
+		center (0.0, 0.0, -0.001)
+	}
+	
+	c4b - c4a
+}
+
+csg {
+	cylinder c5a {
+		colour 0.425, 0.37, 0.22
+		material 0.0, 0.75, 0.1, 5.0
+		radius 9.55
+		center (0.0, 0.0, 0.002)
+		center (0.0, 0.0, -0.002)
+	}
+
+	cylinder c5b {
+/*		colour 0.2125, 0.185, 0.11 */
+		colour 0.24, 0.159, 0.072
+		material 0.0, 0.75, 0.1, 5.0
+		ambient 0.1, 0.1, 0.1
+		radius 10.1
+		center (0.0, 0.0, 0.001)
+		center (0.0, 0.0, -0.001)
+	}
+
+	c5b - c5a
+}

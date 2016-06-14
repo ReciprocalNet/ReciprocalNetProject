@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><message seqnum="137" source="coordinator"><date>2016-06-10 12:25:57 -0400</date><dest>all</dest><prevseqnum>135</prevseqnum><body class="SiteActivationISM"><site id="2576"><name>Test Server 113</name><shortName>testserver113</shortName><baseUrl>http://129.114.18.19/recipnet/</baseUrl><repositoryUrl>http://129.114.18.19/recipnet/data/</repositoryUrl><publicKey algorithm="DSA" encoding="BASE64" format="X.509">MIIBtzCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZp&#13;
+RV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fn&#13;
+xqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuE&#13;
+C/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJ&#13;
+FnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImo&#13;
+g9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYQAAoGASlYfpAAs3c2zFuISa2sCk3Wn/zGhRz4iT9qa&#13;
++kceDXYitmwNSVoBLTV06YtDN4NCiDddKTm0tJNH8aDkYo1O0RAUN8PT+5ZMf1AbohXSEfYy8xN4&#13;
+Y9s6W3mqNSG9275ve2MkkJPSa9zY1bD1J19tvzQgXhRX+XkIGViRhcIw02Q=</publicKey></site></body><deliverToSiteManager/><signature algorithm="SHA1withDSA" encoding="BASE64">MCwCFFmxk8RV/eBoCEaNhYOV+uUGThn6AhR02BaKTnqLd5IowIVn6OnXb3cGjg==</signature></message>

@@ -1,0 +1,325 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="tb01_files/filelist.xml">
+<link rel=Edit-Time-Data href="tb01_files/editdata.mso">
+
+
+<TITLE>Technical Bulletin #01</TITLE>
+
+
+</head>
+
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="http://www.reciprocalnet.org/networkinfo/docs/">Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+
+<div class=Section1>
+
+<div align=center>
+
+<table class=MsoTableGrid  BORDER=1 CELLSPACING=1 CELLPADDING=1 WIDTH="100%">
+ <tr >
+  <td width=271 >
+  <p class=TechBulletinsubtitle > </p>
+  &nbsp;</td>
+  <td width=271 >
+  <p class=TechBulletinsubtitle align=right > </p>
+  &nbsp;</td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal>
+<H1 ALIGN=CENTER><B><FONT SIZE=+3><FONT COLOR="0000FF"><FONT FACE="Arial"><A NAME="T1">How to customize network settings on a server where
+</A></FONT></FONT></FONT></B></H1></p>
+
+<p class=MsoNormal>
+<H1 ALIGN=CENTER><B><FONT SIZE=+3><FONT COLOR="0000FF"><FONT FACE="Arial"><A NAME="T2">the Reciprocal Net site software has been
+pre-installed</A></FONT></FONT></FONT></B></H1></p>
+
+<div >
+
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T3">Background</A></FONT></FONT></FONT></B></h2>
+
+</div>
+
+<p class=MsoNormal>The Reciprocal Net project is furnishing computer hardware
+to the twelve initial partner sites (alpha/beta-testers) in order to ease the
+burden of joining the Reciprocal Net Site Network.  These machines are PC’s that have been
+pre-installed with Red Hat Linux and the Reciprocal Net site software, along
+with all the supporting software packages that the site software requires.  It may be necessary for the system
+administrator who receives one of these pre-configured computers to customize
+its network settings to suit the local network environment.  This document is a guide for doing so.</p>
+
+<div >
+
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T4">Required information</A></FONT></FONT></FONT></B></h2>
+
+</div>
+
+<p class=MsoNormal>Before you can proceed with these instructions, you will
+need to have obtained the following information from your local network’s
+administrator:</p>
+
+<ul type=disc>
+ <li class=MsoNormal >The <I>IP
+     address</I> assigned to your server.  This address must be reachable from the
+     Internet on TCP port 80 (HTTP).  If
+     your local network environment includes a NAT engine between your server
+     and the Internet, your network administrator will assign to your server
+     both a “private” address and a “public” one.  Use the private address as you follow
+     these instructions.</li>
+ <li class=MsoNormal >The <I>IP
+     subnet mask</I> to be used by your server.</li>
+ <li class=MsoNormal >The <I>IP
+     default gateway</I> address to be used by your server.</li>
+ <li class=MsoNormal >The <I>IP
+     broadcast address</I> to be used by your server.  It is possible to compute this from the
+     IP address and subnet mask to be used by your server, but it usually ends with
+     <B><I>.255</B></I>.</li>
+ <li class=MsoNormal >The <I>IP
+     network number</I> to be used by your server.  It is possible to compute this from the
+     IP address and subnet mask to be used by your server, but it usually ends with
+     <B><I>.0</B></I>.</li>
+ <li class=MsoNormal >The IP address(es) of
+     your network’s existing <I>DNS servers</I>.</li>
+ <li class=MsoNormal >The <I>DNS
+     name</I> assigned to your server.  This name comes in two forms: <B><I>yourserver</B></I>
+     (the <I>hostname</I>) and <B><I>yourserver.youruniv.edu</B></I>
+     (the <I>fully-qualified domain name</I>).  You need to know both.  If your local network environment
+     includes a NAT engine between your server and the Internet, your network
+     administrator may assign to your server both a “public” name and a
+     “private” name that are different. 
+     Use the public name as you follow these directions.</li>
+</ul>
+
+<div >
+
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T5">Instructions</A></FONT></FONT></FONT></B></h2>
+
+</div>
+
+<p class=MsoNormal>Log in to the server’s console as root and get a command
+prompt.  Use your favorite text editor to
+open the file <B><I>/etc/hosts</B></I>
+.  There may be a variety of comment
+lines that begin with the character <B><I>#</B></I>, and one line that begins with <B><I>127.0.0.1</B></I>
+.  All other lines in this file are
+extraneous; delete them.  Now, add the
+following line to the bottom of the file:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>150.150.150.150      yourserver.youruniv.edu            yourserver
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Replace <B><I>150.150.150.150</B></I>
+with the IP address assigned to your server, <B><I>yourserver.yourunix.edu</B></I> with the
+fully-qualified domain name assigned to your server, and <B><I>yourserver </B></I>with
+the hostname assigned to your server. 
+Save the file and exit back to a command prompt.</p>
+
+<p class=MsoNormal>Use your favorite text editor to open the file <B><I>/etc/resolv.conf</B></I>
+.  Delete every line in this file.  Then, add the following lines to it:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>search youruniv.edu
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>nameserver 150.150.150.1
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>nameserver 150.150.150.2
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Replace <B><I>youruniv.edu</B></I>
+with the DNS domain assigned to your server. 
+This is the part of the fully-qualified domain name after the hostname
+has been removed.  Replace <B><I>150.150.150.1</B></I>
+with the IP address of the first DNS server on your network.  Replace <B><I>150.150.150.2</B></I> with the IP address
+of the second DNS server on your network. 
+You should use one <B><I>nameserver</B></I>
+line for each DNS server that your network has. 
+Most networks use one, two, or three DNS servers.  Save the file and exit back to a command prompt.</p>
+
+<p class=MsoNormal>Open the file <B><I>/etc/sysconfig/network-scripts/ifcfg-eth0</B></I>
+.  The file contains several lines and
+only some of them need to be changed. 
+Those lines are:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>BROADCAST=150.150.150.255
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>IPADDR=150.150.150.150
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>NETMASK=255.255.255.0
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>NETWORK=150.150.150.0
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Replace <B><I>150.150.150.255</B></I>
+with the IP broadcast address to be used by your server, <B><I>150.150.150.150</B></I>
+with the IP address assigned to your server, <B><I>255.255.255.0</B></I> with the IP subnet
+mask to be used your server, and <B><I>150.150.150.0</B></I> with the IP network
+address to be used by your server.  Save
+the file and exit back to a command prompt.</p>
+
+<p class=MsoNormal>Open the file <B><I>/etc/sysconfig/network</B></I> .  Find the <B><I>HOSTNAME</B></I> line and change it to
+read:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>HOSTNAME=yourserver.youruniv.edu
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Replace <B><I>yourserver.youruniv.edu</B></I>
+with the <I>fully-qualified DNS domain name</I>
+assigned to your server.  Then find the <B><I>GATEWAY</B></I> line
+and change it to read:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>GATEWAY=150.150.150.254
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Replace <B><I>150.150.150.254</B></I>
+with the <I>IP default gateway</I> to be used by
+your server.  Save the file and exit back
+to a command prompt.</p>
+
+<p class=MsoNormal>Open the file <B><I>/etc/tomcat4/server.xml</B></I> in your
+favorite text editor.  Find the <B><I>&lt;Engine&gt;</B></I>
+tag in this file and change it to read:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>&lt;Engine name=”Standalone”
+defaultHost=”yourserver.youruniv.edu” debug=”0”&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>(wrapped for readability). 
+Replace <B><I>yourserver.youruniv.edu</B></I>
+with the <I>fully-qualified DNS domain name</I>
+assigned to your server.  Then find the <B><I>&lt;Host&gt;</B></I>
+tag and change it to read:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>&lt;Host name=”yourserver.youruniv.edu” debug=”0”
+appBase=”webapps” unpackWARs=”true”&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>(wrapped for readability). 
+Again, replace <B><I>yourserver.youruniv.edu</B></I>
+with the <I>fully-qualified DNS domain name</I>
+assigned to your server.  Save the file
+and exit back to a command prompt.</p>
+
+<p class=MsoNormal>Open the file <B><I>/usr/local/apache2/conf/httpd.conf</B></I>
+.  Find the <B><I>ServerAdmin</B></I> line and change it to
+read:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>ServerAdmin root@yourserver.youruniv.edu
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Replace <B><I>yourserver.youruniv.edu</B></I>
+with the fully-qualified DNS domain name assigned to your server.  Then find the <B><I>ServerName</B></I> line and change it to
+read:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>ServerName yourserver.youruniv.edu
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  Replace <B><I>yourserver.youruniv.edu</B></I>
+with the fully-qualified DNS domain name assigned to your server.  The DNS name specified in this file must
+match exactly the one you set in Tomcat’s <B><I>server.xml</B></I> file a moment
+ago.  Save the file and exit back to a
+command prompt.</p>
+
+<p class=MsoNormal>And finally, reboot your computer by typing </p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>reboot
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>at the command prompt. 
+Your server should be activated with the network parameters you
+specified when it comes back up.</p>
+
+<div >
+
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T6">Technical support</A></FONT></FONT></FONT></B></h2>
+
+</div>
+
+<p class=MsoNormal>Configuring a Reciprocal Net-owned computer to suit a
+partner lab’s local network environment is a supported procedure.  Technical support for this procedure is
+available by sending e-mail to <a href="mailto:help@reciprocalnet.org">help@reciprocalnet.org</a>. Comments about this
+document are also welcome.</p>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal> </p>
+
+</div>
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="http://www.reciprocalnet.org/networkinfo/docs/">Home</a></CENTER><P>
+
+</BODY>
+
+</HTML>

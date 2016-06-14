@@ -1,0 +1,60 @@
+copy {
+lookat (-1.5, -0.5, 15.0, -0.5, 0.0, 0.0, 0.0)
+
+raysperpixel 8
+background 0, 0.3, 0.3
+
+shadows off
+
+light {
+	direction (0, 0, -1)
+	color 1.0, 1.0, 1.0
+}
+light {
+	location (1.0, 3.5, 7.0)
+	color 1.0, 1.0, 1.0
+}
+
+light {
+	location (-1.5, -0.5, 15.0)
+	color 1.0, 1.0, 1.0
+}
+polygon {
+	vertex (-100.0, -100.0, -20.0)
+	vertex ( 100.0, -100.0, -20.0)
+	vertex ( 100.0,  100.0, -20.0)
+	vertex (-100.0,  100.0, -20.0)
+	material 0.0, 0.5, 0.5, 10
+	color 0.0, 0.0, 0.0
+	reflectance 0.5
+}
+ambient .4, .4, .4
+material 0.0, 0.3, 0.7, 10
+}
+
+scale(1, 1, 3)
+centertext(true)
+move(0, 2.6, 0) 
+color(1.0, 0, 0)
+textradius(0.1)
+font("times.r")
+textsize(1.8, 2.7)
+drawstr("The Department")
+move(0, 0, 0) 
+color(0, 1, 0)
+textradius(0.06)
+font("cursive")
+textsize(2.0, 3.3)
+drawstr("of")
+move(0, -3.0, 0) 
+color(0, 0, 1)
+textradius(0.1)
+font("times.r")
+textsize(1.6, 2.7)
+drawstr("Elephants, Camels and Rodents")
+move(0, -6.4, -1.5) 
+colour(1, 1, 1)
+textsize(.6, 1.2)
+textradius(0.05)
+output(cyl_sph)
+drawstr("(Actually, Engineering Computer Resources)")

@@ -1,0 +1,132 @@
+
+
+
+VORTFILE(3)            C LIBRARY FUNCTIONS            VORTFILE(3)
+
+
+
+NAME
+     VORTFILE - A Very Ordinary raster file  format  library  for
+     the Very Ordinary Rendering Tool Kit.
+
+SYNOPSIS
+     #include <vort.h>
+
+
+DESCRIPTION
+     The VORT file format is designed to be byte independant  and
+     easily  extendable.  At the moment a VORT file can be recog-
+     nised by the string "VORT01" at the start of the file.
+
+     A VORT file is made up of objects.  The  first  byte  of  an
+     object  gives  its type, the second byte gives the number of
+     bytes in the size of the object, the next n bytes  give  the
+     object's  size,  and  the  next size bytes gives the object.
+     Values are written out highbyte first. Programmes can ignore
+     unknown  fields by reading the size and skipping the object.
+     The first object in a VORT file should always  be  a  direc-
+     tory.
+
+     At the moment the following object types are supported:
+          V_DIRECTORY     0       /* directory */
+          V_IMAGE         1       /* image */
+          V_TEXT          2       /* text */
+          V_COLORMAP      3       /* colourmap */
+
+  The Directory Object.
+     Directories can be made up of simple objects or other direc-
+     tories. The following types can be found in a directory:
+          D_PARENT        0       /* address of parent directory */
+          D_NULL          1       /* empty entry */
+          D_OBJECT        2       /* address of object in directory */
+
+  Image Objects.
+     The following types can be found in  an  image  object.  All
+     values are ints, except I_ADDR and I_COLORMAP.
+          I_ADDR          0       /* address of image in file */
+          I_IMWIDTH       1       /* image width in pixels */
+          I_IMHEIGHT      2       /* image height in pixels */
+          I_IMDEPTH       3       /* image depth in bits */
+          I_RED           4       /* red channel present */
+          I_GREEN         5       /* green channel present */
+          I_BLUE          6       /* blue channel present */
+          I_ALPHA         7       /* alpha channel present */
+          I_BACKGND       8       /* background colour */
+          I_DATE          9       /* creation date */
+          I_COLORMAP      10      /* red, green, and blue channels
+                         in colourmap */
+          I_RLE_CODED     11      /* image is run length encoded */
+          I_XADDR         12      /* x coord of image if fragment */
+
+
+
+VORT 2.2          Last change: 5 December 1990                  1
+
+
+
+
+
+
+VORTFILE(3)            C LIBRARY FUNCTIONS            VORTFILE(3)
+
+
+
+          I_YADDR         13      /* y coord of image if fragment */
+          I_ORIGWIDTH     14      /* width of whole image we are fragment of */
+          I_ORIGHEIGHT    15      /* height of whole image we are fragment of */
+
+  Text Objects.
+     The following types can be found in a text  object.  Charac-
+     ters are assumed to be 8 bits.
+          T_ADDR          0       /* address of text in file */
+          T_LENGTH        1       /* length of text in characters */
+
+  Colourmap Objects.
+     The following types can be found in a text object:
+          C_ADDR          0       /* size of map */
+          C_SIZE          1       /* size of each channel */
+          C_RED           2       /* red channel present */
+          C_GREEN         3       /* green channel present */
+          C_BLUE          4       /* blue channel present */
+
+  Making extensions.
+     People wishing to add fields to the file format  should  get
+     in touch with echidna@ecr.mu.oz.au before doing so.
+
+SEE ALSO
+     art(1),  disp(1),   movie(1),   vortinfo(1),   targ2vort(1),
+     vort2ps(1),  median(1),  mulmcut(1),  greyscale(1), vort(3),
+     gamma(1).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2          Last change: 5 December 1990                  2
+
+
+

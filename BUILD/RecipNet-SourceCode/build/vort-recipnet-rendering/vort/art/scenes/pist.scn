@@ -1,0 +1,196 @@
+raysperpixel 4
+
+lookat(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0)
+
+light {
+	location (0.0, 0.0, 15.0)
+	colour 1.0, 1.0, 1.0
+}
+
+/*
+ * cylinder
+ */
+csg {
+	cylinder c1 {
+		colour 1.0, 1.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (6.0, 0.0, 0.0)
+		center (-7.0, 0.0, 0.0)
+		radius	3.0
+	}
+	cylinder c2 {
+		colour 1.0, 1.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (5.8, 0.0, 0.0)
+		center (-8.0, 0.0, 0.0)
+		radius	2.8
+	}
+	sphere s1 {
+		colour 1.0, 1.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (5.4, 0.0, 0.0)
+		radius 2.2
+	}
+	sphere s2 {
+		colour 1.0, 1.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (5.4, 0.0, 0.0)
+		radius 1.7
+	}
+	cylinder c3 {
+		colour 1.0, 1.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (7.8, 0.0, 0.0)
+		center (-1.0, 0.0, 0.0)
+		radius	0.4
+	}
+	box b2 {
+		colour 1.0, 1.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		vertex (9.1, 3.1, 3.1)
+		vertex (-8.9, -3.1, 0.0)
+	}
+
+	c1 + s1 - c3 - s2 - c2 - b2
+}
+
+/*
+ * piston
+ */
+csg {
+	cylinder pc1 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (1.8, 0.0, 0.0)
+		center (-4.0, 0.0, 0.0)
+		radius	2.8
+	}
+	cylinder pc2 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (1.2, 0.0, 0.0)
+		center (-8.0, 0.0, 0.0)
+		radius	2.2
+	}
+	cylinder pc3 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (-1.2, 0.0, 0.0)
+		center (-8.0, 0.0, 0.0)
+		radius	2.6
+	}
+	cylinder pc4 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (-0.2, 2.65, 0.0)
+		center (-0.2, -2.65, 0.0)
+		radius	0.8
+	}
+	cylinder pc5 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (-0.2, 2.65, 0.0)
+		center (-0.2, -2.65, 0.0)
+		radius	0.4
+	}
+	csg r1 {
+		cylinder r1c1 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 0.75, 0.25, 6.0
+			center (1.5, 0.0, 0.0)
+			center (1.3, 0.0, 0.0)
+			radius	2.8
+		}
+		cylinder r1c2 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 0.75, 0.25, 6.0
+			center (1.5, 0.0, 0.0)
+			center (1.3, 0.0, 0.0)
+			radius	2.4
+		}
+		r1c1 - r1c2
+	}
+	csg r2 {
+		cylinder r2c1 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 0.75, 0.25, 6.0
+			center (1.0, 0.0, 0.0)
+			center (0.8, 0.0, 0.0)
+			radius	2.8
+		}
+		cylinder r2c2 {
+			colour 1.0, 0.0, 0.0
+			material 0.0, 0.75, 0.25, 6.0
+			center (1.0, 0.0, 0.0)
+			center (0.8, 0.0, 0.0)
+			radius	2.4
+		}
+		r2c1 - r2c2
+	}
+	box pb1 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		vertex (1.0, 1.5, 0.9)
+		vertex (-1.0, -1.5, -0.9)
+	}
+	box pb2 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		vertex (7.1, 4.1, 3.1)
+		vertex (-8.9, -4.1, 0.0)
+	}
+	pc1 - pc2 - pc3 + (pc4 - pc5) - pb1 - r1 - r2 - pb2
+}
+
+/*
+ * pin
+ */
+csg {
+	cylinder cc1 {
+		colour 0.0, 0.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (-0.2, 2.65, 0.0)
+		center (-0.2, -2.65, 0.0)
+		radius	0.4
+	}
+	box cb1 {
+		colour 0.0, 0.0, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		vertex (7.1, 4.1, 3.1)
+		vertex (-8.9, -4.1, 0.0)
+	}
+	cc1 - cb1
+}
+
+/*
+ * con rod
+ */
+csg {
+	cylinder cnc1 {
+		colour 0.0, 0.3, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (-0.2, 1.4, 0.0)
+		center (-0.2, -1.4, 0.0)
+		radius	0.8
+	}
+	cylinder cnc2 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.75, 0.25, 6.0
+		center (-0.2, 2.65, 0.0)
+		center (-0.2, -2.65, 0.0)
+		radius	0.4
+	}
+	box cnb1 {
+		colour 0.0, 0.3, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		vertex (-0.2, 0.9, 0.2)
+		vertex (-6.2, -0.9, -0.2)
+	}
+	box cnb2 {
+		colour 0.0, 0.3, 1.0
+		material 0.0, 0.75, 0.25, 6.0
+		vertex (7.1, 4.1, 3.1)
+		vertex (-8.9, -4.1, 0.0)
+	}
+	cnc1 + cnb1 - cnc2 - cnb2
+}

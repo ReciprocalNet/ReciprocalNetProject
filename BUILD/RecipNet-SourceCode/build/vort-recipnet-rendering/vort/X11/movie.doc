@@ -1,0 +1,132 @@
+
+
+
+MOVIE(1)                 USER COMMANDS                   MOVIE(1)
+
+
+
+NAME
+     movie - a programme for displaying several VORT image  files
+     in sequence.
+
+SYNOPSIS
+     movie [ -t ] [ -u ] [ -p ] [ -s ] [ -d secs ] [ -f ]
+     [ -geom geometry ] [ -display displayname ] file1 file2 file3 ....
+
+DESCRIPTION
+     Movie displays each VORT image file on a suitable X worksta-
+     tion  in  the  sequence  given  on  the command line. If the
+     images are full colour they are displayed in greyscale. Full
+     colour  24  bit images may be median cut (see median (1)) to
+     produce 8 bit colour mapped images. Multiple 24  bit  images
+     may have mulmcut (1) performed on them to produce multiple 8
+     bit colour mapped images all sharing the  same  colour  map.
+     Images that have a colour map are displayed using the colour
+     map of the first encountered image.
+
+     If -t is specified the title of each file is printed in  the
+     window as well.
+
+     If -u is specified each image is displayed upside down.
+
+     If -p is specified X Pixmaps are used instead of XImages for
+     each frame of the display. X Pixmaps are much faster if your
+     X Server has enough memory to hold all the images without to
+     much  swaping.  XImages  are  slow, but at least you can get
+     your movie displayed with them.  Try both out and  see  what
+     happens.
+
+     If -s is specified an XSync is done between each frame. This
+     helps  when  using  the -p option as sometimes there is some
+     latency when a button is "pressed".
+
+     If -d secs is specified  there  will  be  a  delay  of  secs
+     seconds  between  each  frame.   The default is to show each
+     frame as fast as possible. Secs may be less than 1.
+
+     If -f is specified a new colour map is created for the  pro-
+     gram.  The  default  is to try to use the default colour map
+     and if this fails to create a new colour map.
+
+     If -geom (or -g or  -geometry)  geometry  is  specified  the
+     standard X geometry string will be used to position and size
+     the window. The size and position of the window may also  be
+     set in the .Xdefaults file. Eg vort.Geometry: =+50+50
+
+
+     If  -display  displayname  is  specified  an  alternative  X
+     display is used.
+
+
+
+
+VORT 2.0            Last change: Nov 29, 1990                   1
+
+
+
+
+
+
+MOVIE(1)                 USER COMMANDS                   MOVIE(1)
+
+
+
+SEE ALSO
+     art(1),   vortinfo(1),   disp(1),   median(1),   mulmcut(1),
+     targ2vort(1), vort2ps(1), gamma(1), greyscale(1), vort(3).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.0            Last change: Nov 29, 1990                   2
+
+
+

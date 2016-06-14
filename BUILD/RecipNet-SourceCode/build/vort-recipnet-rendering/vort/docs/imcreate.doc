@@ -1,0 +1,66 @@
+
+
+
+IMCREATE(1)              USER COMMANDS                IMCREATE(1)
+
+
+
+NAME
+     imcreate - create a blank VORT file
+
+SYNOPSIS
+     impaste file w h
+
+DESCRIPTION
+     Imcreate creates a vort file filled with black  in  file  of
+     width w and height h.
+
+SEE ALSO
+     art(1), vortinfo(1),  targ2vort(1),  vort2ps(1),  median(1),
+     greyscale(1), gamma(1), impaste(1), vortfile(5).  vort(3).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2          Last change: February 7, 1991                 1
+
+
+

@@ -1,0 +1,11 @@
+(art s01.scn $1 $2  ; art s07.scn $1 $2  ; art s13.scn $1 $2  ; art s19.scn $1 $2  ; art s25.scn $1 $2  ; art s31.scn $1 $2) &
+
+(art s02.scn $1 $2  ; art s08.scn $1 $2  ; art s14.scn $1 $2  ; art s20.scn $1 $2  ; art s26.scn $1 $2  ; art s32.scn $1 $2) &
+
+(art s03.scn $1 $2  ; art s09.scn $1 $2  ; art s15.scn $1 $2  ; art s21.scn $1 $2  ; art s27.scn $1 $2  ; art s33.scn $1 $2) &
+
+(art s04.scn $1 $2  ; art s10.scn $1 $2  ; art s16.scn $1 $2  ; art s22.scn $1 $2  ; art s28.scn $1 $2  ; art s34.scn $1 $2) &
+
+(art s05.scn $1 $2  ; art s11.scn $1 $2  ; art s17.scn $1 $2  ; art s23.scn $1 $2  ; art s29.scn $1 $2  ; art s35.scn $1 $2) &
+
+(art s06.scn $1 $2  ; art s12.scn $1 $2  ; art s18.scn $1 $2  ; art s24.scn $1 $2  ; art s30.scn $1 $2  ; art s36.scn $1 $2) &

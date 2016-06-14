@@ -1,0 +1,40 @@
+.TH IMPASTE 1 "February 7, 1991" "VORT 2.2"
+.SH NAME
+impaste \- paste two VORT files together producing a third.
+.SH SYNOPSIS
+.PU
+.ll +8
+.B impaste
+.I "file1"
+.I to_x
+.I to_y
+.I "file2"
+.I from_x
+.I from_y
+.I w
+.I h
+.I "file3"
+.SH DESCRIPTION
+.I Impaste
+copies the rectangle of pixels starting at
+.I from_x,
+and
+.I from_y
+of width
+.I w
+and height
+.I h
+into the image represented in file2 and 
+produces a new file, file3.
+.SH "BUGS"
+Won't work on a PC except for small images.
+.SH "SEE ALSO"
+.IR art (1),
+.IR vortinfo (1),
+.IR targ2vort (1),
+.IR vort2ps (1),
+.IR median (1),
+.IR greyscale (1),
+.IR gamma (1),
+.IR vortfile (5).
+.IR vort (3).

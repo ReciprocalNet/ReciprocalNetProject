@@ -1,0 +1,66 @@
+
+
+
+PCX2VORT(1)              USER COMMANDS                PCX2VORT(1)
+
+
+
+NAME
+     pcx2vort - converts a Microsoft/ZSoft PCX colour mapped file
+     to VORT format.
+
+SYNOPSIS
+     pcx2vort file1 file2
+
+DESCRIPTION
+     pcx2vort reads in  a  colour  mapped  .PCX  image  file  and
+     creates  a  VORT format image file. The PCX file format read
+     is:
+               .8 bits per pixel
+               .1 image plane
+               .colour mapped
+               .run-length encoded
+
+     as produced by Windows 3.0 Paint.
+
+BUGS
+     Doesn't handle the general PCX image case.
+
+SEE ALSO
+     art(1),  vortinfo(1),  targ2vort(1),  median(1),   gamma(1),
+     greyscale(1), vort(3), vortfile(5).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2            Last change: Feb 7, 1991                    1
+
+
+

@@ -1,0 +1,66 @@
+
+
+
+GREYSCALE(1)             USER COMMANDS               GREYSCALE(1)
+
+
+
+NAME
+     greyscale - produce a greyscale pixel  file  from  a  colour
+     pixel file.
+
+SYNOPSIS
+     greyscale file1 file2
+
+DESCRIPTION
+     Greyscale produces a 256 colourmapped grey scale pixel  file
+     file2 from the pixel file file1.
+
+SEE ALSO
+     art(1),  vortinfo(1),  targ2vort(1),  vort2ps(1),  gamma(1),
+     median(1), vortfile(5), vort(3).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2            Last change: May 23, 1989                   1
+
+
+

@@ -1,0 +1,41 @@
+
+light {
+	colour 0.8, 0.8, 0.8
+	location (-10.0, 40.0, 20.0)
+}
+
+light {
+	colour 0.8, 0.7, 1.0
+	location (-10.0, 40.0, -20.0)
+}
+
+sphere {
+	colour 1.0, 0.0, 0.0
+	material 0.0, 0.95, 0.00, 0.0
+	center (2.0, -0.5, -4.0)
+	radius	1.0
+}
+
+sphere {
+	colour 1.0, 0.0, 0.0
+	material 0.0, 0.25, 0.75, 6.0
+	reflectance 0.75
+	center (-2.0, -0.5, -6.0)
+	radius	1.1
+}
+
+box {
+	colour 0.7, 0.5, 0.5
+	material 0.0, 1.0, 0.0, 0.0
+	vertex (2.5, 2.5, -5.0)
+	vertex (1.5, 0.5, -6.0)
+}
+
+box {
+	colour 0.0, 1.0, 0.0
+	material 0.0, 0.25, 0.75, 6.0
+	reflectance 0.75
+	vertex (4.5, 5.5, -10.0)
+	vertex (-3.5, -4.5, -11.0)
+}
+

@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<TITLE>Initializing Reciprocal Net site software</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep19.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep21.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a
+name="_Toc187857400">Initializing Reciprocal Net site software</a></span></span></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<div >
+
+<p class=Newsitesonly ><v:shape id="_x0000_s1065"
+ type="#_x0000_t202" fillcolor="#36f" stroked="f">
+ <v:textbox inset="0,2.16pt,0,2.16pt"/>
+ <w:wrap anchorx="margin"/>
+</v:shape>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=72 height=52 bgcolor="#3366FF" >
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td>
+    <div v:shape="_x0000_s1065" 
+    class=shape>
+    <p class=MsoNormal align=center ><b >NEW</b></p>
+    <p class=MsoNormal align=center ><b > SITES ONLY</b></p>
+    </div>
+    </td>
+   </tr>
+  </table>
+   </td>
+ </tr>
+</table>
+
+This section applies
+only to new Reciprocal Net sites, not to existing sites.  It does not apply to upgrades.  Any attempt to initialize a Reciprocal Net
+site more than once would disrupt the entire Site Network and risk data loss.</p>
+
+<p class=Newsitesonly >Go to a
+command prompt and type:</p>
+
+</div>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>drecipnet
+init
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<div >
+
+<p class=Newsitesonly >.  A window will appear with some explanatory
+text about the installation procedure. 
+Read carefully through the message and answer <B><I>y</B></I> when it asks
+if you’d like to continue.</p>
+
+<p class=Newsitesonly >You will be
+prompted for the username and password of a user account that will be created for
+you.  This user account will exist within
+your site’s Reciprocal Net installation and will have <I>site
+administrator</I> privileges. 
+(Reciprocal Net user accounts are unrelated to MySQL database user
+accounts, GNU/Linux user accounts, Tomcat user accounts, or Apache user
+accounts.)  Many users choose to use
+their personal username (8 characters maximum) and password, although it’s
+recommended that you choose a Reciprocal Net password that’s different from your
+GNU/Linux account password.  You can use
+this user account later to create additional Reciprocal Net user accounts so
+that your colleagues can access the system.</p>
+
+<p class=Newsitesonly >Next you’ll be
+prompted to enter the <I>database <st1:PersonName w:st="on">root</st1:PersonName>
+password</I> that you set earlier in this chapter.  The program will trundle for a few seconds
+and generate many lines of output.  If it
+doesn’t end with the word <B><I>Done</B></I>
+then you have problems – read carefully through the output and try to find the
+error message.  If no error is readily
+apparent on your console, then it’s possible the error message was written to
+syslog instead, in which case the message could be found at the bottom of the <B><I>/var/log/messages</B></I>
+file (in a default Red Hat Enterprise Linux installation).</p>
+
+<p class=Newsitesonly >Notice that
+while the init mode was running, it created three database user accounts for
+you and wrote the passwords to <B><I>/etc/recipnet/recipnetd.conf</B></I> for
+safekeeping.</p>
+
+</div>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep19.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep21.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

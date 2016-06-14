@@ -1,0 +1,141 @@
+.TH STAR 5 "AUGUST 2000" "Reciprocal Net" "User Manuals"
+.SH NAME
+star \- star file format
+.SH DESCRIPTION
+.BR STAR ,
+Self-defining Text Archive and Retreival, format is a highly flexible,
+user-extensible format for describing textual or numeric data in a manner that
+is accessible to any text editor or viewer.
+.P
+.I File Structure
+
+A
+.B STAR
+file is a sequence of zero or more
+.B data_
+and/or
+.B global_
+blocks.  The two differ in that data blocks are identified by unique labels
+and identify disjoint sections of name space, whereas global blocks are
+unlabeled and address a name space shared among all
+.BR data_ " and " global_
+blocks.  Each block contains ia sequence of one or more
+.IR "data items" " and/or " "save frames" .
+.P
+.I Save frames
+consist of a labelled
+.B save_
+header, zero or more
+.I data items
+and an unlabelled
+.B save_
+trailer.
+.P
+.I Data items consist of either a
+.IR "data name" / "data value"
+pair, or a
+.B loop_
+structure.  Data names begin with an underscore and may contain any legal
+.B STAR
+character except whitespace.  Data values may be any of the following:
+.RS
+A non-quoted text string containing no white space and not beginning with
+a dollar sign; if at the beginning of a line then also not beginning with
+a semicolon.
+.RE
+.RS
+A single- or double-quoted string, not extending across any line break.  The
+closing quote must match the opening quote.  Quotation marks of the type of
+the delimiters may be included without special provision if they are not
+followed by white space.  The delimiting quotes are not considered part of
+the data value itself.
+.RE
+.RS
+A semicolon delimited block of text, where each of the semicolon delimiters
+is at the beginning of its line.
+.RE
+.RS
+A frame code, which consists of a dollar sign followed by the label of an
+in-scope save frame.
+.RE
+.P
+Loops consist of a header followed by a list of data values, possibly
+interspersed with
+.B stop_
+keywords to delimit the ends of the value lists associated with nested loops.
+Loop headers consist of a
+.B loop_
+keyword followed by one or more data names and/or nested loop headers.  Nested
+loop headers differ from normal loop headers only in that they are terminated
+by
+.B stop_ keywords if their ends do not coincide with the ends of all loop
+headers containing them.
+.P
+Comments may be inserted into a
+.B STAR
+file by inserting them after a leading hash mark (#).  The hash mark and all
+characters following up to the end of the line are ignored when the file is
+processed, unless they occur within the context of a quoted string or semicolon delimited data value.
+.P
+.B STAR
+.I Characters
+
+The following characters are considered whitespace in a
+.B STAR
+file:
+.I horizontal tab
+(ASCII 09),
+.I line feed
+(ASCII 10),
+.I vertical tab
+(ASCII 11),
+.I form feed
+(ASCII 12),
+.I carriage return
+(ASCII 13), and
+.I space
+(ASCII 32).  Of the whitespace characters, only two,
+.I horizontal tab
+and
+.I space
+are permitted inside quoted or semicolon-delimited data values.  Characters
+with ASCII codes from 32 to 126 will normally make up the bulk of the file.
+Characters other than those already specified are not permitted.  (All ASCII
+code numbers given in decimal.)
+Line termination is significant in
+.B STAR
+files where semicolon-delimited data values and comments are involved.  In those
+cases, the appropriate line-termination sequence for the current context is
+assumed
+.RI ( i.e.
+<CR><LF> on DOS/Windows, <LF> on UNIX).
+
+.SH BUGS
+There are portability problems inherent in the context-sensitive line
+termination aspect of the specification, particularly where semicolon-delimited
+data values are concerned.  For instance, a
+.B STAR
+file prepared on a Windows machine will normally have lines terminated by
+<CR><LF> sequences.  If that file is read on a Macintosh without converting
+to the Mac's line termination (just <CR>) then no semicolon in the entire
+file will be recognized as occuring at the beginning of the line.
+.P
+By design,
+.B STAR
+is not a suitable format for archive or transmission of binary data.
+.SH "ADDITIONAL INFORMATION"
+Additional information on
+.BR CIF " and " STAR
+can be obtained from the International Union for Crystallography,
+http://www.iucr.org or one of the national mirrors.
+.P
+.B STAR
+and
+.BR CIF (5)
+are copyrighted by the International Union for Crystallography.
+.SH "SEE ALSO"
+.BR CIF (5)
+.SH AUTHOR
+This manpage was written by John Bollinger of the Indiana University Molecular
+Structure Center <jobollin@indiana.edu>.  The information on it is correct to
+the best of my knowledge and ability, but not guaranteed in any way.

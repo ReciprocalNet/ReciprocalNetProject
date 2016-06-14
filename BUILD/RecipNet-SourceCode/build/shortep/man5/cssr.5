@@ -1,0 +1,43 @@
+.TH CSSR 5 "AUGUST 2000" "Reciprocal Net" "User Manuals"
+.SH NAME
+cssr \- cssr file format
+.SH DESCRIPTION
+The
+.BR CSSR ,
+Crystal Structure Search and Retrieval,
+file format is a format designed by the Cambridge Crystallographic Data Centre
+for use with the Cambridge Structural Database.  It is understood by a
+wide variety of crystallographic software, and as such provides a suitable
+means of data interchange in some circumstances.  In terms of fortan formatting
+codes, here is the specification:
+.TP
+Record 1
+Cell dimensions; 38X, 3F8.3.  The lengths of the three crystallographic axes.
+.TP
+Record 2
+Cell angles and Space Group; 21X,3F8.3,4X,'SPGR=',I3,1X,A11.  The unit cell
+angles, space group number, and space group symbol.
+.TP
+Record 3
+Model parameters; 2I4,1X,A60.  The number of atoms, coordinate system flag,
+and first title.  The coordinate system flag is zero for fractional coordinates
+or 1 for Cartesian coordinates.
+.TP
+Record 4
+Title 2; A53.
+.TP
+Record 5
+Atomic parameters; I4,1X,A4,2X,3(F9.5,1X),8I4,1X,F7.3.  (one per atom)  The
+serial number of the atom, atom name, coordinates, bonding connectivities, and
+atomic charge.
+.SH BUGS
+Does not include thermal parameters.
+.SH "SEE ALSO"
+.BR cif (5),
+.BR crt (5),
+.BR sdt (5),
+.BR shortep (1)
+.SH AUTHOR
+This manpage was written by John Bollinger of the Indiana University Molecular
+Structure Center <jobollin@indiana.edu>.  The information on it is correct to
+the best of my knowledge and ability, but not guaranteed in any way.

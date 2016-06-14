@@ -1,0 +1,416 @@
+<!-- 
+  - Reciprocal Net project
+  - package-site.xml
+  -
+  - This Ant build file is designed to be called only by the main build file,
+  - build.xml.  Logic within this file knows how to package the Reciprocal
+  - Net site software for distribution.
+  -
+  - 21-Jan-2004: ekoperda wrote first draft
+  - 07-Jun-2004: midurbin added resource bundle files to recipnet-webapp.jar
+  - 14-Jun-2004: midurbin altered include directive to accomodate resource
+  -              bundle file name change.
+  - 15-Jun-2005: ekoperda added targets 'uploader.jar' and 'sign-uploader.jar'
+  - 04-Aug-2005: ekoperda modified 'recipnet-site.spec' target to propagate the
+  -              Ant properties related to applet-signing
+  - 28-Oct-2005: midurbin fixed bug #1687 inthe 'recipnet-site.spec', 'rpms'
+  -              and 'read-distribution-properties' targets
+  - 11-Jan-2008: ekoperda changed 'rpms' target to build SRPM's as well
+  -->
+
+<project name="recipnet-site" default="generate-rpms-from-snapshot">
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                   Externally-callable targets are here                  *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="package-into-jars"
+            description="Package code into .jar files (during development)"
+            depends="VersionUpdater.java, footer.jsp, recipnetd.jar, 
+                     recipnet-webapp.jar, recipnet-utils.jar, miniJaMM.jar, 
+                     JaMM1.jar, JaMM2.jar, JaMMed.jar, uploader.jar, 
+                     sign-uploader.jar" />
+   
+    <target name="generate-rpms-from-snapshot" 
+            description="Generate .rpm files provided a source tree snapshot"
+            depends="read-distribution-properties, rpms" />
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Module-level targets are here                     *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="recipnetd.jar" 
+            depends="discover-jar-filesets, VersionUpdater.java" 
+            unless="skip-recipnetd.jar">
+        <mkdir dir="build/sql/" />
+
+        <!--
+          - Find all the SQL script files that describe db schema changes to be
+          - executed during a version upgrade.  Create a file that enumerates
+          - them all.  The VersionUpdater class uses this list during our app's
+          - runtime.
+          -->
+        <exec executable="find" 
+                output="build/sql/sql.filelist"
+                failonerror="false">
+            <arg file="misc/sql/" />
+            <arg value="-name" />
+            <arg value="*.sql" />
+            <arg value="-printf" />
+            <arg value="%f\n" />
+        </exec>
+
+        <delete file="build/recipnetd.jar" />
+        <jar destFile="build/recipnetd.jar">
+            <fileset refid="recipnetd.jar-files" />
+            <fileset dir="build/sql/">
+                <include name="sql.filelist" />
+            </fileset>
+            <fileset dir="misc/resources/">
+                <include name="configure-banner.txt" />
+            </fileset>
+            <fileset dir="misc/sql/">
+                <include name="*.sql" />
+            </fileset>
+            <fileset dir="conf">
+                <include name="*overrides" />
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="recipnet-webapp.jar" 
+            depends="discover-jar-filesets" 
+            unless="skip-recipnet-webapp.jar">
+        <delete file="build/recipnet-webapp.jar" />
+        <jar destFile="build/recipnet-webapp.jar">
+            <fileset refid="recipnet-webapp.jar-files" />
+            <fileset dir="misc/resources/">
+                <include name="*.strings" />
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="recipnet-utils.jar" 
+            depends="discover-jar-filesets" 
+            unless="skip-recipnet-utils.jar">
+        <delete file="build/recipnet-utils.jar" />
+        <jar destFile="build/recipnet-utils.jar">
+            <fileset refid="recipnet-utils.jar-files" />
+        </jar>
+    </target>
+
+    <target name="miniJaMM.jar" 
+            depends="discover-jar-filesets" 
+            unless="skip-miniJaMM.jar">
+        <delete file="build/miniJaMM.jar" />
+        <jar destFile="build/miniJaMM.jar">
+            <fileset refid="miniJaMM.jar-files" />
+            <fileset dir="misc/jamm-runtime/">
+                <include name="element_data.txt" />
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="JaMM1.jar" 
+            depends="discover-jar-filesets" 
+            unless="skip-JaMM1.jar">
+        <delete file="build/JaMM1.jar" />
+        <jar destFile="build/JaMM1.jar">
+            <fileset refid="JaMM1.jar-files" />
+            <fileset dir="misc/jamm-runtime/">
+                <include name="*ball.gif" />
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="JaMM2.jar" 
+            depends="discover-jar-filesets" 
+            unless="skip-JaMM2.jar">
+        <delete file="build/JaMM2.jar" />
+        <jar destFile="build/JaMM2.jar">
+            <fileset refid="JaMM2.jar-files" />
+            <fileset dir="misc/jamm-runtime/">
+                <include name="element_data.txt" />
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="JaMMed.jar" 
+            depends="discover-jar-filesets" 
+            unless="skip-JaMMed.jar">
+        <delete file="build/JaMMed.jar" />
+        <jar destFile="build/JaMMed.jar">
+            <fileset refid="JaMMed.jar-files" />
+            <fileset dir="misc/jamm-runtime/">
+                <include name="element_data.txt" />
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="uploader.jar" 
+            depends="discover-jar-filesets" 
+            unless="skip-uploader.jar">
+        <delete file="build/uploader.jar" />
+        <jar destFile="build/uploader.jar">
+            <fileset refid="uploader.jar-files" />
+        </jar>
+    </target>
+
+    <target name="sign-uploader.jar" 
+            depends="uploader.jar" 
+            if="dist.site.signature-alias" 
+            unless="skip-uploader.jar">
+        <fail unless="dist.site.signature-alias" />
+        <fail unless="dist.site.signature-keystore" />
+        <fail unless="dist.site.signature-storepass" />
+        <signjar jar="build/uploader.jar"
+                alias="${dist.site.signature-alias}"
+                keystore="${dist.site.signature-keystore}"
+                storepass="${dist.site.signature-storepass}" />
+    </target>
+
+    <target name="recipnet-site.spec">
+        <fail unless="dist.source-snapshot-file-truncated" />
+        <fail unless="dist.site.name" />
+        <fail unless="dist.site.release" />
+        <fail unless="dist.site.buildnumber" />
+        <fail unless="dist.site.signature-alias" />
+        <fail unless="dist.site.signature-keystore" />
+        <fail unless="dist.site.signature-storepass" />
+        <mkdir dir="build/embeddedversion/" />
+        <copy file="misc/recipnet-site.spec" 
+                todir="build/embeddedversion/" 
+                overwrite="true">
+            <filterset>
+                <filter token="dist.source-snapshot-file-truncated" 
+                        value="${dist.source-snapshot-file-truncated}" />
+                <filter token="dist.site.name" 
+                        value="${dist.site.name}" />
+                <filter token="dist.site.release" 
+                        value="${dist.site.release}" />
+                <filter token="dist.site.buildnumber" 
+                        value="${dist.site.buildnumber}" />
+                <filter token="dist.site.signature-alias" 
+                        value="${dist.site.signature-alias}" />
+                <filter token="dist.site.signature-keystore" 
+                        value="${dist.site.signature-keystore}" />
+                <filter token="dist.site.signature-storepass" 
+                        value="${dist.site.signature-storepass}" />
+            </filterset>
+        </copy>
+    </target>
+
+    <!--
+      - VersionUpdater.java needs to know the name of this build so it can
+      - store it in a database table.
+      -->
+    <target name="VersionUpdater.java" depends="read-distribution-properties">
+        <fail unless="dist.site.release" />
+        <fail unless="dist.site.buildnumber" />
+        <mkdir dir="build/embeddedversion/" />
+        <copy todir="build/embeddedversion/">
+            <fileset dir="javasrc/" 
+                    includes="org/recipnet/site/core/VersionUpdater.java" 
+              />
+            <filterset>
+                <filter token="BUILDVERSION" 
+                        value="${dist.site.release}-${dist.site.buildnumber}" 
+                  />
+            </filterset>
+        </copy>
+        <javac srcdir="build/embeddedversion/"
+                destdir="build/classes/"
+                includes="**/VersionUpdater.java"
+                classpath="build/"
+                source="${java-source-version}"
+                deprecation="on"
+                debug="${java-debugging-enabled}"
+                optimize="${java-optimization-enabled}"
+          />
+    </target>
+
+    <!--
+      - footer.jsp needs to know the name of this build so it can be
+      - displayed at the bottom of the webapp UI.  This file actually isn't
+      - distributed inside any jars, but instead it's distributed raw inside
+      - our RPM.  We choose to embed a release number here because it's a
+      - convenient place to perform the job.
+      -->
+    <target name="footer.jsp" depends="read-distribution-properties">
+        <mkdir dir="build/embeddedversion/" />
+        <copy file="content/site/footer.jsp" 
+                todir="build/embeddedversion/">
+            <filterset>
+                <filter token="BUILDNUMBER" 
+                        value="${dist.site.release}-${dist.site.buildnumber}" 
+                  />
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="rpms" 
+            depends="read-distribution-properties">
+        <fail unless="dist.site.name" />
+        <fail unless="dist.site.release" />
+        <fail unless="dist.site.buildnumber" />
+        <fail unless="dist.site.signature-alias" />
+        <fail unless="dist.site.signature-keystore" />
+        <fail unless="dist.site.signature-storepass" />
+        <fail unless="dist.source-snapshot-file"
+                message="Property 'dist.source-snapshot-file' must be set" />
+        <basename property="dist.source-snapshot-file-truncated" 
+                file="${dist.source-snapshot-file}" />
+
+        <antcall target="recipnet-site.spec" />
+
+        <mkdir dir="build/rpm/BUILD/" />
+        <mkdir dir="build/rpm/RPMS/i386/" />
+        <mkdir dir="build/rpm/SOURCES/" />
+        <mkdir dir="build/rpm/SRPMS/" />
+        <copy file="${dist.source-snapshot-file}" todir="build/rpm/SOURCES" />
+        <property name="rpm-topdir" location="build/rpm/" />
+        <echo file=".rpmmacros" message="%_topdir ${rpm-topdir}" />
+        <exec executable="rpmbuild" failonerror="true">
+            <arg value="-ba" />
+            <arg file="build/embeddedversion/recipnet-site.spec" />
+            <env key="HOME" file="." />
+        </exec>
+        <delete file=".rpmmacros" />
+    </target>
+
+
+
+    <!-- **********************************************************************
+    *                                                                         *
+    *                       Build infrastructure is here                      *
+    *                                                                         *
+    *********************************************************************** -->
+
+
+
+    <target name="read-distribution-properties">
+        <property environment="env" />
+        <property name="dist.site.name" value="recipnet-site-${env.USER}" />
+        <property name="dist.site.signature-alias" value="dummy" />
+        <property name="dist.site.signature-keystore"
+                value="misc/dummy.keystore" />
+        <property name="dist.site.signature-storepass" value="dummypassword" />
+        <propertyfile file="misc/site.build.number">
+            <entry key="dist.site.release" default="unknown" />
+            <entry key="dist.site.buildnumber" 
+                    type="int" 
+                    default="1" 
+                    operation="+" />
+        </propertyfile>
+        <loadproperties srcFile="misc/site.build.number" />
+    </target>
+
+    <target name="discover-jar-filesets">
+        <classfileset id="recipnetd.jar-files" dir="build/classes/">
+            <rootfileset dir="build/classes/" 
+                    includesfile="misc/recipnetd.jar.filelist" />
+        </classfileset>
+        <uptodate property="skip-recipnetd.jar" 
+                targetfile="build/recipnetd.jar">
+            <srcfiles refid="recipnetd.jar-files" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="recipnetd.jar.filelist" />
+            <!--
+              - A few install-time resource files are packaged with the .jar
+              - and we need to do dependency checks on them.
+              -->
+            <srcfiles dir="misc/" includes="configure-banner.txt" />
+            <srcfiles dir="misc/sql/" includes="*.sql" />
+        </uptodate>
+
+        <classfileset id="recipnet-webapp.jar-files" 
+                dir="build/classes/" 
+                excludes="**/*_jsp.class">
+            <rootfileset dir="build/classes/" 
+                    includesfile="misc/recipnet-webapp.jar.filelist" />
+         </classfileset>
+        <uptodate property="skip-recipnet-webapp.jar" 
+                targetfile="build/recipnet-webapp.jar">
+            <srcfiles refid="recipnet-webapp.jar-files" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="recipnet-webapp.jar.filelist" />
+        </uptodate>
+
+        <classfileset id="recipnet-utils.jar-files" dir="build/classes/">
+            <rootfileset dir="build/classes/" 
+                    includesfile="misc/recipnet-utils.jar.filelist" />
+        </classfileset>
+        <uptodate property="skip-recipnet-utils.jar" 
+                targetfile="build/recipnet-utils.jar">
+            <srcfiles refid="recipnet-utils.jar-files" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="recipnet-utils.jar.filelist" />
+        </uptodate>
+
+        <classfileset id="miniJaMM.jar-files" dir="build/classes/">
+            <rootfileset dir="build/classes/" 
+                    includesfile="misc/miniJaMM.jar.filelist" />
+        </classfileset>
+        <uptodate property="skip-miniJaMM.jar" targetfile="build/miniJaMM.jar">
+            <srcfiles refid="miniJaMM.jar-files" />
+            <srcfiles dir="misc/jamm-runtime/" includes="**/*" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="miniJaMM.jar.filelist" />
+        </uptodate>
+
+        <classfileset id="JaMM1.jar-files" dir="build/classes/">
+             <rootfileset dir="build/classes/" 
+                    includesfile="misc/JaMM1.jar.filelist" />
+        </classfileset>
+        <uptodate property="skip-JaMM1.jar" targetfile="build/JaMM1.jar">
+            <srcfiles refid="JaMM1.jar-files" />
+            <srcfiles dir="misc/jamm-runtime/" includes="**/*" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="JaMM1.jar.filelist" />
+        </uptodate>
+
+        <classfileset id="JaMM2.jar-files" dir="build/classes/">
+            <rootfileset dir="build/classes/" 
+                    includesfile="misc/JaMM2.jar.filelist" />
+        </classfileset>
+        <uptodate property="skip-JaMM2.jar" targetfile="build/JaMM2.jar">
+            <srcfiles refid="JaMM2.jar-files" />
+            <srcfiles dir="misc/jamm-runtime/" includes="**/*" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="JaMM2.jar.filelist" />
+        </uptodate>
+
+        <classfileset id="JaMMed.jar-files" dir="build/classes/">
+            <rootfileset dir="build/classes/" 
+                    includesfile="misc/JaMMed.jar.filelist" />
+        </classfileset>
+        <uptodate property="skip-JaMMed.jar" targetfile="build/JaMMed.jar">
+            <srcfiles refid="JaMMed.jar-files" />
+            <srcfiles dir="misc/jamm-runtime/" includes="**/*" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="JaMMed.jar.filelist" />
+        </uptodate>
+
+        <classfileset id="uploader.jar-files" dir="build/classes/">
+            <rootfileset dir="build/classes/" 
+                    includesfile="misc/uploader.jar.filelist" />
+        </classfileset>
+        <uptodate property="skip-uploader.jar" targetfile="build/uploader.jar">
+            <srcfiles refid="uploader.jar-files" />
+            <srcfiles dir="misc/" includes="package-site.xml" />
+            <srcfiles dir="misc/" includes="uploader.jar.filelist" />
+        </uptodate>
+    </target>
+</project>

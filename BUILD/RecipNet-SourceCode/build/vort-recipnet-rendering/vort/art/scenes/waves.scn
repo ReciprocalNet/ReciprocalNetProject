@@ -1,0 +1,568 @@
+title "1 ripples and 4 wavey objects in each line"
+
+lookat(0, 0, 5, 0, 0, 0, 0)
+
+raysperpixel 8
+
+light {
+	colour 0, 1, 0
+	location(0, 0, 10)
+}
+
+light {
+	colour 0, 0, 1
+	location(10, 10, 10)
+}
+
+light {
+	colour 1, 0, 0
+	location(-10, 5, 10)
+}
+
+light {
+	colour .8, .7, 1
+	direction(0, 0, -1)
+}
+
+
+polygon {
+	vertex(-50, -50, -50)
+	vertex( 50, -50, -50)
+	vertex( 50,  50, -50)
+	vertex(-50,  50, -50)
+	colour 0.3, 0.7, 0.2
+	material 1, 0.2, 0.2, 3
+	reflectance 0.8
+}
+
+colour 1, 1, 1
+reflectance .4
+ambient 0.3, 0.3, 0.3
+/*transparency .8*/
+material 1.5, .2, .7, 10
+
+sphere s1 {
+	radius 1
+	center(0, 0, 0)
+}
+
+s1 {
+	texture ripples {
+		scale(.1, .1, .1)
+		scalefactor .5
+	}
+	rotate(30, x)
+	rotate(30, z)
+	translate(-4, 2, 0)
+}
+
+s1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(20, x)
+	rotate(20, z)
+	translate(-2, 2, 0)
+}
+
+s1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-1, -1, 1)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(40, x)
+	rotate(40, z)
+	translate(0, 2, 0)
+}
+
+s1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(50, x)
+	rotate(50, z)
+	translate(2, 2, 0)
+}
+
+s1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, .5, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(60, x)
+	rotate(60, z)
+	translate(4, 2, 0)
+}
+
+box b1 {
+	vertex(-1, -1, -1)
+	vertex( 1,  1,  1)
+}
+
+b1 {
+	texture ripples {
+		scale(.1, .1, .1)
+		scalefactor .5
+	}
+	rotate(30, x)
+	rotate(30, z)
+	translate(-4, 0, 0)
+}
+
+b1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(20, x)
+	rotate(20, z)
+	translate(-2, 0, 0)
+}
+
+b1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-1, -1, 1)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(40, x)
+	rotate(40, z)
+}
+
+b1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(50, x)
+	rotate(50, z)
+	translate(2, 0, 0)
+}
+b1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, .5, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(60, x)
+	rotate(60, z)
+	translate(4, 0, 0)
+}
+
+cone c1 {
+	center(0, -1, 0)
+	radius 1
+	vertex(0, 1, 0)
+}
+
+c1 {
+	texture ripples {
+		scale(.1, .1, .1)
+		scalefactor .5
+	}
+	rotate(30, x)
+	rotate(30, z)
+	translate(-4, 4, 0)
+}
+
+c1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(20, x)
+	rotate(20, z)
+	translate(-2, 4, 0)
+}
+
+c1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-1, -1, 1)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(40, x)
+	rotate(40, z)
+	translate(0, 4, 0)
+}
+
+c1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(50, x)
+	rotate(50, z)
+	translate(2, 4, 0)
+}
+
+c1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, .5, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(60, x)
+	rotate(60, z)
+	translate(4, 4, 0)
+}
+
+torus t1 {
+	center(0, 0, 0)
+	radii .7, .3
+}
+
+t1 {
+	texture ripples {
+		scale(.1, .1, .1)
+		scalefactor .5
+	}
+	rotate(30, x)
+	rotate(30, z)
+	translate(-4, -2, 0)
+}
+
+t1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(20, x)
+	rotate(20, z)
+	translate(-2, -2, 0)
+}
+
+t1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-1, -1, 1)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(40, x)
+	rotate(40, z)
+	translate(0, -2, 0)
+}
+
+t1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(50, x)
+	rotate(50, z)
+	translate(2, -2, 0)
+}
+
+t1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, .5, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(60, x)
+	rotate(60, z)
+	translate(4, -2, 0)
+}
+
+superquadric sp1 {
+	vertex (-1.5, -1.5, -1.5)
+	vertex ( 1.5,  1.5,  1.5)
+	order 1
+}
+
+
+sp1 {
+	texture ripples {
+		scale(.1, .1, .1)
+		scalefactor .5
+	}
+	rotate(30, x)
+	rotate(30, z)
+	translate(-4, -4, 0)
+}
+
+sp1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(20, x)
+	rotate(20, z)
+	translate(-2, -4, 0)
+}
+
+sp1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-1, -1, 1)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(40, x)
+	rotate(40, z)
+	translate(0, -4, 0)
+}
+
+sp1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(50, x)
+	rotate(50, z)
+	translate(2, -4, 0)
+}
+
+sp1 {
+	texture waves {
+		/* Texture is in canonical coords */
+		translate(.5, .5, .5)
+		source {
+			center(0, 0, 0)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(-.5, -.5, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, 0, .5)
+			amplitude .5
+			wavelength .2
+		}
+		source {
+			center(0, .5, .5)
+			amplitude .5
+			wavelength .2
+		}
+	}
+	rotate(60, x)
+	rotate(60, z)
+	translate(4, -4, 0)
+}

@@ -1,0 +1,19 @@
+/***********************************************************/
+/* bg_styles3.css                                          */
+/* style definitions for color                             */
+/* written by Ji Young Chong (jchong@indiana.edu)          */
+/***********************************************************/
+
+/***************** Elements definitions***********/
+body {	font-family: Arial, Helvetica, sans-serif;	font-size: 1.0em;	line-height: normal;	background-color: #F2F5fa;	margin-top: 0px;	color: #000000;}
+.title_font {	font-family: Arial, Helvetica, sans-serif;	font-size: 28px;	font-weight: bolder;	color: #003366;	text-align: center;	vertical-align: top;}
+.answer_left_td {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #D7E0EC;
+	padding: 20px;
+	width: 60%;
+	text-align: center;
+}
+.answer_right_td {	border-right-width: 1px;	border-right-style: solid;	border-right-color: #D7E0EC;	padding-left: 20px;}
+.answer_center_td {	border-right-width: 1px;	border-left-width: 1px;	border-right-style: solid;	border-left-style: solid;	border-right-color: #D7E0EC;	border-left-color: #D7E0EC;	padding: 20px;	font-family: Arial, Helvetica, sans-serif;	font-size: 1.1em;}

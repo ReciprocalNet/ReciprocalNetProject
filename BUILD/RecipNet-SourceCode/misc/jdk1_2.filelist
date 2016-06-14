@@ -1,0 +1,12 @@
+# Reciprocal Net project
+# jdk1_2.filelist
+#
+# Java source files listed here will be compiled for a JDK 1.2 virtual machine,
+# instead for a more modern version.  This is necessary because some applets
+# are designed to execute on older VM's.  Files that are already compiled will
+# be ignored by the the ant call that uses this file list.
+#
+# 29-Apr-2004: midurbin wrote fist draft
+
+org/recipnet/site/applet/jamm/**/*.java
+

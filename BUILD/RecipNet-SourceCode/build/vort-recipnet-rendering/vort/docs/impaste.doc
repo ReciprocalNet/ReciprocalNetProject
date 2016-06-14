@@ -1,0 +1,66 @@
+
+
+
+IMPASTE(1)               USER COMMANDS                 IMPASTE(1)
+
+
+
+NAME
+     impaste - paste two VORT files together producing a third.
+
+SYNOPSIS
+     impaste file1 to_x to_y file2 from_x from_y w h file3
+
+DESCRIPTION
+     Impaste copies the rectangle of pixels starting  at  from_x,
+     and   from_y  of  width  w  and  height  h  into  the  image
+     represented in file2 and produces a new file, file3.
+
+BUGS
+     Won't work on a PC except for small images.
+
+SEE ALSO
+     art(1), vortinfo(1),  targ2vort(1),  vort2ps(1),  median(1),
+     greyscale(1), gamma(1), vortfile(5).  vort(3).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2          Last change: February 7, 1991                 1
+
+
+

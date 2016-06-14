@@ -1,0 +1,165 @@
+<HTML>
+<HEAD>
+<TITLE>Merging configuration files for an existing site</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep21.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep23.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a
+name="_Toc187857402">Merging configuration files for an existing site</a></span></span></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<div >
+
+<p class=Existingsitesonly ><v:shape
+ id="_x0000_s1068" type="#_x0000_t202" fillcolor="#f90" stroked="f">
+ <v:textbox inset="0,2.16pt,0,2.16pt"/>
+ <w:wrap anchorx="margin"/>
+</v:shape>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=72 height=52 bgcolor="#FF9900" >
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td>
+    <div v:shape="_x0000_s1068" 
+    class=shape>
+    <p class=MsoNormal align=center ><b >EXISTING SITES ONLY</b></p>
+    </div>
+    </td>
+   </tr>
+  </table>
+   </td>
+ </tr>
+</table>
+
+This section
+applies only to existing Reciprocal Net sites that are upgrading to the newest
+release of the Reciprocal Net site software. 
+It does not apply to new sites.</p>
+
+<p class=Existingsitesonly >Amongst the files that were brought over from your old system was the <B><I>recipnetd.conf</B></I>
+configuration file that controls the <B><I>recipnetd</B></I> daemon.  This file may or may not have contained
+customizations applied previously by your old system’s administrator.  </p>
+
+<p class=Existingsitesonly >The present release of the Reciprocal Net site software includes a new <B><I>recipnetd.conf</B></I>
+with several new and updated configuration directives.  These new directives are required for proper
+operation of site software 0.9.0.  It is
+necessary to <I>merge</I> your new system’s <B><I>recipnetd.conf</B></I>
+file with your old system’s <B><I>recipnetd.conf</B></I> file.  There is a utility for doing just that.  At a command prompt, type:</p>
+
+</div>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>recipnet-mergeconfig
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<div >
+
+<p class=Existingsitesonly >.  The configuration files are
+merged and several lines of descriptive output are produced.  Leave this output open for a moment.</p>
+
+<p class=Existingsitesonly >Now go to the GNOME desktop and double-click the <B><I>Computer</B></I> icon
+in the upper-left corner of the desktop. 
+In the window that appears, double-click the <B><I>Filesystem</B></I>
+icon.  Continue navigating to the <B><I>etc</B></I> folder and
+then the <B><I>recipnet</B></I>
+folder beneath it.  Notice there are
+several files in the <B><I>/etc/recipnet/</B></I>
+folder, including these three:</p>
+
+<p class=ExistingsitesonlybulletedCxSpFirst >· 
+<B><I>recipnetd.conf</B></I> , which is a default configuration file optimized for
+site software 0.9.0.</p>
+
+<p class=ExistingsitesonlybulletedCxSpMiddle >· 
+<B><I>recipnetd.conf.rpmsave</B></I> , which is the configuration file that was copied
+from your old system.</p>
+
+<p class=ExistingsitesonlybulletedCxSpLast >· 
+<B><I>recipnetd.conf.merge</B></I> , which is a merged version of the two files above.</p>
+
+<p class=Existingsitesonly >Double-click the <B><I>recipnetd.conf.merge</B></I>
+file to open it in a text editor.  In a
+moment, you will activate this file as your new system’s configuration
+file.  First, peruse the file and verify
+that all of your customizations (if any) were copied over from your old system
+correctly.</p>
+
+<p class=Existingsitesonly >Review the output of the merge program in the terminal window.  You should see a <B><I>Properties changed</B></I>
+section with one or more configuration directives listed beneath it.  This means that for those directives listed,
+the merge program ignored the value that was found in <B><I>recipnetd.conf.rpmsave</B></I>
+(from your old system), instead overriding it with a default value that is
+likely more appropriate for your new system running site software 0.9.0.  Usually the merge program is correct, but you
+might wish to double-check these directives by looking at the configuration
+files with your text editor.  If needed,
+refer to page 51 for a complete reference
+on the <B><I>recipnetd.conf</B></I>
+file.</p>
+
+<p class=Existingsitesonly >Also output by the merge program in the terminal window should be a <B><I>Properties removed </B></I>section
+with zero or more configuration directives listed beneath it.  The directives listed in this section were
+found in the <B><I>recipnetd.conf.rpmsave</B></I>
+(from your old system) but could not be copied automatically to <B><I>recipnetd.conf.merge</B></I>
+.  They probably represent important
+customizations by your site’s system administrator, such as locally-defined
+custom metadata files.  If there are any
+configuration directives listed in this section, you will need to copy them
+manually.  Open the <B><I>recipnetd.conf.rpmsave</B></I>
+file in a text editor window and find the named directives.  Highlight these lines and copy them to the
+clipboard.  (Look inside the <B><I>recipnetd.conf.rpmsave </B></I>file
+using a text editor; do not rely on the output of the merge program.)  Then, open <B><I>recipnetd.conf.merge</B></I> in a text
+editor window, find the corresponding section of the file, and paste in the
+configuration directives.</p>
+
+<p class=Existingsitesonly >When you’ve finished reviewing <B><I>recipnetd.conf.merge</B></I> and are
+ready to test it, save the file and exit the text editor program.</p>
+
+<p class=Existingsitesonly >In the GNOME folder window, find the file named <B><I>recipnetd.conf</B></I>
+and right-click its icon.  In the menu
+that pops up, select <B><I>Move
+to Trash</B></I>.</p>
+
+<p class=Existingsitesonly >Then find the file named <B><I>recipnetd.conf.merge</B></I> .  Right-click its icon and select <B><I>Rename</B></I> from the
+popup menu.  Rename the file to <B><I>recipnetd.conf </B></I>.  Right-click on the same file again and select
+<B><I>Properties</B></I>
+from the popup menu.  In the window that
+appears, click the <B><I>Permissions</B></I>
+tab.  Set the <B><I>Owner</B></I> to <B><I>recipnet</B></I>, the
+access beneath it to <B><I>Read
+and write</B></I>, the <B><I>Group</B></I> to <B><I>recipnet</B></I>, the
+access beneath it to <B><I>None</B></I>,
+and the access for <B><I>Others</B></I>
+to <B><I>None</B></I>.  Then click the <B><I>Close</B></I> button.  The merged configuration file now is active.</p>
+
+<p class=Existingsitesonly >It is necessary also to remove (or at least rename) the <B><I>recipnetd.conf.rpmsave</B></I>
+file.  Otherwise, future upgrades to the
+Reciprocal Net site software might be confused by the presence of this file and
+would attempt to merge configurations again. 
+Right-click on the icon for <B><I>recipnetd.conf.rpmsave</B></I> and, in
+the menu that pops up, select <B><I>Move to Trash</B></I>.</p>
+
+</div>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep21.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep23.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

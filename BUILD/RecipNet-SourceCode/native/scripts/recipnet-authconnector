@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Reciprocal Net project
+# @(#)recipnet-authconnector
+#
+# Shell script to launch the ModRewriteAuthConnector program
+#
+# 01-Jan-2008: ekoperda wrote first draft
+
+# Obtain a value for JVM_ROOT
+if [ -f /etc/java/java.conf ]; then
+    . /etc/java/java.conf
+fi
+
+JAVACMD="${JVM_ROOT}/jre/bin/java"
+JAVAOPT=""
+JAVACP="/usr/share/java/recipnet-webapp.jar"
+
+# Run the utility, passing it all the command-line options received
+${JAVACMD} \
+  $JAVAOPT \
+  -classpath "$JAVACP" \
+  org.recipnet.site.wrapper.ModRewriteAuthConnector \
+  $@

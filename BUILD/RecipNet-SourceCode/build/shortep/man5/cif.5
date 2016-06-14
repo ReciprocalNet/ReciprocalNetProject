@@ -1,0 +1,125 @@
+.TH CIF 5 "AUGUST 2000" "Reciprocal Net" "User Manuals"
+.SH NAME
+cif \- cif file format
+.SH DESCRIPTION
+.BR CIF ,
+Crystallographic Information File, is a highly flexible, user-extensible format
+for describing crystallographic experiments, models, and manuscripts.  It is a
+restricted dialect of Self-defining Text ARchive (
+.BR star (5))
+format.  The specific restrictions are:
+.RS
+(1) Lines are restricted to a maximum of 80 characters in length.
+.RE
+.RS
+(2) No 
+.BR global_ " blocks or " save_
+frames.
+.RE
+.RS
+(3) No nested
+.BR loops .
+.RE
+.RS
+(4) All data names and block codes are case insensitive.
+.RE
+The version 1
+.B CIF
+specification also required
+.RS
+(5) Data names and data block codes may be no longer than 32 characters.
+.RE
+(That restriction was lifted in
+.B CIF
+version 2.)
+.P
+Furthermore, there are several conventions in the light of which
+.BR CIF s
+are normally interpreted:
+.RS
+(1)
+.B CIF
+data names are normally chosen from among those in the
+.BR "CIF dictionary" ,
+and should be used in a manner consistent with the definitions therein.
+.RE
+.RS
+(2)
+.B CIF
+data values are typed; moreover, their types are determined implicitly,
+according to the following rules:
+.RS
+A single period character by itself is a value of the special type "null".
+.RE
+.RS
+A single question mark by itself is  a value of the special type "unknown".
+.RE
+.RS
+A data value that begins with a decimal digit, a plus or minus sign, or a
+period, and is not enclosed by matching single or double quotes, is of type
+number.
+.RE
+.RS
+A data value that extends over more than one line (see the
+.BR star (5)
+syntax definition) is of type text.
+.RE
+.RS
+A data value is of type character if its type is not otherwise determined by
+these rules.
+.RE
+.RE
+.RS
+(4) Data values of types character and text are semantically interchangeable.
+.RE
+.RS
+(5) Numeric data values may be expressed in integer, floating point, or
+scientific notation formats.  When a number is followed immediately (without
+whitespace) by an integer in parentheses, that integer is interpreted as the
+standard uncertainty in the final digit(s) of the number.
+.RE
+.RS
+(6) The
+.B CIF dictionary
+specifies the units in which numeric type data values are to be expressed for
+the data names contained therein.
+.RE
+.P
+.B CIF
+is supported by the Internation Union for Crystallography, and has quickly
+been adopted as an international standard.  Many scientific journals that
+publish crystal structures accept or even require that appropriate
+.BR CIF s
+accompany submissions with crystallographic content.  At least one journal
+.RI ( "Acta Crystallographica, Section C" )
+requests that all submissions be entirely in
+.B CIF
+format, except for figures.
+.SH BUGS
+There are portability problems inherent in the 80-character line limit, and
+.BR CIF s
+support (inherited from
+.BR STAR (5))
+for multiple line-termination sequences.  For instance, if a line consists of
+80 significant characters followed by a <CR><LF> line termination sequence,
+then it is legal on DOS/Windows, but illegal on UNIX.
+.P
+For other issues consult the
+.BR STAR (5)
+manpage.
+.SH "ADDITIONAL INFORMATION"
+Additional information on
+.BR CIF " and " STAR
+can be obtained from the International Union for Crystallography,
+http://www.iucr.org or one of the national mirrors.
+.P
+.B CIF
+and
+.BR STAR (5)
+are copyrighted by the International Union for Crystallography.
+.SH "SEE ALSO"
+.BR STAR (5)
+.SH AUTHOR
+This manpage was written by John Bollinger of the Indiana University Molecular
+Structure Center <jobollin@indiana.edu>.  The information on it is correct to
+the best of my knowledge and ability, but not guaranteed in any way.

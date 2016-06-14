@@ -1,0 +1,14 @@
+# Reciprocal Net project
+# jdk1_1.filelist
+#
+# Java source files listed here will be compiled for a JDK 1.1 virtual machine,
+# instead for a more modern version.  This is necessary because some applets
+# are designed to execute on older VM's.
+#
+# 08-Jan-2004: ekoperda added changelog
+# 29-Apr-2004: midurbin changed filename
+
+org/recipnet/site/applet/jamm/*.java
+org/recipnet/site/applet/jamm/jamm1/*.java
+org/recipnet/site/applet/jamm/minijamm/*.java
+

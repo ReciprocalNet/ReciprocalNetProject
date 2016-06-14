@@ -1,0 +1,23 @@
+lookat(0.0, 6.0, 7.0, 0.0, 6.0, 0.0, 0.0)
+
+light {
+	colour 0.6, 0.6, 0.6
+	location (6.0, 6.0, 10.0)
+}
+
+csg {
+	superquadric sq1 {
+		colour 1.0, 0.0, 0.0
+		material 0.0, 0.95, 0.0, 0.0
+		vertex (3.0, 9.0, 3.0)
+		vertex (-3.0, 3.0, -3.0)
+		order 1.0
+	}
+	box b1 {
+		colour 0.0, 1.0, 0.0
+		material 0.0, 0.95, 0.0, 0.0
+		vertex (3.0, 9.0, 0.0)
+		vertex (-3.0, 3.0, -3.0)
+	}
+	b1 - sq1
+}

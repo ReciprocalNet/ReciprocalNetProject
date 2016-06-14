@@ -1,0 +1,77 @@
+
+Welcome to SHORTEP!
+
+Shortep is a tool for reading, examining, manipulating, and writing
+crystallographic models.  The original version was created by John C. Huffman
+in 1985 by stripping all the graphics generation features from Carroll
+Johnson's ORTEP II and adding a console interface and certain file manipulation
+routines.  The name comes from the program's genesis: it is a SHortened ORTEP.
+The program has been maintained by John C. Bollinger (jobollin@indiana.edu)
+since 1996.
+
+
+Features
+
+Shortep reads crystallographic models in one of two formats: SDT (developed in
+and mainly used by the Indiana University Molecular Structure Center) and CIF
+(crystallographic information file, an international standard backed by the
+Internation Union for Crystallography).  It provides for measurement of
+interatomic distances and angles, construction of new models, renumbering of
+atoms, and saving the model in SDT, CSSR (an old Cambridge Database output
+format supported by several software packages), or CRT (a Cartesian coordinate
+format developed by the IUMSC for the Reciprocal Net project) format.
+
+
+Installation
+
+1) Unpack the archive.  On systems with GNU tar, tar xzf shortep.tgz will do
+   it.
+
+2) Check the Makefile.  You can select a different installation directory if
+   you like, and you may need to change the Fortran compiler and/or compiler
+   flags.
+
+3) make
+
+4) If all is well,
+   make install
+
+   Otherwise, troubleshoot and/or send e-mail.  If you troubleshoot a problem
+   yourself, then I would love to hear about both the problem and the
+   resolution.
+
+5) Optionally,
+   make clean
+
+   or even
+   make clobber
+
+   to clean up the source directory.
+
+
+Running Shortep
+
+Normally, just
+	shortep <filename>
+where <filename> is the name of the input file.  Alternatively, shortep will
+prompt for a file name to open if one is not supplied on the command line.
+Shortep is a console-mode, command-driven program.  Because of its origin in
+ORTEP, shortep commands are numeric codes.  For user convenience, however,
+Shortep recognizes mnemonic keywords for most of the common commands.  There
+is on-line help available, so if you get stuck try the "help" command.  If all
+else fails, you could always consider reading the manual page, which should
+have been installed along with the executable when you did a "make install".
+
+
+Technical Information
+
+Shortep is written in Fortran 77 with a few extensions.  Most of the extensions
+are standard in Fortran 90 and later, the only exceptions of which I am
+aware being (1) use of the nonstandard iargc and getarg routines to process
+command-line arguments, and (2) use of the nonstandard $ format specifier to
+mean the equivalent of F90's advance="no" read argument.  Other extensions
+include the CYCLE and EXIT statements and DO WHILE loops.  The source has been
+tested successfully with GNU g77, which is freely available on a wide range
+of platforms, so if you can't compile with your system's normal compiler then
+try installing g77.
+

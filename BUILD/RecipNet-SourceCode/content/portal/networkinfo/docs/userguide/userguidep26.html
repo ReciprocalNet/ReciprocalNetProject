@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<TITLE>Using the Site Software</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep25.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep27.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+
+<H1 ALIGN=CENTER><B><FONT SIZE=+3><FONT COLOR="008000"><FONT FACE="Arial"><A NAME="T1"><a name="_Toc187857406"></a><a name="_Toc48712142"></a><a
+name="_Ref20274770"></a><a name="_Ref20274749"></a><a name="_Ref20274675"></a><a
+name="_Toc20190690">Using
+the Site Software</a></A></FONT></FONT></FONT></B></h1>
+
+<div >
+
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T2"><a name="_Toc187857407"></a><a name="_Toc48712143"></a><a
+name="_Toc20190691">Terminology</a></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal>It will be useful to become
+familiar with some basic terminology that will be used in this chapter.</p>
+
+<p class=MsoNormal>A <I>sample</I>
+is the basic data entity in this system; this is what the Reciprocal Net site
+software tracks.  <st1:place w:st="on"><st1:City
+ w:st="on">Crystal</st1:City></st1:place> samples usually are grown by one
+particular <I>sample provider</I> (the lab of a
+research chemist) and subsequently submitted to one particular <I>crystallography
+lab </I>for processing.</p>
+
+<p class=MsoNormal><I>Structures</I> may be contrasted with samples in that while one
+sample always illustrates one molecular structure, it is conceivable that two
+samples in Reciprocal Net would have the same underlying molecular
+structure.  Generally, a <I>duplicate
+flag</I> is added to both samples when such a condition is discovered.
+</p>
+
+<p class=MsoNormal>Now that we’ve already used
+the term we might as well define it: a <I>lab</I> is a
+participating crystallography laboratory that uses the Reciprocal Net site
+software for its daily operations (like you probably hope to do).  Most management features of the Reciprocal
+Net Site Network take place at the lab level. 
+For this reason, each sample has a data field where the originating lab
+is recorded at the time of sample creation. </p>
+
+<p class=MsoNormal>A <I>provider</I>
+is generally the lab of a research chemist that grows crystal samples and
+submits them to your lab for analysis. 
+There frequently are multiple people associated with a single provider,
+perhaps one faculty member and several graduate students.  Each sample has a data field where the
+originating provider is recorded at the time of sample creation.</p>
+
+<p class=MsoNormal>A <I>site</I>
+is a server (or cluster of servers) in the Reciprocal Net Site Network.  More specifically, a site is a web server
+that runs the Reciprocal Net site software and is connected to the Internet.  It is possible for a single site to host
+multiple labs.  All sites in the network
+communicate with one another over the Internet to keep the distributed database
+of publicly visible samples in a consistent and accessible state.  Sites also                              maintain their own
+collection of private samples that are not shared with other sites. </p>
+
+<p class=MsoNormal>The <I>site
+database</I> is a SQL database that exists at each site and that contains
+metadata about samples in the Reciprocal Net Site Network.  The database contains records for every
+sample that exists on the local site, plus those samples at other (remote)
+sites that have been made available to the public.</p>
+
+<p class=MsoNormal>The <I>site
+repository</I> contains actual data files for samples in Reciprocal
+Net and is stored on the server’s file system directly.  These data files might include <B><I>.cif</B></I> files, <B><I>.sdt</B></I> files, <B><I>.ort</B></I> files, <B><I>.crt</B></I> files, <B><I>.pdb</B></I> files, and
+so forth.  To recap: the site database
+contains <I>metadata</I>, the site repository
+contains <I>data</I>.</p>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep25.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep27.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>

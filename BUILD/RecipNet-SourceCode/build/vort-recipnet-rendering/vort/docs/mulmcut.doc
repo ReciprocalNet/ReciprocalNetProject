@@ -1,0 +1,66 @@
+
+
+
+MULMCUT(1)               USER COMMANDS                 MULMCUT(1)
+
+
+
+NAME
+     mulmcut - perform median cut on data in  one  or  more  VORT
+     files
+
+SYNOPSIS
+     mulmcut [ -c size ] [ -f ] file1 file2...
+
+DESCRIPTION
+     Mulmcut applys median cut to the RGB images stored in file1,
+     file2... to generate the colormapped pixel files with a .mix
+     suffix. The resulting files will all have the same colormap,
+     and be suitable for display with the movie (1) program.  The
+     colormaps that are generated have, by default, 256  entries;
+     this  may  be  modified  with the -c option.  By default the
+     image data is quantized by mapping each pixel to the closest
+     color  values  in  the colormap.  If the -f option is speci-
+     fied, Floyd-Steinberg dithering is done before  selecting  a
+     colormap entry.
+
+SEE ALSO
+     art(1), vortinfo(1),  targ2vort(1),  vort2ps(1),  median(1),
+     movie(1), gamma(1), greyscale(1), vortfile(3), vort(3).
+     "Color Image Quantization for Frame  Buffer  Display",  Paul
+     Heckbert, SIGGRAPH proceedings, 1982, pp. 297-307.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VORT 2.2            Last change: Feb 19, 1990                   1
+
+
+

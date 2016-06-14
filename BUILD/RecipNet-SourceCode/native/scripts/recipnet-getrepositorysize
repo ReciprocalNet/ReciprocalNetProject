@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Reciprocal Net project
+# @(#)recipnet-getrepositorysize
+#
+# Shell script used by Statistics Agent to determine the number of KB in the
+# provided directory.  The one requred parameter is the complete base path for
+# the directory whose size is being requested.
+#
+# 2-Jul-2003: midurbin wrote first draft
+
+/usr/bin/du -sk $1 | cut -f1
+
+
+

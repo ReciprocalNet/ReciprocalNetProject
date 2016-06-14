@@ -1,0 +1,548 @@
+<HTML>
+<HEAD>
+<TITLE>Configuration directives in web.xml</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+<META NAME="GENERATOR" CONTENT="Solutionsoft WordToWeb">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep42.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep44.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+<A NAME="topofpage"></A>
+<P><HR SIZE=2 ALIGN=CENTER WIDTH="100%"></P>
+<h2><B><FONT SIZE=+2><FONT COLOR="DDB8FE"><FONT FACE="Arial"><A NAME="T1"><a name="_Toc20190709"></a><a name="_Toc187857425"></a><a
+name="_Toc48712165">Configuration directives in web.xml</a></A></FONT></FONT></FONT></B></h2>
+
+
+</div>
+
+<p class=MsoNormal><B><I>web.xml</B></I> is a text
+file that lives in <B><I>/var/www/html/recipnet/WEB-INF</B></I>
+, but most users find it convenient to edit the symlinked copy of the file in <B><I>/etc/recipnet</B></I>
+.  The file controls the operation of the
+web application, the portion of the Reciprocal Net site software that’s hosted
+by the Apache Tomcat web application server. 
+The contents of the text file are eXtensible Markup Language (XML)
+syntax.  The <st1:PersonName w:st="on">root</st1:PersonName>
+of the document is a <B><I>&lt;web-app&gt;</B></I>
+element.  Beneath the <st1:PersonName
+w:st="on">root</st1:PersonName> <B><I>&lt;web-app&gt;</B></I> element are a
+number of <B><I>&lt;context-param&gt;</B></I>
+elements.  Each <B><I>&lt;context-param&gt;</B></I>
+element contains a single configuration directive; details about each of these
+may be found below.  Other elements
+besides <B><I>&lt;context-param&gt;</B></I>
+are present below the <st1:PersonName w:st="on">root</st1:PersonName> <B><I>&lt;web-app&gt;</B></I>
+element also, but these are not administrator-configurable and should be
+ignored.</p>
+
+<p class=MsoNormal>Each <B><I>&lt;context-param&gt;</B></I> element,
+which contains a single configuration directive, is expressed in a syntax
+similar to the following:</p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>&lt;context-param&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>   
+&lt;param-name&gt;hostname&lt;/param-name&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>   
+&lt;param-value&gt;localhost&lt;/param-value&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>   
+&lt;description&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>       
+The name of the host on which recipned is running
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>    &lt;/description&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>
+<TABLE WIDTH="100%" BGCOLOR="C0C0C0" BORDER=0 CELLPADDING=5><TR><TD>
+<blockquote><code>&lt;/context-param&gt;
+</TD></TR></TABLE>
+</code></blockquote></p>
+
+<p class=MsoNormal>.  In this
+example, the text between <B><I>&lt;param-name&gt;</B></I>
+and <B><I>&lt;/param-name&gt;</B></I>
+identifies this setting as the <B><I>hostname</B></I> directive.  The description of the directive is present
+for this directive only as a convenience for the system administrator; it
+serves no functional purpose.  The
+current value of the <B><I>hostname</B></I>
+directive is <B><I>localhost</B></I>
+.  </p>
+
+<p class=MsoNormal>The <B><I>web.xml</B></I> contains a number of
+configuration directives, each of which already has a value assigned.  System administrators may change a
+directive’s value, but should not alter its name or description.  Syntax of the file should be preserved.  Positioning of directives within the file is
+significant.</p>
+
+<p class=MsoNormal>Currently the following configuration directives are
+defined in the file:</p>
+
+<table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0 width=645
+ >
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>adminEmail</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>SMTP e-mail address of the server’s
+  administrator.  In a default
+  installation the value is blank, which implies that the administrator’s
+  e-mail address is <B><I>root@</B></I>
+  your server’s DNS name.  It is not
+  necessary to specify a value for this directive unless you wish to override
+  the default behavior.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>childPath</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Specifies the <B><I>PATH</B></I> environment variable that
+  should be used when by the web application when it launches external
+  subprocesses.  These programs might be
+  spawned to perform specific scientific calculations or generate images, for
+  example.  The current release depends
+  upon the programs <B><I>cjpeg</B></I>,
+  <B><I>gs</B></I>, <B><I>pnmcrop</B></I>, <B><I>pnmdepth</B></I>, <B><I>pnmmargin</B></I>, <B><I>pnmscale</B></I>, <B><I>recipnet-ortep3</B></I>,
+  <B><I>recipnet-renderclient</B></I>,
+  <B><I>recipnet-vort2ppm</B></I>,
+  and <B><I>sh</B></I>; each
+  of these programs must reside within the path specified.  In a default installation this value is <B><I>PATH=/bin:/usr/bin:/usr/local/bin</B></I>
+  .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>darterServer</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The DNS name of a server offering molecular image
+  rendering services (so-called “darter” services) to Reciprocal Net partner
+  sites.  At the time of this writing
+  only once such server exists, the central rendering service hosted by
+  IUMSC.  The name of their server is <B><I>iumsc-beowulf.reciprocalnet.org</B></I>
+  .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>defaultAuthenticatedApplet</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Controls which molecular visualization applet
+  authenticated users should see by default when they first visit a <B><I>Sample detail</B></I>
+  page.  Possible values are <B><I>minijamm</B></I> , <B><I>jamm1</B></I> , and <B><I>jamm2</B></I> .  The suggested value is jamm2 .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>defaultAuthenticatedLevel</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The default “detail level” for samples to be used
+  for authenticated users.  This is not a
+  security feature, because users are able to switch their level freely, but
+  rather an educational one.  The
+  suggested value is <B><I>65536</B></I>,
+  which is intended for use by “researchers”. 
+  Another possible value is <B><I>8192</B></I>, which equates to “generic
+  Common Molecules level”.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>defaultUnauthenticatedApplet</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Similar to defaultAuthenticatedApplet above,
+  except this setting controls the default molecular visualization applet for
+  unauthenticated users.  The suggested
+  value is <B><I>minijamm</B></I>
+  because it is compatible with the widest range of web browser programs.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>defaultUnauthenticatedLevel</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Similar to defaultAuthenticatedLevel above,
+  except this setting controls the default detail level for unauthenticated
+  users.  The suggested value is <B><I>65536</B></I>.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>externalProcessTimeout</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The maximum number of milliseconds an external
+  program spawned by the web application (to perform a specific computation,
+  for example) may run before it’s assumed to have stalled and is forcibly
+  terminated.  The suggested value is <B><I>30000</B></I> (30
+  seconds).</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>fileCacheTimeout</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The minimum number of seconds after having been
+  generated that a molecular image or diagram is available for download by the
+  user who requested it.  Once this time
+  has elapsed the image may no longer be available.  The suggested value is <B><I>1800</B></I> seconds
+  (30 minutes).</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>hostname</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>DNS or other name of the system on which <B><I>recipnetd</B></I> is
+  running.  It is possible to run <B><I>recipnetd</B></I> on
+  one computer and the web application on potentially many other computers in
+  order to improve performance.  The
+  suggested value <B><I>localhost</B></I>
+  is correct for environments where <B><I>recipnetd</B></I> and the web
+  application run on the same system.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>languageCacheParameterString</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>These are performance tuning parameters used for a
+  cache of localization resources.  The
+  default value is <B><I>64,0,4,0,0,0,true</B></I>
+  .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>languagePackJar</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The complete path of a jar file containing
+  localization information for status codes, file codes, or action codes.  The default value is blank, which means
+  that Reciprocal Net site software’s own language facilities are employed.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>maxFileCacheSize</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Specifies the maximum number of megabytes that
+  temporary files generated in response to molecular diagramming or rendering
+  requests may consume on the local filesystem. 
+  When this limit is approached, temporary files are deleted via a
+  least-recently-used scheme.  The
+  suggested value is <B><I>512</B></I>
+  megabytes.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>maxOaiPmhSamples</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The maximum number of samples to return in response
+  to a single request from a digital library harvesting agent via the OAI-PMH
+  protocol.  Harvesting agents desiring
+  more samples than this value are expected to send multiple consecutive requests.  Setting this value too high might expose
+  your system to possible denial-of-service (DoS) attacks.  Setting this value to <B><I>0</B></I> causes no
+  limit to be enforced – all matching samples are returned in response to a
+  single request – and poses an even greater DoS risk.  The suggested value is <B><I>512</B></I>.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>newUserInitialPreferences</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The preference settings given to newly-created user
+  accounts.  The default value is <B><I>JaMM2,sample,detailed,3,10,true,false,true,false,true,true,false,true,false,false,form-based,false,false,<br
+  clear=all>
+  false,false,true,true</B></I></p>
+  <p class=Directivedescription>In order, the preferences are:</p>
+  <p class=Directivedescription><b
+  >Visualization
+  applet:</b> valid choices are <B><I>minijamm</B></I>, <B><I>jamm1</B></I>, and <B><I>jamm2</B></I>.</p>
+  <p class=Directivedescription><b
+  >Sample
+  view:</b> the preferred means of viewing sample records.  Valid choices are <B><I>showsample</B></I>
+  (for the “Sample Detail” page) and <B><I>sample</B></I> (for the “Edit Sample”
+  page).</p>
+  <p class=Directivedescription><b
+  >Sample
+  detail:</b> the preferred degree of detail to be shown on
+  samples.  Valid choices are <B><I>basic</B></I> and <B><I>detailed</B></I> .</p>
+  <p class=Directivedescription><b
+  >Lab
+  summary day count:</b> the number of days to be displayed on the “Lab
+  Summary” page.</p>
+  <p class=Directivedescription><b>Lab summary sample count:</b> the number
+  of samples to be listed in each box on the “Lab Summary” page.</p>
+  <p class=Directivedescription><b>Blank fields suppressed:</b> whether
+  blank fields are suppressed from display on the “Edit Sample” page.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Comments suppressed:</b> whether
+  workflow comments are suppressed from display on the “Edit Sample” page.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Empty file boxes suppressed:</b> whether
+  action boxes for file actions that are empty are suppressed from display on
+  the “Edit Sample” page.  Valid choices
+  are <B><I>true</B></I> and
+  <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Empty correction boxes supressed:</b> whether
+  action boxes for correction boxes that are empty are suppressed from display
+  on the “Edit Sample” page.  Valid
+  choices are <B><I>true</B></I>
+  and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Empty action boxes suppressed:</b> whether
+  other action boxes that are empty are suppressed from display on the “Edit
+  Sample” page.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Skipped-by-reversion action boxes suppressed:</b> whether action
+  boxes that were skipped by a reversion are suppressed from display on the
+  “Edit Sample” page.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>File descriptions suppressed:</b> whether
+  file descriptions are suppressed from display on the “Edit Sample” page.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Blank file listings suppressed:</b> whether
+  blank listings of files are suppressed from display on the “Edit Sample”
+  page.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Suppression options suppressed:</b> whether the
+  suppression options box is suppressed from display on the “Edit Sample”
+  page.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Files overwritten:</b> whether
+  newly-uploaded files can overwrite existing sample data files.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Upload mechanism:</b> the
+  preferred means of uploading sample data files.  Valid choices are <B><I>form-based</B></I>
+  and <B><I>drag-and-drop</B></I>
+  .</p>
+  <p class=Directivedescription><b>Searches limited to non-retracted:</b> whether searches
+  are limited to samples that do not have a retracted status.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Searches limited to finished:</b> whether
+  searches are limited to samples that have a finished status.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Searches limited to local:</b> whether
+  searches are limited to samples with data files hosted at the local
+  site.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Searches limited to provider:</b> whether
+  searches are limited to samples associated with the user’s affiliated
+  provider.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Implicit preference changes:</b> whether the
+  user’s preferences are updated implicitly as he navigates through the web
+  application.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  <p class=Directivedescription><b>Space group symbol validation:</b> whether
+  space group symbols typed into the web application by the user should be
+  validated.  Valid choices are <B><I>true</B></I> and <B><I>false</B></I> .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>persistedOperationsCache</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>These are performance tuning parameters used for a
+  cache of persisted operations.  The
+  default value is <B><I>256,128,16,0,30000,.1,false</B></I>
+  .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>repositoryManagerName</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The RMI registration name used by Repository Manager,
+  one of the “core modules” contained within <B><I>recipnetd</B></I>.  This value must match the RepRmiName value
+  defined in <B><I>recipnetd.conf</B></I>
+  .  In a default installation it is <B><I>RecipnetRepositoryManager </B></I>.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>restrictLargeFilesAvailability</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Specifies whether prior versions of “large” sample
+  data files are restricted to users affiliated with the sample, or whether
+  such files are generally available. 
+  The sense of “large” is determined by the RepPriorVersionFileSizeLimit directive
+  in <B><I>recipnetd.conf</B></I>.  The suggested value is <B><I>true</B></I> because
+  making available prior versions of very large sample data files consumes a
+  great deal of server resources; thus, allowing unauthenticated users to do so
+  might pose a security risk.  If this
+  value is <B><I>false</B></I>,
+  then no file size limit is imposed upon unauthenticated users.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>rmiPort</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The TCP port number on which <B><I>recipnetd</B></I> is
+  listening for connections from the site software web application.  The value here must match the directive GenRmiPort in <B><I>recipnetd.conf</B></I>
+  .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>shouldredirectAuthUserToSampleJsp</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Specifies whether authenticated users who execute a
+  search that matches exactly one sample should be redirected to the <B><I>Sample Details</B></I>
+  page for that sample (<B><I>false</B></I>)
+  or to the <B><I>Edit
+  Sample</B></I> page for that sample if they have such authorization
+  (<B><I>true</B></I>).  The default is <B><I>false</B></I>.  Unauthenticated users are always redirected
+  to the <B><I>Sample
+  Details</B></I> page when a search they execute matches exactly one
+  sample, regardless of this setting.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>siteManagerName</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>Similar to repositoryManagerName above,
+  except this is the name used by Site Manager. 
+  In a default installation this value is <B><I>RecipnetSiteManager</B></I>.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>stylesheetName</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The name of the CSS stylesheet that Reciprocal Net
+  pages should reference, as a path name relative to the webapp context
+  root.  The value should start with a
+  slash (<B><I>/</B></I>)
+  character.  The default value is <B><I>/recipnet.css</B></I>
+  .</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>tempDir</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The filesystem location in which temporary files
+  generated by the web application such as molecular diagrams and rendered
+  images are stored.  No more than maxFileSizeCache bytes will
+  be stored in this directory at any one time. 
+  The default value is blank, which instructs the web application to
+  store temporary files using the temporary file facility that Apache Tomcat
+  provides.  It is not necessary to
+  specify a value for this directive unless you wish to override the default
+  behavior.</p>
+  </td>
+  
+ </tr>
+ <tr >
+  <td width=225 valign=top >
+  <p class=Directivename>unauthenticatedPreferences</p>
+  </td>
+  
+  <td width=420 valign=top >
+  <p class=Directivedescription>The preference settings given to users who do not
+  authenticate.  The default value is <B><I>minijamm,sample,detailed,3,10,true,false,true,false,<br
+  clear=all>
+  true,false,false,true,false,false,form-based,false,false,<br clear=all>
+  false,false,true,true</B></I> . 
+  See newUserInitialPreferences for a
+  complete description of this value’s syntax.</p>
+  </td>
+  
+ </tr>
+</table>
+
+<div >
+
+
+<!--W2WBODYEND-->
+
+<P><HR ALIGN=center SIZE=2 WIDTH="100%">
+<P><CENTER>
+<a href="toc.html">TOC</a>&nbsp;|&nbsp;<a href="userguidep42.html">Previous</a>&nbsp;|&nbsp;<a href="userguidep44.html">Next</a>&nbsp;|&nbsp;<a href="http://www.reciprocalnet.org/networkinfo/docs/">Documentation Home</a></CENTER><P>
+
+</BODY>
+</HTML>
