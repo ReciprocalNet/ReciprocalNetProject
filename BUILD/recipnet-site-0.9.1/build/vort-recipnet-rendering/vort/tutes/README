@@ -1,7 +1,0 @@
-This directory is meant to contain helpful little hints etc.
-At the moment the is only a hint about how varying the texture
-scaling factors effects the picture. You need to compile texture.c
-(cc -o texture texture.c) and run it. It will make about 52 ".scn"
-files which are used in the same way as for movies. Although there
-isn't a "run" script, you should be able to figure out how to run
-them all.

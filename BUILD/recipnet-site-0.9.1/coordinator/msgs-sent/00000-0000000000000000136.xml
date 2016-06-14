@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><message seqnum="136" source="coordinator"><date>2016-06-10 12:17:34 -0400</date><dest>8255</dest><prevseqnum/><body class="SiteGrantISM"><privateKey algorithm="DSA" encoding="BASE64" format="PKCS#8">MIIBSwIBADCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2&#13;
-USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4&#13;
-O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmC&#13;
-ouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCB&#13;
-gLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhR&#13;
-kImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoEFgIUWv7ib6aF6+XM43qvN60rMb3l7vo=</privateKey></body><deliverToSiteManager/><signature algorithm="SHA1withDSA" encoding="BASE64">MCwCFAvqtVITTRIguhaM/6DAhpEchvSfAhRb6tFzcVh4fC4yJVazCRHdo/wmQg==</signature></message>

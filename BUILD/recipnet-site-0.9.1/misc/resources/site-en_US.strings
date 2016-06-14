@@ -1,8 +1,0 @@
-# site-en_US.strings
-#
-# This file is empty because its parent (site-en.strings) provides correct
-# values for each key.
-#
-# 14-Jun-2004: midurbin wrote first draft by consolidating
-#              actionCodes-en_US.properties, fieldCodes-en_US.properties and
-#              statusCodes-en_US.properties

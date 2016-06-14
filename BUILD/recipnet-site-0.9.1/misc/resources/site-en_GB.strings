@@ -1,8 +1,0 @@
-# site-en_GB.strings
-#
-# The parent (site-en.strings) provides the correct value for all other keys.
-#
-# 07-Jun-2004: midurbin wrote first draft by renaming and adapting
-#              fieldCodes-en_GB.properties
-
-field58=Colour

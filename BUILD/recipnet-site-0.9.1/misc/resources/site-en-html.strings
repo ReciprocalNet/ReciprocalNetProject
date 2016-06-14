@@ -1,8 +1,0 @@
-# site-en-html.strings
-#
-# This file is empty because its parent (site-html.strings) provides correct
-# values for each key.
-#
-# 14-Jun-2004: midurbin wrote first draft by consolidating
-#              actionCodes-en-html.properties, fieldCodes-en-html.properties
-#              and statusCodes-en-html.properties
