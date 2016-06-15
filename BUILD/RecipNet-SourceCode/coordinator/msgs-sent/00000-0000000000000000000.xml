@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><message seqnum="0" source="coordinator"><date>2016-06-10 12:11:26 -0400</date><dest>all</dest><prevseqnum/><body class="SiteActivationISM"><site id="0"><name>Reciprocal Net coordinator</name><shortName>Coordinator</shortName><publicKey algorithm="DSA" encoding="BASE64" format="X.509">MIIBuDCCASwGByqGSM44BAEwggEfAoGBAP1/U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZp&#13;
-RV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fn&#13;
-xqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuE&#13;
-C/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJ&#13;
-FnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImo&#13;
-g9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYUAAoGBAMDpYOsLmficMaPuYts5uPvDTMrolvVhutzE&#13;
-adGHcEyIgzfZic84qubyBhosp94QhobAK+Gzg0BhsJXDaO1JUKwRZ8orZ4SYzi1wXU964WkcsERc&#13;
-8QF4w5qImQziaCtkieZPJKShpSyJUy6601xDw7J0/YAg5CYJLQ8/1dFRrOnw</publicKey></site></body><deliverToSiteManager/><signature algorithm="SHA1withDSA" encoding="BASE64">MCwCFBJpPVKd9IXGvM0465SrEmTMZkeHAhRKIx9cABQwAQWEZoIHqRZS+gbfIA==</signature></message>
