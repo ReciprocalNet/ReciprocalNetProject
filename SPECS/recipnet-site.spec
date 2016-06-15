@@ -59,12 +59,11 @@
 #   Values of the form '@valuekeyword@' are substituted with real values by the
 #   build script at compile time.
 ###############################################################################
-Name: recipnet-site
-Version: 0.9.1
+Name: RecipNet
+Version: SourceCode
 Release: 50
 Source: recipnet-snapshot-HEAD-0376-20090321-source.tgz
-Patch0: recipnet-site-0.9.1-20160229.patch
-Buildroot: /tmp/recipnet-site-0.9.1-50
+Buildroot: /tmp/RecipNet-SourceCode-50
 Summary: A distributed database for molecular structures
 Group: System Environment/Daemons
 Vendor: Indiana University Molecular Structure Center
@@ -143,8 +142,7 @@ remote.
 #   this.)  We might insert patch statements here also.
 ###############################################################################
 %prep
-%setup -c recipnet-site-0.9.1
-%patch0 -p1
+%setup -c RecipNet-SourceCode
 
 
 
