@@ -39,10 +39,10 @@ cd
 mkdir ReciprocalNetProject/SOURCES
 cd ReciprocalNetProject/BUILD/RecipNet-SourceCode
 tar -cvf recipnet-snapshot-HEAD-0376-20090321-source.tgz .
-sudo mv recipnet-snapshot-HEAD-0376-20090321-source.tgz /home/amruta16/ReciprocalNetProject/SOURCES
+sudo mv recipnet-snapshot-HEAD-0376-20090321-source.tgz $HOME/ReciprocalNetProject/SOURCES
 cd
 cd ReciprocalNetProject
-rpmbuild --define "_topdir /home/amruta16/ReciprocalNetProject/" -ba SPECS/recipnet-site.spec
+rpmbuild --define "_topdir $HOME/ReciprocalNetProject/" -ba SPECS/recipnet-site.spec
 cd RPMS/x86_64
 sudo rpm -ivh --nodeps RecipNet-server-SourceCode-50.x86_64.rpm
 sudo rpm -ivh --nodeps RecipNet-webapp-SourceCode-50.x86_64.rpm
