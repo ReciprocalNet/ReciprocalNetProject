@@ -14,9 +14,9 @@ sudo alternatives --config javac
 sudo alternatives --config java
 sudo yum install wget
 cd /usr/local
-sudo wget http://download.nextag.com/apache/tomcat/tomcat-7/v7.0.69/bin/apache-tomcat-7.0.69.tar.gz
-sudo tar xvfz apache-tomcat-7.0.69.tar.gz
-sudo ln -s apache-tomcat-7.0.69/ tomcat
+sudo wget http://download.nextag.com/apache/tomcat/tomcat-7/v7.0.70/bin/apache-tomcat-7.0.70.tar.gz
+sudo tar xvfz apache-tomcat-7.0.70.tar.gz
+sudo ln -s apache-tomcat-7.0.70/ tomcat
 sudo useradd -s /sbin/nologin tomcat
 sudo chown -R tomcat:tomcat /usr/local/tomcat/
 cd
